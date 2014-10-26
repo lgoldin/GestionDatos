@@ -2,4 +2,8 @@
 bin
 obj
 _ReSharper*
+<<<<<<< HEAD
 New folder/hola.txt
+=======
+*.user
+>>>>>>> 6ab84dc86cb26722f8e6b2cd97ae151107478143
