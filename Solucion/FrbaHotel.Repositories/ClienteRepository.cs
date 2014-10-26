@@ -12,6 +12,7 @@ namespace FrbaHotel.Repositories
         public override IEnumerable<Cliente> GetAll()
         {
             List<Cliente> clientes = new List<Cliente>();
+
             SqlCommand _comando = DBConnection.CrearComando();
             _comando.CommandText = "SELECT * FROM Cliente";
             SqlDataReader reader = DBConnection.EjecutarComandoSelect(_comando);
