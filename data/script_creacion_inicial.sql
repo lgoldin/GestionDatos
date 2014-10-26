@@ -35,20 +35,42 @@ CREATE TABLE [Frutillitas].[Cliente](
 	[localidadId] [int],
 	[nacionalidadId] [int],
 	[habilitado] [bit],
-	[telefono])
+	[telefono] [nvarchar](255))
 	
 CREATE TABLE [Frutillitas].[Usuario](
 	[id] [int] IDENTITY(1, 1),
 	[userName] [nvarchar](255),
-	[password],
+	[password] [nvarchar](255), /*Change the type*/
 	[habilitado] [bit],
 	[apellido] [nvarchar](255),
 	[tipoDocumentoId] [int],
 	[numeroDocumento] [numeric](18, 0),
 	[mail] [nvarchar](255),
-	[telefono],
+	[telefono] [nvarchar](255),
 	[direccion] [nvarchar](255),
 	[fechaNacimiento] [datetime])
+	
+CREATE TABLE [Frutillitas].[Rol](
+	[id] [int] IDENTITY(1, 1),
+	[nombre] [nvarchar](255),
+	[activo] [bit])
+	
+CREATE TABLE [Frutillitas].[Funcionalidad](
+	[id] [int] IDENTITY(1, 1),
+	[nombre] [nvarchar](255))
+	
+CREATE TABLE [Frutillitas].[RolFuncionalidad](
+	[rolId] [int],
+	[funcionalidadId] [int])
+	
+CREATE TABLE [Frutillitas].[UsuarioRol](
+	[usuarioId] [int],
+	[rolId] [int])
+	
+CREATE TABLE [Frutillitas].[UsuarioLog](
+	[id] [int] IDENTITY(1, 1),
+	[usuarioId] [int],
+	[fecha] [datetime])
 	
 CREATE TABLE [Frutillitas].[Hotel](
 	[id] [int] IDENTITY(1, 1),
@@ -63,7 +85,7 @@ CREATE TABLE [Frutillitas].[TipoHabitacion](
 	[codigo] [numeric](18, 0),
 	[descripcion] [nvarchar](255),
 	[procentual] [numeric](18, 2),
-	[cantHuespedes])
+	[cantHuespedes] [int])
 	
 CREATE TABLE [Frutillitas].[Habitacion](
 	[id] [int] IDENTITY(1, 1),
@@ -111,16 +133,25 @@ CREATE TABLE [Frutillitas].[ReservaTipoHabitacion](
 	[reservaCodigo] [numeric](18, 0),
 	[tipoHabitacionCodigo] [numeric](18, 0))
 	
+CREATE TABLE [Frutillitas].[ReservaEstado](
+	[id] [int] IDENTITY(1, 1),
+	[descripcion] [nvarchar](255))
+	
 CREATE TABLE [Frutillitas].[ReservaCancelacion](
 	[reservaCodigo] [numeric](18, 0),
 	[fecha] [datetime],
 	[usuarioId] [int],
 	[motivo] [nvarchar](255))
 	
-CREATE TABLE [Frutillitas].[EstadiaDetalle](
+CREATE TABLE [Frutillitas].[ReservaHistorial](
 	[id] [int] IDENTITY(1, 1),
+	[usuarioId] [int],
 	[fecha] [datetime],
-	[usuarioId] [int])
+	[accionId] [int])
+	
+CREATE TABLE [Frutillitas].[ReservaHistorialAccion](
+	[id] [int] IDENTITY(1, 1),
+	[nombre] [nvarchar](255))
 
 CREATE TABLE [Frutillitas].[Estadia](
 	[id] [int] IDENTITY(1, 1),
@@ -128,8 +159,27 @@ CREATE TABLE [Frutillitas].[Estadia](
 	[checkinId] [int],
 	[checkoutId] [int])
 	
+CREATE TABLE [Frutillitas].[EstadiaDetalle](
+	[id] [int] IDENTITY(1, 1),
+	[fecha] [datetime],
+	[usuarioId] [int])
+
+CREATE TABLE [Frutillitas].[EstadiaCliente](
+	[estadiaId] [int],
+	[clienteId] [int])
+	
+CREATE TABLE [Frutillitas].[EstadiaConsumible](
+	[estadiaId] [int],
+	[consumibleCodigo] [numeric](18, 0))
+	
 CREATE TABLE [Frutillitas].[Factura](
 	[numero] [numeric](18, 0),
 	[fecha] [datetime],
 	[total] [numeric](18, 2),
 	[estadiaId] [int])
+
+
+/******************* CONSTRAINS *********************/
+
+
+/******************* MIGRATION **********************/
