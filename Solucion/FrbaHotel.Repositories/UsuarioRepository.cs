@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrbaHotel.Entities;
+using System.Data.SqlClient;
 
 namespace FrbaHotel.Repositories
 {
@@ -20,7 +21,10 @@ namespace FrbaHotel.Repositories
 
         public override int Insert(Usuario entity)
         {
-            throw new NotImplementedException();
+            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
+            _comando.Parameters.AddWithValue("@userName", entity.Username);
+            _comando.Parameters.AddWithValue("@passWord", entity.Password);
+            return DBConnection.EjecutarComandoNonQuery(_comando);
         }
 
         public override void Update(Usuario entity)
