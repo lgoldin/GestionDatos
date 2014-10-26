@@ -107,6 +107,10 @@ CREATE TABLE [Frutillitas].[Reserva](
 	[clienteId] [int],
 	[fechaCreacion] [datetime])
 	
+CREATE TABLE [Frutillitas].[ReservaTipoHabitacion](
+	[reservaCodigo] [numeric](18, 0),
+	[tipoHabitacionCodigo] [numeric](18, 0))
+	
 CREATE TABLE [Frutillitas].[ReservaCancelacion](
 	[reservaCodigo] [numeric](18, 0),
 	[fecha] [datetime],
@@ -123,3 +127,9 @@ CREATE TABLE [Frutillitas].[Estadia](
 	[reservaCodigo] [numeric](18, 0),
 	[checkinId] [int],
 	[checkoutId] [int])
+	
+CREATE TABLE [Frutillitas].[Factura](
+	[numero] [numeric](18, 0),
+	[fecha] [datetime],
+	[total] [numeric](18, 2),
+	[estadiaId] [int])
