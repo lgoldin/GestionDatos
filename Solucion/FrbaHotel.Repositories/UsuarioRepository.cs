@@ -97,7 +97,7 @@ namespace FrbaHotel.Repositories
             usuario.Direccion = new Direccion() { Calle = reader["direccion"].ToString() };
             usuario.Id = Convert.ToInt32(reader["id"]);
             usuario.HotelUsuario = new Hotel() { Id = Convert.ToInt32(reader["hotelId"]) };
-            usuario.Rol = new RolUsuario() { Id = Convert.ToInt32(reader["rolId"]), Rol = reader["rol"].ToString()};
+            usuario.Rol = new RolUsuario() { Id = Convert.ToInt32(reader["rolId"]), Nombre = reader["rol"].ToString()};
             usuario.Username = reader["userName"].ToString();
         }
 

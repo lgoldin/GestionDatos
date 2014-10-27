@@ -5,14 +5,10 @@ using System.Text;
 
 namespace FrbaHotel.Entities
 {
-    public class RolUsuario
+    public class Funcionalidad
     {
         public int Id { get; set; }
 
         public string Nombre { get; set; }
-
-        public bool IsActive { get; set; }
-
-        public List<Funcionalidad> Funcionalidades { get; set; }
     }
 }
