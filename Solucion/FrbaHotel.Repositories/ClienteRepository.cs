@@ -20,17 +20,7 @@ namespace FrbaHotel.Repositories
             while (reader.Read())
             {
                 Cliente cliente = new Cliente();
-                cliente.Apellido = reader["apellido"].ToString();
-                cliente.FechaNacimiento = Convert.ToDateTime(reader["fechaNacimiento"]);
-                cliente.Mail = reader["mail"].ToString();
-                cliente.Nacionalidad = reader["nacionalidad"].ToString();
-                cliente.Nombre = reader["nombre"].ToString();
-                cliente.NumeroDocumento = reader["numeroDocumente"].ToString();
-                cliente.Telefono = reader["telefono"].ToString();
-                cliente.TipoDocumento = reader["tipoDocumento"].ToString();
-                cliente.Id = Convert.ToInt32(reader["id"]);
-                cliente.Direccion = new Direccion() { Calle = reader["direccion"].ToString() };
-
+                CreateCliente(cliente, reader);
                 clientes.Add(cliente);
             }
 
@@ -49,15 +39,7 @@ namespace FrbaHotel.Repositories
 
             if(reader.Read())
             {
-                cliente.Apellido = reader["apellido"].ToString();
-                cliente.FechaNacimiento = Convert.ToDateTime(reader["fechaNacimiento"]);
-                cliente.Mail = reader["mail"].ToString();
-                cliente.Nacionalidad = reader["nacionalidad"].ToString();
-                cliente.Nombre = reader["nombre"].ToString();
-                cliente.NumeroDocumento = reader["numeroDocumente"].ToString();
-                cliente.Telefono = reader["telefono"].ToString();
-                cliente.TipoDocumento = reader["tipoDocumento"].ToString();
-                cliente.Direccion = new Direccion() { Calle = reader["direccion"].ToString()};
+                CreateCliente(cliente, reader);
             }
 
             return cliente;
@@ -66,40 +48,50 @@ namespace FrbaHotel.Repositories
         public override int Insert(Cliente entity)
         {
             SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
-            _comando.Parameters.AddWithValue("@nombre", entity.Nombre);
-            _comando.Parameters.AddWithValue("@apellido", entity.Apellido);
-            _comando.Parameters.AddWithValue("@direccionCalle", entity.Direccion.Calle);
-            _comando.Parameters.AddWithValue("@direccionNumero", entity.Direccion.Numero);
-            _comando.Parameters.AddWithValue("@fechaNacimiento", entity.FechaNacimiento);
-            _comando.Parameters.AddWithValue("@mail", entity.Mail);
-            _comando.Parameters.AddWithValue("@nacionalidad", entity.Nacionalidad);
-            _comando.Parameters.AddWithValue("@numeroDocumento", entity.NumeroDocumento);
-            _comando.Parameters.AddWithValue("@telefono", entity.Telefono);
-            _comando.Parameters.AddWithValue("@tipoDocumento", entity.TipoDocumento);
+            AddClienteParameters(entity, _comando);
             return DBConnection.EjecutarComandoNonQuery(_comando);
         }
 
         public override void Update(Cliente entity)
         {
             SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
-            _comando.Parameters.AddWithValue("@nombre", entity.Nombre);
-            _comando.Parameters.AddWithValue("@apellido", entity.Apellido);
-            _comando.Parameters.AddWithValue("@direccionCalle", entity.Direccion.Calle);
-            _comando.Parameters.AddWithValue("@direccionNumero", entity.Direccion.Numero);
-            _comando.Parameters.AddWithValue("@fechaNacimiento", entity.FechaNacimiento);
-            _comando.Parameters.AddWithValue("@mail", entity.Mail);
-            _comando.Parameters.AddWithValue("@nacionalidad", entity.Nacionalidad);
-            _comando.Parameters.AddWithValue("@numeroDocumento", entity.NumeroDocumento);
-            _comando.Parameters.AddWithValue("@telefono", entity.Telefono);
-            _comando.Parameters.AddWithValue("@tipoDocumento", entity.TipoDocumento);
+            AddClienteParameters(entity, _comando);
             DBConnection.EjecutarComandoNonQuery(_comando);
         }
 
         public override void Delete(Cliente entity)
         {
             SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
-            _comando.Parameters.AddWithValue("@nombre", entity.Id);
+            _comando.Parameters.AddWithValue("@id", entity.Id);
             DBConnection.EjecutarComandoNonQuery(_comando);
+        }
+
+        private static void CreateCliente(Cliente cliente, SqlDataReader reader)
+        {
+            cliente.Apellido = reader["apellido"].ToString();
+            cliente.FechaNacimiento = Convert.ToDateTime(reader["fechaNacimiento"]);
+            cliente.Mail = reader["mail"].ToString();
+            cliente.Nacionalidad = reader["nacionalidad"].ToString();
+            cliente.Nombre = reader["nombre"].ToString();
+            cliente.NumeroDocumento = reader["numeroDocumente"].ToString();
+            cliente.Telefono = reader["telefono"].ToString();
+            cliente.TipoDeDocumento = (TipoDocumento)Convert.ToInt32(reader["tipoDocumento"]);
+            cliente.Direccion = new Direccion() { Calle = reader["direccion"].ToString() };
+            cliente.Id = Convert.ToInt32(reader["id"]);
+        }
+
+        private static void AddClienteParameters(Cliente cliente, SqlCommand _comando)
+        {
+            _comando.Parameters.AddWithValue("@nombre", cliente.Nombre);
+            _comando.Parameters.AddWithValue("@apellido", cliente.Apellido);
+            _comando.Parameters.AddWithValue("@direccionCalle", cliente.Direccion.Calle);
+            _comando.Parameters.AddWithValue("@direccionNumero", cliente.Direccion.Numero);
+            _comando.Parameters.AddWithValue("@fechaNacimiento", cliente.FechaNacimiento);
+            _comando.Parameters.AddWithValue("@mail", cliente.Mail);
+            _comando.Parameters.AddWithValue("@nacionalidad", cliente.Nacionalidad);
+            _comando.Parameters.AddWithValue("@numeroDocumento", cliente.NumeroDocumento);
+            _comando.Parameters.AddWithValue("@telefono", cliente.Telefono);
+            _comando.Parameters.AddWithValue("@tipoDocumento", (int)cliente.TipoDeDocumento);
         }
     }
 }

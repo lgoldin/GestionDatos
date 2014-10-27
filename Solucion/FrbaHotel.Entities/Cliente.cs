@@ -15,7 +15,7 @@ namespace FrbaHotel.Entities
 
         public string Apellido { get; set; }
 
-        public string TipoDocumento { get; set; }
+        public TipoDocumento TipoDeDocumento { get; set; }
 
         public string NumeroDocumento { get; set; }
 

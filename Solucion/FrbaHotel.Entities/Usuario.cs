@@ -12,5 +12,25 @@ namespace FrbaHotel.Entities
         public string  Username { get; set; }
 
         public string Password { get; set; }
+
+        public RolUsuario Rol { get; set; }
+
+        public string Nombre { get; set; }
+
+        public string Apellido { get; set; }
+
+        public TipoDocumento TipoDeDocumento{ get; set;}
+
+        public string NumeroDocumento { get; set; }
+
+        public string Mail { get; set; }
+
+        public string Telefono { get; set; }
+
+        public Direccion Direccion { get; set; }
+       
+        public DateTime FechaNacimiento { get; set; }
+        
+        public Hotel HotelUsuario { get; set; }
     }
 }
