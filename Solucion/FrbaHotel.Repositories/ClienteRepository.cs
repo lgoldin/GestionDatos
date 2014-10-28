@@ -13,7 +13,7 @@ namespace FrbaHotel.Repositories
         {
             List<Cliente> clientes = new List<Cliente>();
 
-            SqlCommand _comando = DBConnection.CrearComando();
+            SqlCommand _comando = DBConnection.CreateCommand();
             _comando.CommandText = "SELECT * FROM Cliente";
             SqlDataReader reader = DBConnection.EjecutarComandoSelect(_comando);
 
@@ -31,7 +31,7 @@ namespace FrbaHotel.Repositories
         {
             Cliente cliente = new Cliente();
 
-            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
+            SqlCommand _comando = DBConnection.CreateStoredProcedure("NombreDelSP");
             _comando.Parameters.AddWithValue("@id", id);
 
             SqlDataReader reader = DBConnection.EjecutarComandoSelect(_comando);
@@ -47,23 +47,23 @@ namespace FrbaHotel.Repositories
 
         public override int Insert(Cliente entity)
         {
-            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
+            SqlCommand _comando = DBConnection.CreateStoredProcedure("NombreDelSP");
             AddClienteParameters(entity, _comando);
-            return DBConnection.EjecutarComandoNonQuery(_comando);
+            return DBConnection.ExecuteNonQuery(_comando);
         }
 
         public override void Update(Cliente entity)
         {
-            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
+            SqlCommand _comando = DBConnection.CreateStoredProcedure("NombreDelSP");
             AddClienteParameters(entity, _comando);
-            DBConnection.EjecutarComandoNonQuery(_comando);
+            DBConnection.ExecuteNonQuery(_comando);
         }
 
         public override void Delete(Cliente entity)
         {
-            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
+            SqlCommand _comando = DBConnection.CreateStoredProcedure("NombreDelSP");
             _comando.Parameters.AddWithValue("@id", entity.Id);
-            DBConnection.EjecutarComandoNonQuery(_comando);
+            DBConnection.ExecuteNonQuery(_comando);
         }
 
         private static void CreateCliente(Cliente cliente, SqlDataReader reader)

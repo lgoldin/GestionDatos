@@ -13,15 +13,13 @@ namespace FrbaHotel.Repositories
         {
             List<Usuario> usuarios = new List<Usuario>();
 
-            SqlCommand _comando = DBConnection.CrearComando();
-            _comando.CommandText = "SELECT * FROM Usuario";
-            SqlDataReader reader = DBConnection.EjecutarComandoSelect(_comando);
-
+            SqlCommand command = DBConnection.CreateCommand();
+            command.CommandText = "SELECT * FROM Usuario";
+            
+            SqlDataReader reader = DBConnection.EjecutarComandoSelect(command);
             while (reader.Read())
             {
-                Usuario usuario = new Usuario();
-                CreateUsuario(usuario, reader);
-                usuarios.Add(usuario);
+                usuarios.Add(this.CreateUsuario(reader));
             }
 
             return usuarios;
@@ -30,75 +28,75 @@ namespace FrbaHotel.Repositories
 
         public override Usuario Get(int id)
         {
-            Usuario usuario = new Usuario();
+            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
+            command.Parameters.AddWithValue("@id", id);
 
-            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
-            _comando.Parameters.AddWithValue("@id", id);
-
-            SqlDataReader reader = DBConnection.EjecutarComandoSelect(_comando);
-
+            SqlDataReader reader = DBConnection.EjecutarComandoSelect(command);
 
             if (reader.Read())
             {
-                CreateUsuario(usuario, reader);
+                return this.CreateUsuario(reader);
             }
 
-            return usuario;
+            return null;
         }
 
         public override int Insert(Usuario entity)
         {
-            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
-            AddUsuarioParameters(entity, _comando);
-            return DBConnection.EjecutarComandoNonQuery(_comando);
+            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
+            AddUsuarioParameters(entity, command);
+            return DBConnection.ExecuteNonQuery(command);
         }
 
         public override void Update(Usuario entity)
         {
-            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
-            AddUsuarioParameters(entity, _comando);
-            DBConnection.EjecutarComandoNonQuery(_comando);
+            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
+            AddUsuarioParameters(entity, command);
+            DBConnection.ExecuteNonQuery(command);
         }
 
         public override void Delete(Usuario entity)
         {
-            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
-            _comando.Parameters.AddWithValue("@id", entity.Id);
-            DBConnection.EjecutarComandoNonQuery(_comando);
+            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
+            command.Parameters.AddWithValue("@id", entity.Id);
+            DBConnection.ExecuteNonQuery(command);
         }
 
         public Usuario GetByUsernameAndPassword(string username, string password)
         {
-            Usuario usuario = new Usuario();
+            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
+            command.Parameters.AddWithValue("@userName", username);
+            command.Parameters.AddWithValue("@password", password);
 
-            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
-            _comando.Parameters.AddWithValue("@userName", username);
-            _comando.Parameters.AddWithValue("@password", password);
+            SqlDataReader reader = DBConnection.EjecutarComandoSelect(command);
 
-            SqlDataReader reader = DBConnection.EjecutarComandoSelect(_comando);
+            Usuario usuario = null;
 
             if (reader.Read())
             {
-                CreateUsuario(usuario, reader);
+                return this.CreateUsuario(reader);
             }
 
             return usuario;
         }
 
-        private static void CreateUsuario(Usuario usuario, SqlDataReader reader)
+        private Usuario CreateUsuario(SqlDataReader reader)
         {
+            Usuario usuario = new Usuario();
             usuario.Apellido = reader["apellido"].ToString();
             usuario.FechaNacimiento = Convert.ToDateTime(reader["fechaNacimiento"]);
             usuario.Mail = reader["mail"].ToString();
             usuario.Nombre = reader["nombre"].ToString();
-            usuario.NumeroDocumento = reader["numeroDocumente"].ToString();
+            usuario.NumeroDocumento = reader["numeroDocumento"].ToString();
             usuario.Telefono = reader["telefono"].ToString();
             usuario.TipoDeDocumento = (TipoDocumento)Convert.ToInt32(reader["tipoDocumento"]);
-            usuario.Direccion = new Direccion() { Calle = reader["direccion"].ToString() };
+            usuario.Direccion = new Direccion { Calle = reader["direccion"].ToString() };
             usuario.Id = Convert.ToInt32(reader["id"]);
-            usuario.HotelUsuario = new Hotel() { Id = Convert.ToInt32(reader["hotelId"]) };
-            usuario.Rol = new RolUsuario() { Id = Convert.ToInt32(reader["rolId"]), Nombre = reader["rol"].ToString()};
+            usuario.HotelUsuario = new Hotel { Id = Convert.ToInt32(reader["hotelId"]) };
+            usuario.Rol = new RolUsuario { Id = Convert.ToInt32(reader["rolId"]), Nombre = reader["rol"].ToString()};
             usuario.Username = reader["userName"].ToString();
+
+            return usuario;
         }
 
         private static void AddUsuarioParameters(Usuario usuario, SqlCommand _comando)

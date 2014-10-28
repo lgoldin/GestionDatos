@@ -19,12 +19,15 @@ namespace FrbaHotel
 
         private void Index_Load(object sender, EventArgs e)
         {
+            var indexForm = Application.OpenForms["Index"];
+            indexForm.SendToBack();
+            indexForm.Hide();
+            
             var loginForm = new LoginForm();
             loginForm.Activate();
             loginForm.Show();
             loginForm.BringToFront();
-
-            Application.OpenForms["Index"].SendToBack();
+            loginForm.Focus();
         }
     }
 }

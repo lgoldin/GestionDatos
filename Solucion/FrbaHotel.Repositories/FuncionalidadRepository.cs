@@ -13,9 +13,9 @@ namespace FrbaHotel.Repositories
         {
             List<Funcionalidad> funcionalidades = new List<Funcionalidad>();
 
-            SqlCommand _comando = DBConnection.CrearComando();
-            _comando.CommandText = "SELECT * FROM Funcionalidad";
-            SqlDataReader reader = DBConnection.EjecutarComandoSelect(_comando);
+            SqlCommand comando = DBConnection.CreateCommand();
+            comando.CommandText = "SELECT * FROM Funcionalidad";
+            SqlDataReader reader = DBConnection.EjecutarComandoSelect(comando);
 
             while (reader.Read())
             {

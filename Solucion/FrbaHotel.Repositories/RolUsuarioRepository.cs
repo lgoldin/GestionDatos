@@ -21,9 +21,9 @@ namespace FrbaHotel.Repositories
 
         public override int Insert(RolUsuario entity)
         {
-            SqlCommand _comando = DBConnection.CrearComandoStoredProcedure("NombreDelSP");
+            SqlCommand _comando = DBConnection.CreateStoredProcedure("NombreDelSP");
             AddRolUsuarioParameters(entity, _comando);
-            return DBConnection.EjecutarComandoNonQuery(_comando);
+            return DBConnection.ExecuteNonQuery(_comando);
         }
 
         public override void Update(RolUsuario entity)
