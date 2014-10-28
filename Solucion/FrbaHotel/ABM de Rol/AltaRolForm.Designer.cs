@@ -117,7 +117,7 @@
             this.Controls.Add(this.lblNombreRol);
             this.Controls.Add(this.lblTitulo);
             this.Name = "frmAltaRol";
-            this.Text = "Form1";
+            this.Text = "Alta_Rol";
             this.Load += new System.EventHandler(this.frmAltaRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

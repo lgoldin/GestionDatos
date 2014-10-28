@@ -9,5 +9,7 @@ namespace FrbaHotel.Services.Interfaces
     public interface IFuncionalidadService
     {
         List<Funcionalidad> GetAll();
+
+        List<Funcionalidad> GetByRolId(int rolId);
     }
 }

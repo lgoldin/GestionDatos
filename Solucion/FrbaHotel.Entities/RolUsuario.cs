@@ -11,7 +11,7 @@ namespace FrbaHotel.Entities
 
         public string Nombre { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool Activo { get; set; }
 
         public List<Funcionalidad> Funcionalidades { get; set; }
     }

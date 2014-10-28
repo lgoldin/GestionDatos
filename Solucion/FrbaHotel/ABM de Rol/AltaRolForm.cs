@@ -30,7 +30,7 @@ namespace FrbaHotel.ABM_de_Rol
         {
             RolUsuario rol = new RolUsuario();
             rol.Nombre = txtNombreRol.Text;
-            rol.IsActive = chbActivo.Checked;
+            rol.Activo = chbActivo.Checked;
             rol.Funcionalidades = new List<Funcionalidad>();
             for (int i = 0; i < lstFuncionalidades.Items.Count; i++)
             {

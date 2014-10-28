@@ -46,6 +46,23 @@ namespace FrbaHotel.Repositories
             throw new NotImplementedException();
         }
 
+        public List<Funcionalidad> GetByRol(int rolId)
+        {
+            List<Funcionalidad> funcionalidades = new List<Funcionalidad>();
+
+            SqlCommand _comando = DBConnection.CreateStoredProcedure("NombreDelSP");
+            _comando.Parameters.AddWithValue("@rolId", rolId);
+            SqlDataReader reader = DBConnection.EjecutarComandoSelect(_comando);
+
+            while (reader.Read())
+            {
+                Funcionalidad funcionalidad = CreateFuncionalidad(reader);
+                funcionalidades.Add(funcionalidad);
+            }
+
+            return funcionalidades;
+        }
+
         public Funcionalidad CreateFuncionalidad(SqlDataReader reader)
         {
             Funcionalidad funcionalidad = new Funcionalidad();
