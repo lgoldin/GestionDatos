@@ -11,5 +11,7 @@ namespace FrbaHotel.Services.Interfaces
         List<RolUsuario> GetAll();
 
         int Insert(RolUsuario rolUsuario);
+
+        void Update(RolUsuario rolUsuario);
     }
 }
