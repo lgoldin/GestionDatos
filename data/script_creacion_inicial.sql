@@ -242,3 +242,8 @@ SELECT DISTINCT
     NULL
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
+
+INSERT INTO [Frutillitas].[Consumible]([codigo], [descripcion], [precio])
+SELECT DISTINCT [Consumible_Codigo] ,[Consumible_Descripcion] ,[Consumible_Precio]      
+FROM [GD2C2014].[gd_esquema].[Maestra] WHERE [Consumible_Codigo] IS NOT NULL
+GO
