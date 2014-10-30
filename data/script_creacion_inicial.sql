@@ -216,6 +216,14 @@ GO
 INSERT INTO [Frutillitas].[TipoDocumento] ([nombre]) VALUES ('Pasaporte')
 GO
 
+INSERT INTO [Frutillitas].[Pais]([nombre], [nacionalidad]) VALUES ('Argentina', 'Argentino')
+GO
+
+INSERT INTO [Frutillitas].[Ciudad]([nombre], [paisId])
+SELECT DISTINCT [Hotel_Ciudad], 1
+FROM [GD2C2014].[gd_esquema].[Maestra]
+GO
+
 INSERT INTO [Frutillitas].[Cliente](
 	[tipoDocumentoId],
 	[numeroDocumento],
@@ -251,3 +259,4 @@ GO
 INSERT INTO [Frutillitas].[Regimen](/*[codigo], */[descripcion], [precio], [activo])
 SELECT DISTINCT [Regimen_Descripcion], [Regimen_Precio], 1
 FROM [GD2C2014].[gd_esquema].[Maestra]
+GO
