@@ -247,3 +247,7 @@ INSERT INTO [Frutillitas].[Consumible]([codigo], [descripcion], [precio])
 SELECT DISTINCT [Consumible_Codigo] ,[Consumible_Descripcion] ,[Consumible_Precio]      
 FROM [GD2C2014].[gd_esquema].[Maestra] WHERE [Consumible_Codigo] IS NOT NULL
 GO
+
+INSERT INTO [Frutillitas].[Regimen](/*[codigo], */[descripcion], [precio], [activo])
+SELECT DISTINCT [Regimen_Descripcion], [Regimen_Precio], 1
+FROM [GD2C2014].[gd_esquema].[Maestra]
