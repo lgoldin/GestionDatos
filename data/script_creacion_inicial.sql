@@ -88,6 +88,7 @@ CREATE TABLE [Frutillitas].[Hotel](
 	[id] [int] IDENTITY(1, 1),
 	[nombre] [nvarchar](255),
 	[ciudadId] [int],
+	[direccion] [nvarchar](255),
 	[estrellas] [numeric](18, 0),
 	[recargaEstrella] [numeric](18, 0),
 	[mail] [nvarchar](255),
@@ -107,7 +108,7 @@ CREATE TABLE [Frutillitas].[Habitacion](
 	[tipoCodigo] [numeric](18, 0),
 	[numero] [numeric](18, 0),
 	[piso] [numeric](18, 0),
-	[frente] [nvarchar](50),
+	[frente] [nvarchar](50) /*Hay que cambiar esto, por ahora está tal como viene (S, N)*/,
 	[descripcion] [nvarchar](255),
 	[activa] [bit])
 GO
@@ -121,7 +122,7 @@ CREATE TABLE [Frutillitas].[HotelInhabilitacion](
 GO
 	
 CREATE TABLE [Frutillitas].[Regimen](
-	[codigo] [numeric](18, 0),
+	[codigo] [numeric](18, 0) IDENTITY(1, 1) /*Como no hay codigo lo dejo como autoincremental*/,
 	[descripcion] [nvarchar](255),
 	[precio][numeric](18, 2),
 	[activo] [bit])
@@ -220,7 +221,7 @@ INSERT INTO [Frutillitas].[Pais]([nombre], [nacionalidad]) VALUES ('Argentina', 
 GO
 
 INSERT INTO [Frutillitas].[Ciudad]([nombre], [paisId])
-SELECT DISTINCT [Hotel_Ciudad], 1
+SELECT DISTINCT [Hotel_Ciudad], 1 /*El único pais que hay*/
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
 
@@ -256,7 +257,28 @@ SELECT DISTINCT [Consumible_Codigo] ,[Consumible_Descripcion] ,[Consumible_Preci
 FROM [GD2C2014].[gd_esquema].[Maestra] WHERE [Consumible_Codigo] IS NOT NULL
 GO
 
-INSERT INTO [Frutillitas].[Regimen](/*[codigo], */[descripcion], [precio], [activo])
+INSERT INTO [Frutillitas].[Regimen]([descripcion], [precio], [activo])
 SELECT DISTINCT [Regimen_Descripcion], [Regimen_Precio], 1
+FROM [GD2C2014].[gd_esquema].[Maestra]
+GO
+
+INSERT INTO [Frutillitas].[Hotel]([nombre], [ciudadId], [direccion], [estrellas], [recargaEstrella], [mail], [fechaCreacion])
+SELECT DISTINCT NULL /*Lo dejo en null pero podría ir la dir*/, (SELECT [id] FROM [Frutillitas].[Ciudad] WHERE [nombre] LIKE [Hotel_Ciudad]), [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255)), [Hotel_CantEstrella], [Hotel_Recarga_Estrella], NULL, GETDATE()
+FROM [GD2C2014].[gd_esquema].[Maestra]
+GO
+
+/*Por ahora dejo un todos contra todos, después hay que preguntar si solo ponemos los minimos*/
+INSERT INTO [Frutillitas].[HotelRegimen]([hotelId], [regimenCodigo])
+SELECT h.[id], r.[codigo]
+FROM [Frutillitas].[Hotel] h, [Frutillitas].[Regimen] r
+GO
+
+INSERT INTO [Frutillitas].[TipoHabitacion]([codigo], [descripcion], [procentual], [cantHuespedes])
+SELECT DISTINCT [Habitacion_Tipo_Codigo], [Habitacion_Tipo_Descripcion], [Habitacion_Tipo_Porcentual], 1/*Cómo lo sacamos??*/
+FROM [GD2C2014].[gd_esquema].[Maestra]
+GO
+
+INSERT INTO [Frutillitas].[Habitacion]([hotelId], [tipoCodigo], [numero], [piso], [frente], [descripcion], [activa])
+SELECT DISTINCT (SELECT [id] FROM [Frutillitas].[Hotel] WHERE [direccion] = [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255))), [Habitacion_Tipo_Codigo], [Habitacion_Numero], [Habitacion_Piso], [Habitacion_Frente], NULL/*Ni idea la descripcion*/, 1
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
