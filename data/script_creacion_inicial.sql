@@ -127,7 +127,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutilli
 BEGIN
 CREATE TABLE [Frutillitas].[Usuario](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[userName] [nvarchar](255) NULL,
+	[username] [nvarchar](255) NULL,
 	[password] [nvarchar](255) NULL,
 	[habilitado] [bit] NULL,
 	[apellido] [nvarchar](255) NULL,

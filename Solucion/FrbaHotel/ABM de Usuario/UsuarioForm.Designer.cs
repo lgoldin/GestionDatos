@@ -52,6 +52,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.cmbHotel = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.cmbRol = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -248,11 +250,30 @@
             this.label12.TabIndex = 22;
             this.label12.Text = "Hotel";
             // 
+            // cmbRol
+            // 
+            this.cmbRol.FormattingEnabled = true;
+            this.cmbRol.Location = new System.Drawing.Point(220, 211);
+            this.cmbRol.Name = "cmbRol";
+            this.cmbRol.Size = new System.Drawing.Size(100, 21);
+            this.cmbRol.TabIndex = 25;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(104, 219);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(23, 13);
+            this.label13.TabIndex = 24;
+            this.label13.Text = "Rol";
+            // 
             // UsuarioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1234, 610);
+            this.Controls.Add(this.cmbRol);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.cmbHotel);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.txtFechaNacimiento);
@@ -279,6 +300,7 @@
             this.Controls.Add(this.label1);
             this.Name = "UsuarioForm";
             this.Text = "ABM Usuario";
+            this.Load += new System.EventHandler(this.UsuarioForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,5 +332,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cmbHotel;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox cmbRol;
+        private System.Windows.Forms.Label label13;
     }
 }

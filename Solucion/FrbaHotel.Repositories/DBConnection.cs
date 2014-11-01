@@ -33,8 +33,7 @@ namespace FrbaHotel.Repositories
         {
             SqlConnection conexion = new SqlConnection(ConnectionString);
             
-            SqlCommand command = conexion.CreateCommand();
-            command.CommandText = storedName;
+            SqlCommand command = new SqlCommand(string.Format("[Frutillitas].[{0}]", storedName), conexion);
             command.CommandType = CommandType.StoredProcedure;
             
             return command;
@@ -78,22 +77,34 @@ namespace FrbaHotel.Repositories
             }
 
             return reader;
+        }
 
-            //Dejo esto comentado porque puede llegar a servir:
-
-            /*DataTable _tabla = new DataTable();
+        public static DataTable EjecutarStoredProcedureSelect(SqlCommand command)
+        {
+            var table = new DataTable();
+            
             try
             {
-                comando.Connection.Open();
-                SqlDataAdapter adaptador = new SqlDataAdapter();
-                adaptador.SelectCommand = comando;
-                adaptador.Fill(_tabla);
+                command.Connection.Open();
+                
+                var adapter = new SqlDataAdapter();
+                adapter.SelectCommand = command;
+
+                DataSet dataSet = new DataSet();
+                adapter.Fill(dataSet, "Roles");
+
+                table = dataSet.Tables["Roles"];
             }
-            catch (Exception ex)
-            { throw ex; }
+            catch (Exception exception)
+            { 
+                throw exception; 
+            }
             finally
-            { comando.Connection.Close(); }
-            return _tabla;*/
+            {
+                CloseCommand(command);
+            }
+
+            return table;
         }
 
         public static void CloseCommand(SqlCommand command)
