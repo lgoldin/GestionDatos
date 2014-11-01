@@ -89,31 +89,31 @@ namespace FrbaHotel.Repositories
             usuario.Nombre = reader["nombre"].ToString();
             usuario.NumeroDocumento = reader["numeroDocumento"].ToString();
             usuario.Telefono = reader["telefono"].ToString();
-            usuario.TipoDeDocumento = (TipoDocumento)Convert.ToInt32(reader["tipoDocumento"]);
+            usuario.TipoDeDocumento = new TipoDocumento { Id = Convert.ToInt32(reader["TipoDocumentoId"]), Nombre = reader["TipoDocumentoNombre"].ToString() };
             usuario.Direccion = new Direccion { Calle = reader["direccion"].ToString() };
             usuario.Id = Convert.ToInt32(reader["id"]);
             usuario.HotelUsuario = new Hotel { Id = Convert.ToInt32(reader["hotelId"]) };
-            usuario.Rol = new RolUsuario { Id = Convert.ToInt32(reader["rolId"]), Nombre = reader["rol"].ToString()};
+            usuario.Rol = new Rol { Id = Convert.ToInt32(reader["rolId"]), Nombre = reader["rol"].ToString()};
             usuario.Username = reader["userName"].ToString();
 
             return usuario;
         }
 
-        private static void AddUsuarioParameters(Usuario usuario, SqlCommand _comando)
+        private static void AddUsuarioParameters(Usuario usuario, SqlCommand command)
         {
-            _comando.Parameters.AddWithValue("@nombre", usuario.Nombre);
-            _comando.Parameters.AddWithValue("@apellido", usuario.Apellido);
-            _comando.Parameters.AddWithValue("@direccionCalle", usuario.Direccion.Calle);
-            _comando.Parameters.AddWithValue("@direccionNumero", usuario.Direccion.Numero);
-            _comando.Parameters.AddWithValue("@fechaNacimiento", usuario.FechaNacimiento);
-            _comando.Parameters.AddWithValue("@mail", usuario.Mail);
-            _comando.Parameters.AddWithValue("@numeroDocumento", usuario.NumeroDocumento);
-            _comando.Parameters.AddWithValue("@telefono", usuario.Telefono);
-            _comando.Parameters.AddWithValue("@tipoDocumento", (int)usuario.TipoDeDocumento);
-            _comando.Parameters.AddWithValue("@hotelId", usuario.HotelUsuario.Id);
-            _comando.Parameters.AddWithValue("@password", usuario.Password);
-            _comando.Parameters.AddWithValue("@rolId", usuario.Rol.Id);
-            _comando.Parameters.AddWithValue("@userName", usuario.Username);
+            command.Parameters.AddWithValue("@nombre", usuario.Nombre);
+            command.Parameters.AddWithValue("@apellido", usuario.Apellido);
+            command.Parameters.AddWithValue("@direccionCalle", usuario.Direccion.Calle);
+            command.Parameters.AddWithValue("@direccionNumero", usuario.Direccion.Numero);
+            command.Parameters.AddWithValue("@fechaNacimiento", usuario.FechaNacimiento);
+            command.Parameters.AddWithValue("@mail", usuario.Mail);
+            command.Parameters.AddWithValue("@numeroDocumento", usuario.NumeroDocumento);
+            command.Parameters.AddWithValue("@telefono", usuario.Telefono);
+            command.Parameters.AddWithValue("@tipoDocumento", usuario.TipoDeDocumento.Id);
+            command.Parameters.AddWithValue("@hotelId", usuario.HotelUsuario.Id);
+            command.Parameters.AddWithValue("@password", usuario.Password);
+            command.Parameters.AddWithValue("@rolId", usuario.Rol.Id);
+            command.Parameters.AddWithValue("@userName", usuario.Username);
         }
     }
 }

@@ -48,12 +48,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cliente.cs" />
+    <Compile Include="Ciudad.cs" />
+    <Compile Include="Pais.cs" />
     <Compile Include="Direccion.cs" />
     <Compile Include="Funcionalidad.cs" />
     <Compile Include="Hotel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rol.cs" />
-    <Compile Include="RolUsuario.cs" />
     <Compile Include="TipoDocumento.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>

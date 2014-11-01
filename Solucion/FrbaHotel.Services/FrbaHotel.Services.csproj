@@ -46,11 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClienteService.cs" />
-    <Compile Include="Interfaces\IRolService.cs" />
+    <Compile Include="HotelService.cs" />
+    <Compile Include="Interfaces\IHotelService.cs" />
+    <Compile Include="Interfaces\ITipoDocumentoService.cs" />
+    <Compile Include="TipoDocumentoService.cs" />
     <Compile Include="RolService.cs" />
-    <Compile Include="RolUsuarioService.cs" />
     <Compile Include="FuncionalidadService.cs" />
-    <Compile Include="Interfaces\IRolUsuarioService.cs" />
+    <Compile Include="Interfaces\IRolService.cs" />
     <Compile Include="Interfaces\IFuncionalidadService.cs" />
     <Compile Include="Interfaces\ILoginService.cs" />
     <Compile Include="Interfaces\IClienteService.cs" />

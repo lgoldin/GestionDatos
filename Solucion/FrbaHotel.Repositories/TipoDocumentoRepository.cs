@@ -8,55 +8,54 @@ using System.Data;
 
 namespace FrbaHotel.Repositories
 {
-    public class RolRepository : BaseRepository<Rol>
+    public class TipoDocumentoRepository : BaseRepository<TipoDocumento>
     {
-        public override IEnumerable<Rol> GetAll()
+        public override IEnumerable<TipoDocumento> GetAll()
         {
-            var roles = new List<Rol>();
+            var tipos = new List<TipoDocumento>();
 
-            SqlCommand command = DBConnection.CreateStoredProcedure("GetRoles");
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetTiposDocumento");
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
-            foreach (DataRow rol in collection)
+            foreach (DataRow tipoDocumento in collection)
             {
-                roles.Add(this.CreateRol(rol));
+                tipos.Add(this.CreateTipoDocumento(tipoDocumento));
             }
             
-            return roles;
+            return tipos;
         }
 
-        public override Rol Get(int id)
+        public override TipoDocumento Get(int id)
         {
             return this.GetAll().FirstOrDefault(x => x.Id == id);
         }
 
-        public override int Insert(Rol entity)
+        public override int Insert(TipoDocumento entity)
         {
             SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
-            AddRolParameters(entity, command);
+            AddTipoDocumentoParameters(entity, command);
             return DBConnection.ExecuteNonQuery(command);
         }
 
-        public override void Update(Rol entity)
+        public override void Update(TipoDocumento entity)
         {
             throw new NotImplementedException();
         }
 
-        public override void Delete(Rol entity)
+        public override void Delete(TipoDocumento entity)
         {
             throw new NotImplementedException();
         }
 
-        private Rol CreateRol(DataRow row)
+        private TipoDocumento CreateTipoDocumento(DataRow row)
         {
-            return new Rol
+            return new TipoDocumento
             {
-                Activo = Convert.ToBoolean(row["Activo"]),
                 Nombre = row["Nombre"].ToString(),
                 Id = Convert.ToInt32(row["Id"])
             };
         }
 
-        private void AddRolParameters(Rol rolUsuario, SqlCommand command)
+        private void AddTipoDocumentoParameters(TipoDocumento tipoDocumento, SqlCommand command)
         {
         }
     }

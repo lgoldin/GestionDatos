@@ -5,14 +5,12 @@ using System.Text;
 
 namespace FrbaHotel.Entities
 {
-    public class RolUsuario
+    public class Pais
     {
         public int Id { get; set; }
 
         public string Nombre { get; set; }
 
-        public bool Activo { get; set; }
-
-        public List<Funcionalidad> Funcionalidades { get; set; }
+        public string Nacionalidad { get; set; }
     }
 }

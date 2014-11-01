@@ -6,12 +6,8 @@ using FrbaHotel.Entities;
 
 namespace FrbaHotel.Services.Interfaces
 {
-    public interface IRolService
+    public interface ITipoDocumentoService
     {
-        IEnumerable<Rol> GetAll();
-
-        int Insert(Rol rolUsuario);
-
-        void Update(Rol rolUsuario);
+        IEnumerable<TipoDocumento> GetAll();
     }
 }

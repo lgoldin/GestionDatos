@@ -13,14 +13,24 @@ namespace FrbaHotel.Services
         public IEnumerable<Rol> GetAll()
         {
             var roles = new List<Rol>();
-            
+            roles.Add(new Rol { Id = 0, Nombre = "- No Especificado -" });
+
             var repository = new RolRepository();
-            roles = repository.GetAll().ToList();
-            roles.Add(new Rol { Id = -1, Nombre = "- No Especificado -" });
-            
-            roles.OrderBy(x => x.Id);
+            repository.GetAll().ToList().ForEach(roles.Add);
             
             return roles;
+        }
+
+        public int Insert(Rol rolUsuario)
+        {
+            var repository = new RolRepository();
+            return repository.Insert(rolUsuario);
+        }
+
+        public void Update(Rol rolUsuario)
+        {
+            var repository = new RolRepository();
+            repository.Update(rolUsuario);
         }
     }
 }

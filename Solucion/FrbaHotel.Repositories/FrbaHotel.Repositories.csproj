@@ -47,10 +47,11 @@
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
     <Compile Include="ClienteRepository.cs" />
+    <Compile Include="HotelRepository.cs" />
+    <Compile Include="TipoDocumentoRepository.cs" />
     <Compile Include="RolRepository.cs" />
     <Compile Include="FuncionalidadRepository.cs" />
     <Compile Include="DBConnection.cs" />
-    <Compile Include="RolUsuarioRepository.cs" />
     <Compile Include="UsuarioRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

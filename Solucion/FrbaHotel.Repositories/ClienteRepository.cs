@@ -68,6 +68,7 @@ namespace FrbaHotel.Repositories
 
         private static void CreateCliente(Cliente cliente, SqlDataReader reader)
         {
+            /*
             cliente.Apellido = reader["apellido"].ToString();
             cliente.FechaNacimiento = Convert.ToDateTime(reader["fechaNacimiento"]);
             cliente.Mail = reader["mail"].ToString();
@@ -78,10 +79,12 @@ namespace FrbaHotel.Repositories
             cliente.TipoDeDocumento = (TipoDocumento)Convert.ToInt32(reader["tipoDocumento"]);
             cliente.Direccion = new Direccion() { Calle = reader["direccion"].ToString() };
             cliente.Id = Convert.ToInt32(reader["id"]);
+            */
         }
 
         private static void AddClienteParameters(Cliente cliente, SqlCommand _comando)
         {
+            /*
             _comando.Parameters.AddWithValue("@nombre", cliente.Nombre);
             _comando.Parameters.AddWithValue("@apellido", cliente.Apellido);
             _comando.Parameters.AddWithValue("@direccionCalle", cliente.Direccion.Calle);
@@ -92,6 +95,7 @@ namespace FrbaHotel.Repositories
             _comando.Parameters.AddWithValue("@numeroDocumento", cliente.NumeroDocumento);
             _comando.Parameters.AddWithValue("@telefono", cliente.Telefono);
             _comando.Parameters.AddWithValue("@tipoDocumento", (int)cliente.TipoDeDocumento);
+            */
         }
     }
 }

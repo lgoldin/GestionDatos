@@ -28,7 +28,7 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void btnAgregarRol_Click(object sender, EventArgs e)
         {
-            RolUsuario rol = new RolUsuario();
+            Rol rol = new Rol();
             rol.Nombre = txtNombreRol.Text;
             rol.Activo = chbActivo.Checked;
             rol.Funcionalidades = new List<Funcionalidad>();
@@ -41,7 +41,7 @@ namespace FrbaHotel.ABM_de_Rol
                 }
             } 
             
-            RolUsuarioService service = new RolUsuarioService();
+            RolService service = new RolService();
             service.Insert(rol);
 
         }

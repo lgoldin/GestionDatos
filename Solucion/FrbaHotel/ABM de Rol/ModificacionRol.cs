@@ -20,8 +20,8 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void ModificacionRol_Load(object sender, EventArgs e)
         {
-            RolUsuarioService service = new RolUsuarioService();
-            List<RolUsuario> roles = service.GetAll();
+            RolService service = new RolService();
+            List<Rol> roles = service.GetAll().ToList();
             cmbRoles.DataSource = roles;
             cmbRoles.DisplayMember = "Nombre";
             cmbRoles.ValueMember = "Id";
@@ -31,7 +31,7 @@ namespace FrbaHotel.ABM_de_Rol
         {
             lstFuncionalidades.Items.Clear();
             FuncionalidadService service = new FuncionalidadService();
-            RolUsuario rol = (RolUsuario)cmbRoles.SelectedItem;
+            Rol rol = (Rol)cmbRoles.SelectedItem;
             rol.Funcionalidades = service.GetByRolId(rol.Id);
 
             List<Funcionalidad> funcionalidades = service.GetAll();
@@ -59,7 +59,7 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void btnModificarRol_Click(object sender, EventArgs e)
         {
-            RolUsuario rol = (RolUsuario)cmbRoles.SelectedItem;
+            Rol rol = (Rol)cmbRoles.SelectedItem;
             rol.Nombre = txtNombreRol.Text;
             rol.Activo = chbActivo.Checked;
             rol.Funcionalidades = new List<Funcionalidad>();
@@ -72,7 +72,7 @@ namespace FrbaHotel.ABM_de_Rol
                 }
             }
 
-            RolUsuarioService service = new RolUsuarioService();
+            RolService service = new RolService();
             service.Update(rol);
         }
     }

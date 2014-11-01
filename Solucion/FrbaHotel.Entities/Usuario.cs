@@ -13,7 +13,7 @@ namespace FrbaHotel.Entities
 
         public string Password { get; set; }
 
-        public RolUsuario Rol { get; set; }
+        public Rol Rol { get; set; }
 
         public string Nombre { get; set; }
 
