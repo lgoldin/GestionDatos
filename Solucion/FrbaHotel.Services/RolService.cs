@@ -32,5 +32,11 @@ namespace FrbaHotel.Services
             var repository = new RolRepository();
             repository.Update(rolUsuario);
         }
+
+        public void Delete(Rol rol)
+        {
+            var repository = new RolRepository();
+            repository.Delete(rol);
+        }
     }
 }

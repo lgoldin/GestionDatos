@@ -44,6 +44,7 @@ namespace FrbaHotel.Repositories
         {
             SqlCommand command = DBConnection.CreateStoredProcedure("UpdateRol");
             AddRolParameters(entity, command);
+            command.Parameters.AddWithValue("@id", entity.Id);
             DBConnection.ExecuteNonQuery(command);
 
             InsertRolFuncionalidad(entity, entity.Id);
@@ -51,7 +52,10 @@ namespace FrbaHotel.Repositories
 
         public override void Delete(Rol entity)
         {
-            throw new NotImplementedException();
+            SqlCommand command = DBConnection.CreateStoredProcedure("DeleteRol");
+            command.Parameters.AddWithValue("@activo", entity.Activo);
+            command.Parameters.AddWithValue("@id", entity.Id);
+            DBConnection.ExecuteNonQuery(command);
         }
 
         private void InsertRolFuncionalidad(Rol entity, int rolId)
@@ -84,7 +88,6 @@ namespace FrbaHotel.Repositories
         {
             command.Parameters.AddWithValue("@nombre", rolUsuario.Nombre);
             command.Parameters.AddWithValue("@activo", rolUsuario.Activo);
-            command.Parameters.AddWithValue("@id", rolUsuario.Id);
         }
     }
 }

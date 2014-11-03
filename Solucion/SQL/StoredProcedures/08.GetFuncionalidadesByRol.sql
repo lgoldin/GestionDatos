@@ -11,7 +11,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutilli
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetFuncionalidadesByRol]
 
-@rolId bit
+@rolId int
 
 AS
 BEGIN
@@ -20,7 +20,7 @@ BEGIN
 	SELECT
       [funcionalidadId]
   FROM [GD2C2014].[Frutillitas].[RolFuncionalidad]
-  WHERE [rolId] = rolId
+  WHERE [rolId] = @rolId
 END
 ' 
 END
