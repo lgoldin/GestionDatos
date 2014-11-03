@@ -29,32 +29,36 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void cmbRoles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             lstFuncionalidades.Items.Clear();
             FuncionalidadService service = new FuncionalidadService();
             Rol rol = (Rol)cmbRoles.SelectedItem;
-            rol.Funcionalidades = service.GetByRolId(rol.Id);
-
-            List<Funcionalidad> funcionalidades = service.GetAll();
-
-            foreach(Funcionalidad f in funcionalidades)
+            if (rol.Id != 0)
             {
-                bool esta = false;
-                foreach(Funcionalidad rf in rol.Funcionalidades)
+                rol.Funcionalidades = service.GetByRolId(rol.Id);
+
+                List<Funcionalidad> funcionalidades = service.GetAll();
+
+                foreach (Funcionalidad f in funcionalidades)
                 {
-                    if(f.Id == rf.Id)
+                    bool esta = false;
+                    foreach (Funcionalidad rf in rol.Funcionalidades)
                     {
-                        esta = true;
+                        if (f.Id == rf.Id)
+                        {
+                            esta = true;
+                        }
                     }
+
+                    lstFuncionalidades.Items.Add(f, esta);
                 }
 
-                lstFuncionalidades.Items.Add(f,esta);
-            }
-            
-            ((ListBox)lstFuncionalidades).ValueMember = "Id";
-            ((ListBox)lstFuncionalidades).DisplayMember = "Nombre";
+                ((ListBox)lstFuncionalidades).ValueMember = "Id";
+                ((ListBox)lstFuncionalidades).DisplayMember = "Nombre";
 
-            txtNombreRol.Text = rol.Nombre;
-            chbActivo.Checked = rol.Activo;
+                txtNombreRol.Text = rol.Nombre;
+                chbActivo.Checked = rol.Activo;
+            }
         }
 
         private void btnModificarRol_Click(object sender, EventArgs e)
