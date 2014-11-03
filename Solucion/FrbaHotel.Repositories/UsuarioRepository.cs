@@ -21,7 +21,7 @@ namespace FrbaHotel.Repositories
             {
                 usuarios.Add(this.CreateUsuario(reader));
             }
-
+            
             return usuarios;
 
         }
@@ -37,7 +37,7 @@ namespace FrbaHotel.Repositories
             {
                 return this.CreateUsuario(reader);
             }
-
+            
             return null;
         }
 
@@ -76,7 +76,7 @@ namespace FrbaHotel.Repositories
             {
                 return this.CreateUsuario(reader);
             }
-
+            
             return usuario;
         }
 

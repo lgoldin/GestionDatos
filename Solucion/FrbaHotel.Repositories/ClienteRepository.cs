@@ -23,7 +23,7 @@ namespace FrbaHotel.Repositories
                 CreateCliente(cliente, reader);
                 clientes.Add(cliente);
             }
-
+            
             return clientes;
         }
 
@@ -41,7 +41,7 @@ namespace FrbaHotel.Repositories
             {
                 CreateCliente(cliente, reader);
             }
-
+            
             return cliente;
         }
 

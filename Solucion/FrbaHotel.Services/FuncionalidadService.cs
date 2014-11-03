@@ -15,13 +15,8 @@ namespace FrbaHotel.Services
         public List<Funcionalidad> GetAll()
         {
             FuncionalidadRepository repository = new FuncionalidadRepository();
-            List<Funcionalidad> list = new List<Funcionalidad>();
-            list.Add(new Funcionalidad() { Id = 1, Nombre = "Funcionalidad 1" });
-            list.Add(new Funcionalidad() { Id = 2, Nombre = "Funcionalidad 2" });
-            list.Add(new Funcionalidad() { Id = 3, Nombre = "Funcionalidad 3" });
-            list.Add(new Funcionalidad() { Id = 4, Nombre = "Funcionalidad 4" });
 
-            //list = repository.GetAll();
+            List<Funcionalidad> list = repository.GetAll().ToList();
             return list;
         }
 

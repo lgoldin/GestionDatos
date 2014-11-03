@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Login;
+using FrbaHotel.ABM_de_Rol;
 
 namespace FrbaHotel
 {
@@ -22,7 +23,7 @@ namespace FrbaHotel
             var indexForm = Application.OpenForms["Index"];
             indexForm.SendToBack();
             indexForm.Hide();
-            
+
             var loginForm = new LoginForm();
             loginForm.Activate();
             loginForm.Show();

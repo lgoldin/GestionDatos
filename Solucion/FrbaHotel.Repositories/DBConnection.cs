@@ -36,6 +36,7 @@ namespace FrbaHotel.Repositories
             SqlCommand command = new SqlCommand(string.Format("[Frutillitas].[{0}]", storedName), conexion);
             command.CommandType = CommandType.StoredProcedure;
             
+            
             return command;
         }
 
@@ -49,6 +50,24 @@ namespace FrbaHotel.Repositories
             catch (Exception exception)
             {
                 throw exception; 
+            }
+            finally
+            {
+                command.Connection.Close();
+                command.Connection.Dispose();
+            }
+        }
+
+        public static int ExecuteScalar(SqlCommand command)
+        {
+            try
+            {
+                command.Connection.Open();
+                return (int)command.ExecuteScalar();
+            }
+            catch (Exception exception)
+            {
+                throw exception;
             }
             finally
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FrbaHotel.Entities;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace FrbaHotel.Repositories
 {
@@ -12,17 +13,13 @@ namespace FrbaHotel.Repositories
         public override IEnumerable<Funcionalidad> GetAll()
         {
             List<Funcionalidad> funcionalidades = new List<Funcionalidad>();
-
-            SqlCommand comando = DBConnection.CreateCommand();
-            comando.CommandText = "SELECT * FROM Funcionalidad";
-            SqlDataReader reader = DBConnection.EjecutarComandoSelect(comando);
-
-            while (reader.Read())
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetFuncionalidades");
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+            foreach (DataRow funcionalidad in collection)
             {
-                Funcionalidad funcionalidad = CreateFuncionalidad(reader);
-                funcionalidades.Add(funcionalidad);
+                funcionalidades.Add(this.CreateFuncionalidad(funcionalidad));
             }
-
+           
             return funcionalidades;
         }
 
@@ -50,20 +47,19 @@ namespace FrbaHotel.Repositories
         {
             List<Funcionalidad> funcionalidades = new List<Funcionalidad>();
 
-            SqlCommand _comando = DBConnection.CreateStoredProcedure("NombreDelSP");
-            _comando.Parameters.AddWithValue("@rolId", rolId);
-            SqlDataReader reader = DBConnection.EjecutarComandoSelect(_comando);
+            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
+            command.Parameters.AddWithValue("@rolId", rolId);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
 
-            while (reader.Read())
+            foreach (DataRow funcionalidad in collection)
             {
-                Funcionalidad funcionalidad = CreateFuncionalidad(reader);
-                funcionalidades.Add(funcionalidad);
+                funcionalidades.Add(this.CreateFuncionalidad(funcionalidad));
             }
-
+            
             return funcionalidades;
         }
 
-        public Funcionalidad CreateFuncionalidad(SqlDataReader reader)
+        public Funcionalidad CreateFuncionalidad(DataRow reader)
         {
             Funcionalidad funcionalidad = new Funcionalidad();
             funcionalidad.Nombre = reader["nombre"].ToString();

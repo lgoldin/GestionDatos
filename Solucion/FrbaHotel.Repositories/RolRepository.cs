@@ -31,9 +31,20 @@ namespace FrbaHotel.Repositories
 
         public override int Insert(Rol entity)
         {
-            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
+            SqlCommand command = DBConnection.CreateStoredProcedure("InsertRol");
             AddRolParameters(entity, command);
-            return DBConnection.ExecuteNonQuery(command);
+            int rolId = (int)DBConnection.ExecuteScalar(command);
+            //DBConnection.ExecuteNonQuery(command);
+            
+
+            foreach (Funcionalidad f in entity.Funcionalidades)
+            {
+                SqlCommand commandRolFuncionalidad = DBConnection.CreateStoredProcedure("InsertRolFuncionalidad");
+                AddRolFuncionalidadParameters(rolId, f.Id, commandRolFuncionalidad);
+                DBConnection.ExecuteNonQuery(commandRolFuncionalidad);
+            }
+
+            return rolId;
         }
 
         public override void Update(Rol entity)
@@ -56,8 +67,16 @@ namespace FrbaHotel.Repositories
             };
         }
 
+        private void AddRolFuncionalidadParameters(int rolId, int funcionalidadId, SqlCommand command)
+        {
+            command.Parameters.AddWithValue("@rolId", rolId);
+            command.Parameters.AddWithValue("@funcionalidadId", funcionalidadId);
+        }
+
         private void AddRolParameters(Rol rolUsuario, SqlCommand command)
         {
+            command.Parameters.AddWithValue("@nombre", rolUsuario.Nombre);
+            command.Parameters.AddWithValue("@activo", rolUsuario.Activo);
         }
     }
 }
