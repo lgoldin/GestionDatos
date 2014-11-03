@@ -34,27 +34,34 @@ namespace FrbaHotel.Repositories
             SqlCommand command = DBConnection.CreateStoredProcedure("InsertRol");
             AddRolParameters(entity, command);
             int rolId = (int)DBConnection.ExecuteScalar(command);
-            //DBConnection.ExecuteNonQuery(command);
-            
 
-            foreach (Funcionalidad f in entity.Funcionalidades)
-            {
-                SqlCommand commandRolFuncionalidad = DBConnection.CreateStoredProcedure("InsertRolFuncionalidad");
-                AddRolFuncionalidadParameters(rolId, f.Id, commandRolFuncionalidad);
-                DBConnection.ExecuteNonQuery(commandRolFuncionalidad);
-            }
+            InsertRolFuncionalidad(entity, rolId);
 
             return rolId;
         }
 
         public override void Update(Rol entity)
         {
-            throw new NotImplementedException();
+            SqlCommand command = DBConnection.CreateStoredProcedure("UpdateRol");
+            AddRolParameters(entity, command);
+            DBConnection.ExecuteNonQuery(command);
+
+            InsertRolFuncionalidad(entity, entity.Id);
         }
 
         public override void Delete(Rol entity)
         {
             throw new NotImplementedException();
+        }
+
+        private void InsertRolFuncionalidad(Rol entity, int rolId)
+        {
+            foreach (Funcionalidad f in entity.Funcionalidades)
+            {
+                SqlCommand commandRolFuncionalidad = DBConnection.CreateStoredProcedure("InsertRolFuncionalidad");
+                AddRolFuncionalidadParameters(rolId, f.Id, commandRolFuncionalidad);
+                DBConnection.ExecuteNonQuery(commandRolFuncionalidad);
+            }
         }
 
         private Rol CreateRol(DataRow row)
@@ -77,6 +84,7 @@ namespace FrbaHotel.Repositories
         {
             command.Parameters.AddWithValue("@nombre", rolUsuario.Nombre);
             command.Parameters.AddWithValue("@activo", rolUsuario.Activo);
+            command.Parameters.AddWithValue("@id", rolUsuario.Id);
         }
     }
 }

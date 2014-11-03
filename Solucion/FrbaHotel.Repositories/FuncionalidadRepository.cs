@@ -47,23 +47,30 @@ namespace FrbaHotel.Repositories
         {
             List<Funcionalidad> funcionalidades = new List<Funcionalidad>();
 
-            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetFuncionalidadesByRol");
             command.Parameters.AddWithValue("@rolId", rolId);
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
 
             foreach (DataRow funcionalidad in collection)
             {
-                funcionalidades.Add(this.CreateFuncionalidad(funcionalidad));
+                funcionalidades.Add(this.CreateFuncionalidadOnlyId(funcionalidad));
             }
             
             return funcionalidades;
         }
 
-        public Funcionalidad CreateFuncionalidad(DataRow reader)
+        public Funcionalidad CreateFuncionalidad(DataRow row)
         {
             Funcionalidad funcionalidad = new Funcionalidad();
-            funcionalidad.Nombre = reader["nombre"].ToString();
-            funcionalidad.Id = Convert.ToInt32(reader["id"]);
+            funcionalidad.Nombre = row["nombre"].ToString();
+            funcionalidad.Id = Convert.ToInt32(row["id"]);
+            return funcionalidad;
+        }
+
+        public Funcionalidad CreateFuncionalidadOnlyId(DataRow row)
+        {
+            Funcionalidad funcionalidad = new Funcionalidad();
+            funcionalidad.Id = Convert.ToInt32(row["funcionalidadId"]);
             return funcionalidad;
         }
     }
