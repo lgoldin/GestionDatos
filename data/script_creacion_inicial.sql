@@ -280,7 +280,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Regimen]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [Frutillitas].[Regimen](
-	[codigo] [numeric](18, 0) NULL,
+	[codigo] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
 	[descripcion] [nvarchar](255) NULL,
 	[precio] [numeric](18, 2) NULL,
 	[activo] [bit] NULL
