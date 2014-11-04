@@ -128,7 +128,7 @@ BEGIN
 CREATE TABLE [Frutillitas].[Usuario](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[username] [nvarchar](255) NULL,
-	[password] [nvarchar](255) NULL,
+	[password] [nvarchar](255) NULL,/*Ver qué tipo meter*/
 	[habilitado] [bit] NULL,
 	[apellido] [nvarchar](255) NULL,
 	[tipoDocumentoId] [int] NULL,
@@ -280,7 +280,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Regimen]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [Frutillitas].[Regimen](
-	[codigo] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[codigo] [numeric](18, 0) IDENTITY(1,1) NOT NULL, /*Como no hay codigo lo dejo como autoincremental*/
 	[descripcion] [nvarchar](255) NULL,
 	[precio] [numeric](18, 2) NULL,
 	[activo] [bit] NULL
@@ -370,7 +370,7 @@ CREATE TABLE [Frutillitas].[Habitacion](
 	[tipoCodigo] [numeric](18, 0) NULL,
 	[numero] [numeric](18, 0) NULL,
 	[piso] [numeric](18, 0) NULL,
-	[frente] [nvarchar](50) NULL,
+	[frente] [nvarchar](50) NULL,/*Hay que cambiar esto, por ahora esta tal como viene (S, N)*/
 	[descripcion] [nvarchar](255) NULL,
 	[activa] [bit] NULL
 ) ON [PRIMARY]
