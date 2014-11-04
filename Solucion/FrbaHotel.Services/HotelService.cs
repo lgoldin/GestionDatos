@@ -20,5 +20,11 @@ namespace FrbaHotel.Services
             
             return hoteles;
         }
+
+        public int Insert(Hotel hotel)
+        {
+            HotelRepository repository = new HotelRepository();
+            return repository.Insert(hotel);
+        }
     }
 }

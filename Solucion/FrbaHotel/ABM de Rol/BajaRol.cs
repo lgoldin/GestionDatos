@@ -31,5 +31,10 @@ namespace FrbaHotel.ABM_de_Rol
             RolService service = new RolService();
             service.Delete(rol);
         }
+
+        private void BajaRol_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

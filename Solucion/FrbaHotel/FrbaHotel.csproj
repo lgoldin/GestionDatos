@@ -55,11 +55,17 @@
     <Compile Include="ABM de Cliente\ClienteForm.Designer.cs">
       <DependentUpon>ClienteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Habitacion\Form1.cs">
+    <Compile Include="ABM de Habitacion\AltaHabitacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Habitacion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM de Habitacion\AltaHabitacion.Designer.cs">
+      <DependentUpon>AltaHabitacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Hotel\AltaHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Hotel\AltaHotel.Designer.cs">
+      <DependentUpon>AltaHotel.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Regimen\Form1.cs">
       <SubType>Form</SubType>
@@ -125,6 +131,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ABM de Cliente\ClienteForm.resx">
       <DependentUpon>ClienteForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Habitacion\AltaHabitacion.resx">
+      <DependentUpon>AltaHabitacion.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Hotel\AltaHotel.resx">
+      <DependentUpon>AltaHotel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Rol\AltaRolForm.resx">

@@ -85,6 +85,7 @@
             this.Controls.Add(this.lblBaja);
             this.Name = "BajaRol";
             this.Text = "BajaRol";
+            this.Load += new System.EventHandler(this.BajaRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
