@@ -130,6 +130,7 @@ CREATE TABLE [Frutillitas].[Usuario](
 	[username] [nvarchar](255) NULL,
 	[password] [nvarchar](255) NULL,/*Ver qué tipo meter*/
 	[habilitado] [bit] NULL,
+	[nombre] [nvarchar](255) NULL,
 	[apellido] [nvarchar](255) NULL,
 	[tipoDocumentoId] [int] NULL,
 	[numeroDocumento] [numeric](18, 0) NULL,

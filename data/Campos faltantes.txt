@@ -1,4 +1,1 @@
-Tabla [Usuario]
-	1. [nombre]
-	
 Falta tabla relacion UsuarioHotel?
