@@ -603,3 +603,9 @@ SELECT DISTINCT [id], [Consumible_Codigo] FROM [Frutillitas].[Estadia]
 INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [reservaCodigo] = [Reserva_Codigo]
 WHERE [Consumible_Codigo] IS NOT NULL
 GO
+
+INSERT INTO [Frutillitas].[Factura]([numero], [fecha], [total], [estadiaId])
+SELECT DISTINCT [Factura_Nro], [Factura_Fecha], [Factura_Total], [id] FROM [Frutillitas].[Estadia]
+INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [reservaCodigo] = [Reserva_Codigo]
+WHERE [Factura_Nro] IS NOT NULL
+GO
