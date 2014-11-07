@@ -403,7 +403,7 @@ CREATE TABLE [Frutillitas].[Factura](
 ) ON [PRIMARY]
 END
 GO
-SET ANSI_NULLS ON
+/*SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
@@ -415,7 +415,7 @@ CREATE TABLE [Frutillitas].[EstadiaDetalle](
 	[usuarioId] [int] NULL
 ) ON [PRIMARY]
 END
-GO
+GO*/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -449,8 +449,10 @@ BEGIN
 CREATE TABLE [Frutillitas].[Estadia](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[reservaCodigo] [numeric](18, 0) NULL,
-	[checkinId] [int] NULL,
-	[checkoutId] [int] NULL
+	/*[checkinId] [int] NULL,
+	[checkoutId] [int] NULL*/
+	[fechaDesde] [datetime] NULL,
+	[fechaHasta] [datetime] NULL
 ) ON [PRIMARY]
 END
 GO
@@ -588,4 +590,10 @@ SELECT DISTINCT [Reserva_Codigo], [Reserva_Fecha_Inicio], DATEADD(day, [Reserva_
 	GETDATE()
 FROM [GD2C2014].[gd_esquema].[Maestra]
 INNER JOIN [Frutillitas].[Cliente] c ON [numeroDocumento] = [Cliente_Pasaporte_Nro] AND [nombre] = [Cliente_Nombre] AND [apellido] = [Cliente_Apellido]
+GO
+
+INSERT INTO [Frutillitas].[Estadia]([reservaCodigo], [fechaDesde], [fechaHasta])
+SELECT DISTINCT [Reserva_Codigo], [Estadia_Fecha_Inicio], DATEADD(day, [Estadia_Cant_Noches], [Estadia_Fecha_Inicio])
+FROM [GD2C2014].[gd_esquema].[Maestra]
+WHERE [Estadia_Fecha_Inicio] IS NOT NULL AND [Estadia_Cant_Noches] IS NOT NULL
 GO
