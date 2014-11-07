@@ -597,3 +597,9 @@ SELECT DISTINCT [Reserva_Codigo], [Estadia_Fecha_Inicio], DATEADD(day, [Estadia_
 FROM [GD2C2014].[gd_esquema].[Maestra]
 WHERE [Estadia_Fecha_Inicio] IS NOT NULL AND [Estadia_Cant_Noches] IS NOT NULL
 GO
+
+INSERT INTO [Frutillitas].[EstadiaConsumible]([estadiaId], [consumibleCodigo])
+SELECT DISTINCT [id], [Consumible_Codigo] FROM [Frutillitas].[Estadia]
+INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [reservaCodigo] = [Reserva_Codigo]
+WHERE [Consumible_Codigo] IS NOT NULL
+GO
