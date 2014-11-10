@@ -48,18 +48,19 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txtDireccion = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.txtFechaNacimiento = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.cmbHotel = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.cmbRol = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.btnGuardar = new System.Windows.Forms.Button();
+            this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
+            this.lstHotel = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(104, 95);
+            this.label1.Location = new System.Drawing.Point(104, 50);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 0;
@@ -67,7 +68,7 @@
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(220, 88);
+            this.txtUsername.Location = new System.Drawing.Point(220, 43);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(100, 20);
             this.txtUsername.TabIndex = 1;
@@ -75,7 +76,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(104, 137);
+            this.label2.Location = new System.Drawing.Point(104, 92);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 2;
@@ -83,15 +84,16 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(220, 130);
+            this.txtPassword.Location = new System.Drawing.Point(220, 85);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(100, 20);
             this.txtPassword.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(104, 182);
+            this.label3.Location = new System.Drawing.Point(104, 137);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 13);
             this.label3.TabIndex = 4;
@@ -99,8 +101,9 @@
             // 
             // txtConfirmPassword
             // 
-            this.txtConfirmPassword.Location = new System.Drawing.Point(220, 175);
+            this.txtConfirmPassword.Location = new System.Drawing.Point(220, 130);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
+            this.txtConfirmPassword.PasswordChar = '*';
             this.txtConfirmPassword.Size = new System.Drawing.Size(100, 20);
             this.txtConfirmPassword.TabIndex = 5;
             // 
@@ -217,13 +220,6 @@
             this.label10.TabIndex = 18;
             this.label10.Text = "Direccion";
             // 
-            // txtFechaNacimiento
-            // 
-            this.txtFechaNacimiento.Location = new System.Drawing.Point(569, 350);
-            this.txtFechaNacimiento.Name = "txtFechaNacimiento";
-            this.txtFechaNacimiento.Size = new System.Drawing.Size(100, 20);
-            this.txtFechaNacimiento.TabIndex = 21;
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -233,18 +229,10 @@
             this.label11.TabIndex = 20;
             this.label11.Text = "Fecha Nacimiento";
             // 
-            // cmbHotel
-            // 
-            this.cmbHotel.FormattingEnabled = true;
-            this.cmbHotel.Location = new System.Drawing.Point(220, 42);
-            this.cmbHotel.Name = "cmbHotel";
-            this.cmbHotel.Size = new System.Drawing.Size(100, 21);
-            this.cmbHotel.TabIndex = 23;
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(104, 50);
+            this.label12.Location = new System.Drawing.Point(104, 293);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(32, 13);
             this.label12.TabIndex = 22;
@@ -253,7 +241,7 @@
             // cmbRol
             // 
             this.cmbRol.FormattingEnabled = true;
-            this.cmbRol.Location = new System.Drawing.Point(220, 211);
+            this.cmbRol.Location = new System.Drawing.Point(220, 166);
             this.cmbRol.Name = "cmbRol";
             this.cmbRol.Size = new System.Drawing.Size(100, 21);
             this.cmbRol.TabIndex = 25;
@@ -261,22 +249,49 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(104, 219);
+            this.label13.Location = new System.Drawing.Point(104, 174);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(23, 13);
             this.label13.TabIndex = 24;
             this.label13.Text = "Rol";
             // 
+            // btnGuardar
+            // 
+            this.btnGuardar.Location = new System.Drawing.Point(107, 442);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(562, 41);
+            this.btnGuardar.TabIndex = 26;
+            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            // 
+            // dtpFechaNacimiento
+            // 
+            this.dtpFechaNacimiento.Location = new System.Drawing.Point(569, 357);
+            this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
+            this.dtpFechaNacimiento.Size = new System.Drawing.Size(191, 20);
+            this.dtpFechaNacimiento.TabIndex = 27;
+            this.dtpFechaNacimiento.Value = new System.DateTime(2014, 11, 8, 9, 25, 47, 0);
+            // 
+            // lstHotel
+            // 
+            this.lstHotel.FormattingEnabled = true;
+            this.lstHotel.Location = new System.Drawing.Point(220, 229);
+            this.lstHotel.Name = "lstHotel";
+            this.lstHotel.Size = new System.Drawing.Size(120, 139);
+            this.lstHotel.TabIndex = 29;
+            // 
             // UsuarioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1234, 610);
+            this.ClientSize = new System.Drawing.Size(824, 610);
+            this.Controls.Add(this.lstHotel);
+            this.Controls.Add(this.dtpFechaNacimiento);
+            this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.cmbRol);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.cmbHotel);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.txtFechaNacimiento);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txtDireccion);
             this.Controls.Add(this.label10);
@@ -328,11 +343,12 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtDireccion;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtFechaNacimiento;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox cmbHotel;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox cmbRol;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
+        private System.Windows.Forms.CheckedListBox lstHotel;
     }
 }

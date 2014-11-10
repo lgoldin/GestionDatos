@@ -19,7 +19,7 @@ namespace FrbaHotel.Entities
 
         public string Apellido { get; set; }
 
-        public TipoDocumento TipoDeDocumento{ get; set;}
+        public TipoDocumento TipoDocumento{ get; set;}
 
         public string NumeroDocumento { get; set; }
 
@@ -31,6 +31,13 @@ namespace FrbaHotel.Entities
        
         public DateTime FechaNacimiento { get; set; }
         
-        public Hotel HotelUsuario { get; set; }
+        public List<Hotel> Hoteles { get; set; }
+
+        public bool IsNew()
+        {
+            return this.Id == 0;
+        }
+
+        public byte[] HashedPassword { get; set; }
     }
 }

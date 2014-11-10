@@ -1,6 +1,24 @@
 USE [GD2C2014]
 GO
+
+/************ DROP SPs **************************/
+DECLARE @CantidadSPs int
+SELECT @CantidadSPs = COUNT(*) FROM sys.objects WHERE type in (N'P', N'PC')
+WHILE @CantidadSPs > 0
+BEGIN
+	DECLARE @SPName nvarchar(max)
+	SELECT TOP 1 @SPName = name FROM sys.objects WHERE type in (N'P', N'PC')
+	DECLARE @Sql nvarchar(max)
+	SET @Sql = 'DROP PROCEDURE [Frutillitas].' + @SPName
+	exec sp_executesql @Sql
+	SET @CantidadSPs = @CantidadSPs - 1
+END
+GO
+
 /************ CREATE TABLE AND SCHEMA ***********/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[UsuarioHotel]') AND type in (N'U'))
+DROP TABLE [Frutillitas].[UsuarioHotel]
+GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Ciudad]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[Ciudad]
 GO
@@ -98,6 +116,19 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[UsuarioHotel]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [Frutillitas].[UsuarioHotel](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[usuarioId] [int] NULL,
+	[hotelId] [int] NULL
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[UsuarioRol]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [Frutillitas].[UsuarioRol](
@@ -128,7 +159,7 @@ BEGIN
 CREATE TABLE [Frutillitas].[Usuario](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[username] [nvarchar](255) NULL,
-	[password] [nvarchar](255) NULL,/*Ver qué tipo meter*/
+	[password] [varbinary](MAX) NULL,
 	[habilitado] [bit] NULL,
 	[nombre] [nvarchar](255) NULL,
 	[apellido] [nvarchar](255) NULL,

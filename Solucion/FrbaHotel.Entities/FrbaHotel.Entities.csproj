@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Cliente.cs" />
     <Compile Include="Ciudad.cs" />
+    <Compile Include="Exceptions\FormException.cs" />
     <Compile Include="Pais.cs" />
     <Compile Include="Direccion.cs" />
     <Compile Include="Funcionalidad.cs" />

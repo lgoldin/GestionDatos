@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Login;
 using FrbaHotel.ABM_de_Rol;
+using FrbaHotel.ABM_de_Usuario;
 
 namespace FrbaHotel
 {
@@ -18,17 +19,24 @@ namespace FrbaHotel
             InitializeComponent();
         }
 
-        private void Index_Load(object sender, EventArgs e)
+        private void btnUsuarioForm_Click(object sender, EventArgs e)
         {
-            var indexForm = Application.OpenForms["Index"];
-            indexForm.SendToBack();
-            indexForm.Hide();
+            var form = new UsuarioForm(1);
+            form.Location = this.Location;
+            form.StartPosition = FormStartPosition.Manual;
+            form.FormClosing += delegate { this.Show(); };
+            form.Show();
+            this.Hide();
+        }
 
-            var loginForm = new LoginForm();
-            loginForm.Activate();
-            loginForm.Show();
-            loginForm.BringToFront();
-            loginForm.Focus();
+        private void btnRolForm_Click(object sender, EventArgs e)
+        {
+            var form = new frmAltaRol();
+            form.Location = this.Location;
+            form.StartPosition = FormStartPosition.Manual;
+            form.FormClosing += delegate { this.Show(); };
+            form.Show();
+            this.Hide();
         }
     }
 }
