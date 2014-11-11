@@ -33,9 +33,7 @@ namespace FrbaHotel.Repositories
         {
             SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotel");
             AddHotelParameters(entity, command);
-            command.Connection.Open();
-            command.ExecuteNonQuery();
-            int hotelId = (int)command.Parameters["@id"].Value;
+            int hotelId = DBConnection.ExecuteScalar(command);
 
             InsertHotelRegimen(entity, hotelId);
 
@@ -61,7 +59,6 @@ namespace FrbaHotel.Repositories
             command.Parameters.AddWithValue("@nombre", hotel.Nombre);
             command.Parameters.AddWithValue("@recargaEstrella", hotel.RecargaEstrella);
             command.Parameters.AddWithValue("@mail", hotel.Mail);
-            command.Parameters.Add("@id",SqlDbType.Int).Direction = ParameterDirection.Output;
         }
 
         private Hotel CreateHotel(DataRow row)

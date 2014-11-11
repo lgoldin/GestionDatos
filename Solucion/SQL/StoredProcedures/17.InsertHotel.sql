@@ -18,13 +18,13 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[InsertHote
 @fechaCreacion datetime,
 @nombre nvarchar(255),
 @recargaEstrella numeric(18, 0),
-@mail nvarchar(255),
-@id int output
+@mail nvarchar(255)
 
 AS
 BEGIN
-	SET NOCOUNT ON;
-	
+
+SET NOCOUNT ON;
+declare @id int
 
 INSERT INTO [Frutillitas].[Hotel]
            ([nombre]
@@ -44,7 +44,8 @@ INSERT INTO [Frutillitas].[Hotel]
            ,@fechaCreacion)
 
 		   set @id = SCOPE_IDENTITY()
-		   RETURN @id
+		   select @id
+		   
 END
 ' 
 END
