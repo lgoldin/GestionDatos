@@ -48,6 +48,7 @@ namespace FrbaHotel.ABM_de_Usuario
             Usuario usuario = null;
             if (this.IdUsuario > 0)
             {
+                btnBorrar.Enabled = true;
                 usuario = this.UsuarioService.Get(this.IdUsuario);
             }
 
@@ -238,6 +239,11 @@ namespace FrbaHotel.ABM_de_Usuario
             }
 
             return usuario;
+        }
+
+        private void btnBorrar_Click(object sender, EventArgs e)
+        {
+            this.UsuarioService.Delete(new Usuario { Id = this.IdUsuario });
         }
     }
 }

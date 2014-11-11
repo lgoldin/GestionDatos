@@ -13,26 +13,7 @@ namespace FrbaHotel.Repositories
     {
         public override IEnumerable<Usuario> GetAll()
         {
-            List<Usuario> usuarios = new List<Usuario>();
-            
-            SqlCommand command = DBConnection.CreateStoredProcedure("GetUsuarios");
-            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
-            foreach (DataRow usuario in collection)
-            {
-                Usuario entity = this.CreateUsuario(usuario);
-
-                command = DBConnection.CreateStoredProcedure("GetHotelesByIdUsuario");
-                command.Parameters.AddWithValue("@usuarioId", entity.Id);
-                collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
-                foreach (DataRow hotel in collection)
-                {
-                    entity.Hoteles.Add(this.CreateHotel(hotel));
-                }
-
-                usuarios.Add(entity);
-            }
-            
-            return usuarios;
+            return this.GetAll(null, null, null, null, null, null, null, null, null, null);
         }
 
         public override Usuario Get(int id)
@@ -83,9 +64,34 @@ namespace FrbaHotel.Repositories
 
         public override void Delete(Usuario entity)
         {
-            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
+            SqlCommand command = DBConnection.CreateStoredProcedure("DeleteUsuario");
             command.Parameters.AddWithValue("@id", entity.Id);
             DBConnection.ExecuteNonQuery(command);
+        }
+
+        public IEnumerable<Usuario> GetAll(string username, string nombre, string apellido, int? tipoDocumentoId, string numeroDocumento, string mail, string telefono, string direccion, DateTime? fechaNacimiento, int? rolId)
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetUsuarios");
+            GetUsuariosParameters(username, nombre, apellido, tipoDocumentoId, numeroDocumento, mail, telefono, direccion, fechaNacimiento, rolId, command);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+            foreach (DataRow usuario in collection)
+            {
+                Usuario entity = this.CreateUsuario(usuario);
+
+                command = DBConnection.CreateStoredProcedure("GetHotelesByIdUsuario");
+                command.Parameters.AddWithValue("@usuarioId", entity.Id);
+                collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+                foreach (DataRow hotel in collection)
+                {
+                    entity.Hoteles.Add(this.CreateHotel(hotel));
+                }
+
+                usuarios.Add(entity);
+            }
+
+            return usuarios;
         }
 
         public Usuario GetByUsernameAndPassword(string username, string password)
@@ -169,6 +175,20 @@ namespace FrbaHotel.Repositories
         {
             command.Parameters.AddWithValue("@usuarioId", idUsuario);
             command.Parameters.AddWithValue("@hotelId", hotel.Id);
+        }
+
+        private void GetUsuariosParameters(string username, string nombre, string apellido, int? tipoDocumentoId, string numeroDocumento, string mail, string telefono, string direccion, DateTime? fechaNacimiento, int? rolId, SqlCommand command)
+        {
+            command.Parameters.AddWithValue("@username", username);
+            command.Parameters.AddWithValue("@nombre", nombre);
+            command.Parameters.AddWithValue("@apellido", apellido);
+            command.Parameters.AddWithValue("@tipoDocumentoId", tipoDocumentoId);
+            command.Parameters.AddWithValue("@numeroDocumento", numeroDocumento);
+            command.Parameters.AddWithValue("@mail", mail);
+            command.Parameters.AddWithValue("@telefono", telefono);
+            command.Parameters.AddWithValue("@direccion", direccion);
+            command.Parameters.AddWithValue("@fechaNacimiento", fechaNacimiento);
+            command.Parameters.AddWithValue("@rolId", rolId);
         }
 
         private Hotel CreateHotel(DataRow row)

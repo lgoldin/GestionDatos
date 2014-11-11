@@ -55,6 +55,7 @@
             this.btnGuardar = new System.Windows.Forms.Button();
             this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.lstHotel = new System.Windows.Forms.CheckedListBox();
+            this.btnBorrar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -281,11 +282,23 @@
             this.lstHotel.Size = new System.Drawing.Size(120, 139);
             this.lstHotel.TabIndex = 29;
             // 
+            // btnBorrar
+            // 
+            this.btnBorrar.Enabled = false;
+            this.btnBorrar.Location = new System.Drawing.Point(554, 501);
+            this.btnBorrar.Name = "btnBorrar";
+            this.btnBorrar.Size = new System.Drawing.Size(115, 41);
+            this.btnBorrar.TabIndex = 30;
+            this.btnBorrar.Text = "Borrar";
+            this.btnBorrar.UseVisualStyleBackColor = true;
+            this.btnBorrar.Click += new System.EventHandler(this.btnBorrar_Click);
+            // 
             // UsuarioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(824, 610);
+            this.Controls.Add(this.btnBorrar);
             this.Controls.Add(this.lstHotel);
             this.Controls.Add(this.dtpFechaNacimiento);
             this.Controls.Add(this.btnGuardar);
@@ -350,5 +363,6 @@
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
         private System.Windows.Forms.CheckedListBox lstHotel;
+        private System.Windows.Forms.Button btnBorrar;
     }
 }
