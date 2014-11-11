@@ -63,7 +63,7 @@ namespace FrbaHotel.Repositories
             try
             {
                 command.Connection.Open();
-                return (int)command.ExecuteScalar();
+                return command.ExecuteScalar() != null ? (int)command.ExecuteScalar() : 0;
             }
             catch (Exception exception)
             {

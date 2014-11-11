@@ -22,5 +22,7 @@ namespace FrbaHotel.Entities
         public string Mail { get; set; }
 
         public DateTime FechaCreacion { get; set; }
+
+        public List<Regimen> Regimenes { get; set; }
     }
 }

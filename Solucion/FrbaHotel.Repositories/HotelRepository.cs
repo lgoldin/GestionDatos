@@ -31,9 +31,15 @@ namespace FrbaHotel.Repositories
 
         public override int Insert(Hotel entity)
         {
-            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
+            SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotel");
             AddHotelParameters(entity, command);
-            return DBConnection.ExecuteNonQuery(command);
+            command.Connection.Open();
+            command.ExecuteNonQuery();
+            int hotelId = (int)command.Parameters["@id"].Value;
+
+            InsertHotelRegimen(entity, hotelId);
+
+            return hotelId;
         }
 
         public override void Update(Hotel entity)
@@ -46,6 +52,18 @@ namespace FrbaHotel.Repositories
             throw new NotImplementedException();
         }
 
+        private void AddHotelParameters(Hotel hotel, SqlCommand command)
+        {
+            command.Parameters.AddWithValue("@ciudadId", hotel.Ciudad.Id);
+            command.Parameters.AddWithValue("@direccion", hotel.Direccion);
+            command.Parameters.AddWithValue("@estrellas", hotel.Estrellas);
+            command.Parameters.AddWithValue("@fechaCreacion", hotel.FechaCreacion);
+            command.Parameters.AddWithValue("@nombre", hotel.Nombre);
+            command.Parameters.AddWithValue("@recargaEstrella", hotel.RecargaEstrella);
+            command.Parameters.AddWithValue("@mail", hotel.Mail);
+            command.Parameters.Add("@id",SqlDbType.Int).Direction = ParameterDirection.Output;
+        }
+
         private Hotel CreateHotel(DataRow row)
         {
             return new Hotel
@@ -54,16 +72,16 @@ namespace FrbaHotel.Repositories
                 Nombre = !string.IsNullOrEmpty(row["Nombre"].ToString()) ? row["Nombre"].ToString() : "Hotel" + row["Id"].ToString(),
                 Direccion = row["Direccion"].ToString(),
                 Ciudad = new Ciudad 
-                            { 
-                                Id = Convert.ToInt32(row["CiudadId"]), 
-                                Nombre = row["CiudadNombre"].ToString(), 
-                                Pais = new Pais 
-                                            { 
-                                                Id = Convert.ToInt32(row["PaisId"]),
-                                                Nombre = row["PaisNombre"].ToString(),
-                                                Nacionalidad = row["PaisNacionalidad"].ToString()
-                                            }
-                            },
+                { 
+                    Id = Convert.ToInt32(row["CiudadId"]), 
+                    Nombre = row["CiudadNombre"].ToString(), 
+                    Pais = new Pais 
+                    { 
+                        Id = Convert.ToInt32(row["PaisId"]),
+                        Nombre = row["PaisNombre"].ToString(),
+                        Nacionalidad = row["PaisNacionalidad"].ToString()
+                    }
+                },
                 Estrellas = Convert.ToInt32(row["Estrellas"]),
                 FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]),
                 RecargaEstrella = Convert.ToInt32(row["RecargaEstrella"]),
@@ -71,8 +89,15 @@ namespace FrbaHotel.Repositories
             };
         }
 
-        private void AddHotelParameters(Hotel hotel, SqlCommand command)
+        private void InsertHotelRegimen(Hotel entity, int hotelId)
         {
+            foreach (Regimen r in entity.Regimenes)
+            {
+                SqlCommand commandHotelRegimen = DBConnection.CreateStoredProcedure("InsertHotelRegimen");
+                commandHotelRegimen.Parameters.AddWithValue("@hotelId", hotelId);
+                commandHotelRegimen.Parameters.AddWithValue("@regimenCodigo", r.Codigo);
+                DBConnection.ExecuteNonQuery(commandHotelRegimen);
+            }
         }
     }
 }

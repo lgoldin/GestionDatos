@@ -16,17 +16,20 @@ namespace FrbaHotel.ABM_de_Hotel
         public AltaHotel()
         {
             InitializeComponent();
-            PaisService service = new PaisService();
-            List<Pais> paises = service.GetAll().ToList();
+            PaisService paisService = new PaisService();
+            List<Pais> paises = paisService.GetAll().ToList();
             cmbPaises.DataSource = paises;
             cmbPaises.DisplayMember = "Nombre";
             cmbPaises.ValueMember = "Id";
+
+            RegimenService regimenService = new RegimenService();
+            List<Regimen> regimenes = regimenService.GetAll().ToList();
+            ((ListBox)chListRegimenes).DataSource = regimenService.GetAll();
+            ((ListBox)chListRegimenes).ValueMember = "Codigo";
+            ((ListBox)chListRegimenes).DisplayMember = "Descripcion";
         }
 
-        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            txtFecha.Text = monthCalendar1.SelectionStart.ToString();
-        }
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -34,9 +37,19 @@ namespace FrbaHotel.ABM_de_Hotel
             hotel.Ciudad = (Ciudad)cmbCiudades.SelectedItem;
             hotel.Direccion = txtDireccion.Text;
             hotel.Estrellas = GetEstrellas();
-            hotel.FechaCreacion = monthCalendar1.SelectionStart;
+            hotel.FechaCreacion = dateTimePicker1.Value;
             hotel.Mail = txtMail.Text;
             hotel.Nombre = txtNombre.Text;
+
+            hotel.Regimenes = new List<Regimen>();
+            for (int i = 0; i < chListRegimenes.Items.Count; i++)
+            {
+                if (chListRegimenes.GetItemChecked(i))
+                {
+                    Regimen regimen = (Regimen)chListRegimenes.Items[i];
+                    hotel.Regimenes.Add(regimen);
+                }
+            } 
 
             HotelService service = new HotelService();
             service.Insert(hotel);
@@ -75,6 +88,11 @@ namespace FrbaHotel.ABM_de_Hotel
                 cmbCiudades.DisplayMember = "Nombre";
                 cmbCiudades.ValueMember = "Id";
             }
+        }
+
+        private void AltaHotel_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
