@@ -379,14 +379,15 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Hotel]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [Frutillitas].[Hotel](
-	[id] [int] IDENTITY(1, 1),
-	[nombre] [nvarchar](255),
-	[ciudadId] [int],
-	[direccion] [nvarchar](255),
-	[estrellas] [numeric](18, 0),
-	[recargaEstrella] [numeric](18, 0),
-	[mail] [nvarchar](255),
-	[fechaCreacion] [datetime]
+	[id] [int] IDENTITY(1, 1) NOT NULL,
+	[nombre] [nvarchar](255) NULL,
+	[ciudadId] [int] NULL,
+	[direccion] [nvarchar](255) NULL,
+	[estrellas] [numeric](18, 0) NULL,
+	[recargaEstrella] [numeric](18, 0) NULL,
+	[mail] [nvarchar](255) NULL,
+	[fechaCreacion] [datetime] NULL,
+	[telefono] [nvarchar](255) NULL
 ) ON [PRIMARY]
 END
 GO
