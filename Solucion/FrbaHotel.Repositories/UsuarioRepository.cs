@@ -46,7 +46,7 @@ namespace FrbaHotel.Repositories
             using (var transaction = new TransactionScope())
             {
                 SqlCommand command = DBConnection.CreateStoredProcedure("InsertUsuario");
-                AddUsuarioParameters(entity, command);
+                InsertUsuarioParameters(entity, command);
                 id = DBConnection.ExecuteScalar(command);
 
                 foreach (Hotel hotel in entity.Hoteles)
@@ -64,9 +64,21 @@ namespace FrbaHotel.Repositories
 
         public override void Update(Usuario entity)
         {
-            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
-            AddUsuarioParameters(entity, command);
-            DBConnection.ExecuteNonQuery(command);
+            using (var transaction = new TransactionScope())
+            {
+                SqlCommand command = DBConnection.CreateStoredProcedure("UpdateUsuario");
+                UpdateUsuarioParameters(entity, command);
+                DBConnection.ExecuteNonQuery(command);
+
+                foreach (Hotel hotel in entity.Hoteles)
+                {
+                    command = DBConnection.CreateStoredProcedure("InsertUsuarioHotel");
+                    AddUsuarioHotelesParameters(entity.Id, hotel, command);
+                    DBConnection.ExecuteNonQuery(command);
+                }
+
+                transaction.Complete();
+            }
         }
 
         public override void Delete(Usuario entity)
@@ -131,7 +143,7 @@ namespace FrbaHotel.Repositories
             return usuario;
         }
 
-        private static void AddUsuarioParameters(Usuario usuario, SqlCommand command)
+        private static void InsertUsuarioParameters(Usuario usuario, SqlCommand command)
         {
             command.Parameters.AddWithValue("@username", usuario.Username);
             command.Parameters.AddWithValue("@password", usuario.HashedPassword);
@@ -145,6 +157,12 @@ namespace FrbaHotel.Repositories
             command.Parameters.AddWithValue("@fechaNacimiento", usuario.FechaNacimiento);
             command.Parameters.AddWithValue("@rolId", usuario.Rol.Id);
             
+        }
+
+        private static void UpdateUsuarioParameters(Usuario usuario, SqlCommand command)
+        {
+            InsertUsuarioParameters(usuario, command);
+            command.Parameters.AddWithValue("@id", usuario.Id);
         }
 
         private void AddUsuarioHotelesParameters(int idUsuario, Hotel hotel, SqlCommand command)
