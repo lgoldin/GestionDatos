@@ -51,5 +51,17 @@ namespace FrbaHotel
             form.Show();
             this.Hide();
         }
+
+        private void modificacionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new ListadoUsuario();
+            DisplayForm(form);
+        }
+
+        private void altaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new UsuarioForm();
+            DisplayForm(form);
+        }
     }
 }
