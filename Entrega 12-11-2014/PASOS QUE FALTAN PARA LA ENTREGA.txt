@@ -1,0 +1,17 @@
+1. Cambiar NROGRUPO por el numero del grupo respetando los espacios
+2. Validar que el curso este bien. (Tiene que ser el curso del representante del grupo, o sea den)
+3. Actualizar el script de creacion de la carpeta data agregando los SPs (Hice un archivo CreateSPs.sql que esta en data, simplemente hay que unificarlos).
+4. Agregar archivo Estrategia.pdf, imagino que con las decisiones que tomamos. 
+5. Actualizar Readme.txt agregando los legajos de gaby y den, agregando el NROGRUPO en el renglon abajo del curso y validando que el curso este bien.
+6. Hacer zip de esa carpeta con el mismo nombre
+7. Cambiar extension del .zip a .zip123 (para ser enviado por mail)
+8. Enviar mail con la siguiente estructura:
+	Direccion: gestiondedatos.entregas@gmail.com
+	Asunto: Nombre del archivo (TP2C2014 K3073 FrutillitasNROGRUPO)
+	Cuerpo:
+		Grupo:
+		Curso:
+		Integrantes: <apellido>, <nombres> - <legajo>
+
+
+ACLARACION: K3073 ES EL CURSO DE LEAN. DEN EL CURSO LO PODES VALIDAR EN LA PAGINA DEL SIGA EN LA PARTE DE ALUMNO -> CURSADA
