@@ -26,10 +26,18 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void btnEliminarRol_Click(object sender, EventArgs e)
         {
-            Rol rol = (Rol)cmbRoles.SelectedItem;
-            rol.Activo = false;
-            RolService service = new RolService();
-            service.Delete(rol);
+            try
+            {
+                Rol rol = (Rol)cmbRoles.SelectedItem;
+                rol.Activo = false;
+                RolService service = new RolService();
+                service.Delete(rol);
+                MessageBox.Show("Se ha eliminado el rol correctamente");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ocurrió un error al eliminar el rol");
+            }
         }
 
         private void BajaRol_Load(object sender, EventArgs e)

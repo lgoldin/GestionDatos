@@ -16,8 +16,9 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[InsertRol]
 
 AS
 BEGIN
+
 	SET NOCOUNT ON;
-	
+	declare @id int	
 
 	INSERT INTO [Frutillitas].[Rol]
            ([nombre]
@@ -26,6 +27,10 @@ BEGIN
     VALUES
            (@nombre
            ,@activo)
+
+		   
+		   set @id = SCOPE_IDENTITY()
+		   select @id
 END
 ' 
 END

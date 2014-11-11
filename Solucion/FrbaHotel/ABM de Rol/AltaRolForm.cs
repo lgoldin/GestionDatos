@@ -28,21 +28,41 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void btnAgregarRol_Click(object sender, EventArgs e)
         {
-            Rol rol = new Rol();
-            rol.Nombre = txtNombreRol.Text;
-            rol.Activo = chbActivo.Checked;
-            rol.Funcionalidades = new List<Funcionalidad>();
-            for (int i = 0; i < lstFuncionalidades.Items.Count; i++)
+            string errorMessage = string.Empty;
+            if (string.IsNullOrEmpty(txtNombreRol.Text))
             {
-                if (lstFuncionalidades.GetItemChecked(i))
+                errorMessage += "Ingrese un nombre para el rol";
+            }
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                MessageBox.Show(errorMessage);
+            }
+            else
+            {
+                try
                 {
-                    Funcionalidad funcionalidad = (Funcionalidad)lstFuncionalidades.Items[i];
-                    rol.Funcionalidades.Add(funcionalidad);
+                    Rol rol = new Rol();
+                    rol.Nombre = txtNombreRol.Text;
+                    rol.Activo = chbActivo.Checked;
+                    rol.Funcionalidades = new List<Funcionalidad>();
+                    for (int i = 0; i < lstFuncionalidades.Items.Count; i++)
+                    {
+                        if (lstFuncionalidades.GetItemChecked(i))
+                        {
+                            Funcionalidad funcionalidad = (Funcionalidad)lstFuncionalidades.Items[i];
+                            rol.Funcionalidades.Add(funcionalidad);
+                        }
+                    }
+
+                    RolService service = new RolService();
+                    service.Insert(rol);
+                    MessageBox.Show("El rol se ha creado correctamente");
                 }
-            } 
-            
-            RolService service = new RolService();
-            service.Insert(rol);
+                catch (Exception)
+                {
+                    MessageBox.Show("Ocurrió un error al crear el rol");
+                }
+            }
 
         }
     }

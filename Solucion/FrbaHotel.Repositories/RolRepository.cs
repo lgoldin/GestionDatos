@@ -5,6 +5,7 @@ using System.Text;
 using FrbaHotel.Entities;
 using System.Data.SqlClient;
 using System.Data;
+using System.Transactions;
 
 namespace FrbaHotel.Repositories
 {
@@ -42,12 +43,17 @@ namespace FrbaHotel.Repositories
 
         public override void Update(Rol entity)
         {
-            SqlCommand command = DBConnection.CreateStoredProcedure("UpdateRol");
-            AddRolParameters(entity, command);
-            command.Parameters.AddWithValue("@id", entity.Id);
-            DBConnection.ExecuteNonQuery(command);
+            using (var transaction = new TransactionScope())
+            {
+                SqlCommand command = DBConnection.CreateStoredProcedure("UpdateRol");
+                AddRolParameters(entity, command);
+                command.Parameters.AddWithValue("@id", entity.Id);
+                DBConnection.ExecuteNonQuery(command);
 
-            InsertRolFuncionalidad(entity, entity.Id);
+                InsertRolFuncionalidad(entity, entity.Id);
+
+                transaction.Complete();
+            }
         }
 
         public override void Delete(Rol entity)

@@ -27,32 +27,80 @@ namespace FrbaHotel.ABM_de_Hotel
             ((ListBox)chListRegimenes).DataSource = regimenService.GetAll();
             ((ListBox)chListRegimenes).ValueMember = "Codigo";
             ((ListBox)chListRegimenes).DisplayMember = "Descripcion";
+
+            rb1.Checked = true;
         }
 
         
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Hotel hotel = new Hotel();
-            hotel.Ciudad = (Ciudad)cmbCiudades.SelectedItem;
-            hotel.Direccion = txtDireccion.Text;
-            hotel.Estrellas = GetEstrellas();
-            hotel.FechaCreacion = dateTimePicker1.Value;
-            hotel.Mail = txtMail.Text;
-            hotel.Nombre = txtNombre.Text;
-
-            hotel.Regimenes = new List<Regimen>();
-            for (int i = 0; i < chListRegimenes.Items.Count; i++)
+            string error = ValidateForm();
+            if (string.IsNullOrEmpty(error))
             {
-                if (chListRegimenes.GetItemChecked(i))
+                try
                 {
-                    Regimen regimen = (Regimen)chListRegimenes.Items[i];
-                    hotel.Regimenes.Add(regimen);
-                }
-            } 
+                    Hotel hotel = new Hotel();
+                    hotel.Ciudad = (Ciudad)cmbCiudades.SelectedItem;
+                    hotel.Direccion = txtDireccion.Text;
+                    hotel.Estrellas = GetEstrellas();
+                    hotel.FechaCreacion = dateTimePicker1.Value;
+                    hotel.Mail = txtMail.Text;
+                    hotel.Nombre = txtNombre.Text;
 
-            HotelService service = new HotelService();
-            service.Insert(hotel);
+                    hotel.Regimenes = new List<Regimen>();
+                    for (int i = 0; i < chListRegimenes.Items.Count; i++)
+                    {
+                        if (chListRegimenes.GetItemChecked(i))
+                        {
+                            Regimen regimen = (Regimen)chListRegimenes.Items[i];
+                            hotel.Regimenes.Add(regimen);
+                        }
+                    }
+
+                    HotelService service = new HotelService();
+                    service.Insert(hotel);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Ocurrió un error al crear el hotel");
+                }
+            }
+            else
+            {
+                MessageBox.Show(error);
+            }
+        
+        }
+
+        private string ValidateForm()
+        {
+            string errorMessage = string.Empty;
+            if (cmbCiudades.SelectedValue == null)
+            {
+                errorMessage = "Seleccione una ciudad";
+            }
+            if (cmbPaises.SelectedValue == null)
+            {
+                errorMessage += System.Environment.NewLine + "Seleccione un país";
+            }
+            if (string.IsNullOrEmpty(txtDireccion.Text))
+            {
+                errorMessage += System.Environment.NewLine + "Escriba la dirección";
+            }
+            if (string.IsNullOrEmpty(txtMail.Text))
+            {
+                errorMessage += System.Environment.NewLine + "Escriba el mail";
+            }
+            if (string.IsNullOrEmpty(txtNombre.Text))
+            {
+                errorMessage += System.Environment.NewLine + "Escriba el nombre";
+            }
+            if (string.IsNullOrEmpty(txtTelefono.Text))
+            {
+                errorMessage += System.Environment.NewLine + "Escriba el telefono";
+            }
+            return errorMessage;
         }
 
         private int GetEstrellas()
