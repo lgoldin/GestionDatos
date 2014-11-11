@@ -21,7 +21,7 @@ namespace FrbaHotel
 
         private void btnUsuarioForm_Click(object sender, EventArgs e)
         {
-            var form = new UsuarioForm(1);
+            var form = new UsuarioForm();
             form.Location = this.Location;
             form.StartPosition = FormStartPosition.Manual;
             form.FormClosing += delegate { this.Show(); };

@@ -119,7 +119,6 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[UsuarioHotel]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [Frutillitas].[UsuarioHotel](
-	[id] [int] IDENTITY(1,1) NOT NULL,
 	[usuarioId] [int] NULL,
 	[hotelId] [int] NULL
 ) ON [PRIMARY]

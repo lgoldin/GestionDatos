@@ -1,1 +1,1 @@
-Falta tabla relacion UsuarioHotel?
+En la tabla hotel falta el campo telefono

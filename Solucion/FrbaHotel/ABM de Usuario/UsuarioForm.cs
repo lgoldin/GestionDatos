@@ -54,6 +54,7 @@ namespace FrbaHotel.ABM_de_Usuario
             this.FillRoles(usuario);
             this.FillTipoDocumentos(usuario);
             this.FillHoteles(usuario);
+            this.FillOtherFields(usuario);
         }
 
         private void InitializeServices()
@@ -62,6 +63,21 @@ namespace FrbaHotel.ABM_de_Usuario
             this.TipoDocumentoService = new TipoDocumentoService();
             this.HotelService = new HotelService();
             this.UsuarioService = new UsuarioService();
+        }
+
+        private void FillOtherFields(Usuario usuario)
+        {
+            if (usuario != null)
+            {
+                txtUsername.Text = usuario.Username;
+                txtNombre.Text = usuario.Nombre;
+                txtApellido.Text = usuario.Apellido;
+                txtNumeroDocumento.Text = usuario.NumeroDocumento;
+                txtMail.Text = usuario.Mail;
+                txtTelefono.Text = usuario.Telefono;
+                txtDireccion.Text = usuario.Direccion.Calle;
+                dtpFechaNacimiento.Value = usuario.FechaNacimiento;
+            }
         }
 
         private void FillTipoDocumentos(Usuario usuario)
@@ -105,88 +121,95 @@ namespace FrbaHotel.ABM_de_Usuario
                 form.StartPosition = FormStartPosition.Manual;
                 form.FormClosing += delegate { this.Show(); };
                 form.Show();
-                this.Hide();
+                this.Close();
             }
             catch (FormException formException)
             {
                 MessageBox.Show(formException.Message, "Error", MessageBoxButtons.OK);
             }
-            catch (Exception exception)
+            catch
             {
-                MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK);
+                MessageBox.Show("Ocurrio un error", "Error", MessageBoxButtons.OK);
             }
         }
 
         private void ValidateForm()
         {
-            if (lstHotel.CheckedItems.Count == 0)
-            {
-                throw new FormException("Seleccione al menos un hotel");
-            }
+            var builder = new StringBuilder(string.Empty);
 
             if (string.IsNullOrEmpty(txtUsername.Text))
             {
-                throw new FormException("Ingrese un username");
+                builder.AppendLine("Ingrese un username");
             }
 
             if (string.IsNullOrEmpty(txtPassword.Text))
             {
-                throw new FormException("Ingrese una password");
+                builder.AppendLine("Ingrese una password");
             }
 
             if (string.IsNullOrEmpty(txtConfirmPassword.Text))
             {
-                throw new FormException("Tiene que confirmar la password");
+                builder.AppendLine("Tiene que confirmar la password");
             }
 
             if (txtPassword.Text != txtConfirmPassword.Text)
             {
-                throw new FormException("Verifique la password ingresada");
+                builder.AppendLine("Verifique la password ingresada");
             }
 
             if (cmbRol.SelectedValue.ToString() == "0")
             {
-                throw new FormException("Seleccione un rol");
+                builder.AppendLine("Seleccione un rol");
+            }
+
+            if (lstHotel.CheckedItems.Count == 0)
+            {
+                builder.AppendLine("Seleccione al menos un hotel");
             }
 
             if (string.IsNullOrEmpty(txtNombre.Text))
             {
-                throw new FormException("Ingrese un nombre");
+                builder.AppendLine("Ingrese un nombre");
             }
 
             if (string.IsNullOrEmpty(txtApellido.Text))
             {
-                throw new FormException("Ingrese un apellido");
+                builder.AppendLine("Ingrese un apellido");
             }
 
             if (cmbTipoDocumento.SelectedValue.ToString() == "0")
             {
-                throw new FormException("Seleccione un tipo de documento");
+                builder.AppendLine("Seleccione un tipo de documento");
             }
 
             if (string.IsNullOrEmpty(txtNumeroDocumento.Text))
             {
-                throw new FormException("Ingrese un numero de documento");
+                builder.AppendLine("Ingrese un numero de documento");
             }
 
             if (string.IsNullOrEmpty(txtMail.Text))
             {
-                throw new FormException("Ingrese un mail");
+                builder.AppendLine("Ingrese un mail");
             }
 
             if (string.IsNullOrEmpty(txtTelefono.Text))
             {
-                throw new FormException("Ingrese un telefono");
+                builder.AppendLine("Ingrese un telefono");
             }
 
             if (string.IsNullOrEmpty(txtDireccion.Text))
             {
-                throw new FormException("Ingrese una direccion");
+                builder.AppendLine("Ingrese una direccion");
             }
 
             if (dtpFechaNacimiento.Value >= DateTime.Today)
             {
-                throw new FormException("Seleccione una fecha de nacimiento valida");
+                builder.AppendLine("Seleccione una fecha de nacimiento valida");
+            }
+
+            if (!string.IsNullOrEmpty(builder.ToString()))
+            {
+                throw new FormException(builder.ToString());
             }
         }
 
