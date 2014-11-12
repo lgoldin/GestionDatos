@@ -34,6 +34,9 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_RolFuncionalidad_Funcionalidad]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[RolFuncionalidad]'))
 ALTER TABLE [Frutillitas].[RolFuncionalidad] DROP CONSTRAINT [FK_RolFuncionalidad_Funcionalidad]
 GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_RolFuncionalidad_Rol]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[RolFuncionalidad]'))
+ALTER TABLE [Frutillitas].[RolFuncionalidad] DROP CONSTRAINT [FK_RolFuncionalidad_Rol]
+GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaTipoHabitacion_Reserva]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaTipoHabitacion]'))
 ALTER TABLE [Frutillitas].[ReservaTipoHabitacion] DROP CONSTRAINT [FK_ReservaTipoHabitacion_Reserva]
 GO
@@ -645,6 +648,8 @@ GO
 ALTER TABLE [Frutillitas].[UsuarioLog] ADD CONSTRAINT FK_UsuarioLog_Usuario FOREIGN KEY (usuarioId) REFERENCES [Frutillitas].[Usuario](id)
 GO
 ALTER TABLE [Frutillitas].[RolFuncionalidad] ADD CONSTRAINT FK_RolFuncionalidad_Funcionalidad FOREIGN KEY (funcionalidadId) REFERENCES [Frutillitas].[Funcionalidad](id)
+GO
+ALTER TABLE [Frutillitas].[RolFuncionalidad] ADD CONSTRAINT FK_RolFuncionalidad_Rol FOREIGN KEY (rolId) REFERENCES [Frutillitas].[Rol](id)
 GO
 ALTER TABLE [Frutillitas].[ReservaTipoHabitacion] ADD CONSTRAINT FK_ReservaTipoHabitacion_Reserva FOREIGN KEY (reservaCodigo) REFERENCES [Frutillitas].[Reserva](codigo)
 GO
