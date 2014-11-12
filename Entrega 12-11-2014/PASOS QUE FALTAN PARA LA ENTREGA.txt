@@ -6,7 +6,7 @@ LISTO 2. Validar que el curso este bien. Curso de Den: K3137
 
 4. Agregar archivo Estrategia.pdf, imagino que con las decisiones que tomamos. 
 
-FALTA GABY 5. Actualizar Readme.txt agregando los legajos de gaby y den, agregando el NROGRUPO en el renglon abajo del curso y validando que el curso este bien.
+LISTO 5. Actualizar Readme.txt agregando los legajos de gaby y den, agregando el NROGRUPO en el renglon abajo del curso y validando que el curso este bien.
 
 6. Hacer zip de esa carpeta con el mismo nombre
 
