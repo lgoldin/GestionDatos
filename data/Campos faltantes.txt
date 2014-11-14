@@ -1,1 +1,0 @@
-En la tabla hotel falta el campo telefono
