@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.lblNombre = new System.Windows.Forms.Label();
             this.cmbPaises = new System.Windows.Forms.ComboBox();
@@ -39,6 +40,7 @@
             this.dgHoteles = new System.Windows.Forms.DataGridView();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
+            this.Seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Pais = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -127,6 +129,7 @@
             // 
             this.dgHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgHoteles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Seleccionar,
             this.Id,
             this.Nombre,
             this.Pais,
@@ -140,6 +143,7 @@
             this.dgHoteles.Name = "dgHoteles";
             this.dgHoteles.Size = new System.Drawing.Size(845, 150);
             this.dgHoteles.TabIndex = 48;
+            this.dgHoteles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgHoteles_CellContentClick);
             // 
             // btnLimpiar
             // 
@@ -161,6 +165,17 @@
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
+            // Seleccionar
+            // 
+            this.Seleccionar.DataPropertyName = "Seleccionar";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            this.Seleccionar.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Seleccionar.HeaderText = "";
+            this.Seleccionar.Name = "Seleccionar";
+            this.Seleccionar.ReadOnly = true;
             // 
             // Id
             // 
@@ -262,6 +277,7 @@
         private System.Windows.Forms.DataGridView dgHoteles;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.DataGridViewButtonColumn Seleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn Pais;

@@ -13,10 +13,21 @@ namespace FrbaHotel.ABM_de_Hotel
 {
     public partial class ListadoHotel : Form
     {
+        private bool isUpdate { get; set; }
+
         public ListadoHotel()
         {
             InitializeComponent();
-            
+        }
+
+        public ListadoHotel(bool isUpdate)
+        {
+            InitializeComponent();
+            this.isUpdate = isUpdate;
+        }
+
+        private void ListadoHotel_Load(object sender, EventArgs e)
+        {
             PaisService paisService = new PaisService();
             List<Pais> paises = paisService.GetAll().ToList();
             cmbPaises.DataSource = paises;
@@ -39,12 +50,6 @@ namespace FrbaHotel.ABM_de_Hotel
             cmbEstrellas.DataSource = estrellas;
             cmbEstrellas.DisplayMember = "text";
             cmbEstrellas.ValueMember = "value";
-
-            
-        }
-
-        private void ListadoHotel_Load(object sender, EventArgs e)
-        {
 
         }
 
@@ -87,6 +92,20 @@ namespace FrbaHotel.ABM_de_Hotel
             List<HotelDTO> hoteles = service.GetAllDTO(nombre, estrellas, pais, ciudad).Where(x => x.Id != 0).ToList();
             dgHoteles.DataSource = hoteles;
             
+        }
+
+        private void dgHoteles_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var grid = (DataGridView)sender;
+            if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            {
+                Form form = this.isUpdate ? new ABM_de_Hotel.ModificacionHotel(Convert.ToInt32(grid.Rows[e.RowIndex].Cells[1].Value)) : null;
+                form.Location = this.Location;
+                form.StartPosition = FormStartPosition.Manual;
+                form.FormClosing += delegate { this.Show(); };
+                form.Show();
+                this.Hide();
+            }
         }
     }
 }

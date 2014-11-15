@@ -26,5 +26,7 @@ namespace FrbaHotel.Entities
         public string FechaCreacion { get; set; }
 
         public string Telefono{ get; set; }
+
+        public string Seleccionar { get; set; }
     }
 }

@@ -20,5 +20,13 @@ namespace FrbaHotel.Services
             
             return regimenes;
         }
+
+        public List<Regimen> GetByHotelId(int hotelId)
+        {
+            var regimenes = new List<Regimen>();
+            var repository = new RegimenRepository();
+            repository.GetByHotelId(hotelId).ToList().ForEach(regimenes.Add);
+            return regimenes;
+        }
     }
 }

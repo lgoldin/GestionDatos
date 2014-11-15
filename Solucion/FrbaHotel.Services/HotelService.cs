@@ -46,13 +46,23 @@ namespace FrbaHotel.Services
                             Mail = h.Mail,
                             Nombre = h.Nombre,
                             Pais = h.Ciudad.Pais.Nombre,
-                            Telefono = h.Telefono
-
+                            Telefono = h.Telefono,
+                            Seleccionar = "Seleccionar"
                         });
                 }
             }
 
             return hotelesDTO;
         }
+
+        #region IHotelService Members
+
+
+        public Hotel GetById(int id)
+        {
+            return this.GetAll(null,null,null,null).FirstOrDefault(x => x.Id == id);
+        }
+
+        #endregion
     }
 }

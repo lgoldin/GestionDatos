@@ -9,5 +9,6 @@ namespace FrbaHotel.Services.Interfaces
     public interface IHotelService
     {
         IEnumerable<Hotel> GetAll(string nombre, int? esttrellas, int? paisId, int? ciudadId);
+        Hotel GetById(int id);
     }
 }

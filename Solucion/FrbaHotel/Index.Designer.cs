@@ -109,6 +109,7 @@
             this.bajaToolStripMenuItem1.Name = "bajaToolStripMenuItem1";
             this.bajaToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.bajaToolStripMenuItem1.Text = "Baja";
+            this.bajaToolStripMenuItem1.Click += new System.EventHandler(this.bajaToolStripMenuItem1_Click);
             // 
             // modificacionToolStripMenuItem1
             // 

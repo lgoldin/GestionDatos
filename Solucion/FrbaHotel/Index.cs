@@ -66,8 +66,13 @@ namespace FrbaHotel
 
         private void modificacionToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var form = new ABM_de_Hotel.ListadoHotel();
+            var form = new ABM_de_Hotel.ListadoHotel(true);
             DisplayForm(form);
+        }
+
+        private void bajaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

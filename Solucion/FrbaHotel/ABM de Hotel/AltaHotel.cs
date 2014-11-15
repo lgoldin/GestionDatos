@@ -23,7 +23,7 @@ namespace FrbaHotel.ABM_de_Hotel
             cmbPaises.ValueMember = "Id";
 
             RegimenService regimenService = new RegimenService();
-            List<Regimen> regimenes = regimenService.GetAll().ToList();
+            List<Regimen> regimenes = regimenService.GetAll().Where(x=>x.Activo).ToList();
             ((ListBox)chListRegimenes).DataSource = regimenService.GetAll();
             ((ListBox)chListRegimenes).ValueMember = "Codigo";
             ((ListBox)chListRegimenes).DisplayMember = "Descripcion";
