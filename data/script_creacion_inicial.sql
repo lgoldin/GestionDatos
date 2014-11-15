@@ -277,8 +277,7 @@ BEGIN
 CREATE TABLE [Frutillitas].[TipoHabitacion](
 	[codigo] [numeric](18, 0) NOT NULL PRIMARY KEY,
 	[descripcion] [nvarchar](255) NULL,
-	[procentual] [numeric](18, 2) NULL,
-	[cantHuespedes] [int] NULL
+	[procentual] [numeric](18, 2) NULL
 ) ON [PRIMARY]
 END
 GO
@@ -764,8 +763,8 @@ SELECT h.[id], r.[codigo]
 FROM [Frutillitas].[Hotel] h, [Frutillitas].[Regimen] r
 GO
 
-INSERT INTO [Frutillitas].[TipoHabitacion]([codigo], [descripcion], [procentual], [cantHuespedes])
-SELECT DISTINCT [Habitacion_Tipo_Codigo], [Habitacion_Tipo_Descripcion], [Habitacion_Tipo_Porcentual], 1/*Cómo lo sacamos??*/
+INSERT INTO [Frutillitas].[TipoHabitacion]([codigo], [descripcion], [procentual])
+SELECT DISTINCT [Habitacion_Tipo_Codigo], [Habitacion_Tipo_Descripcion], [Habitacion_Tipo_Porcentual]
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
 
