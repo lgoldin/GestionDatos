@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Cliente.cs" />
     <Compile Include="Ciudad.cs" />
+    <Compile Include="HotelDTO.cs" />
     <Compile Include="Regimen.cs" />
     <Compile Include="Exceptions\FormException.cs" />
     <Compile Include="Pais.cs" />

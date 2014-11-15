@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
     <Compile Include="ClienteRepository.cs" />
+    <Compile Include="CiudadRepository.cs" />
     <Compile Include="RegimenRepository.cs" />
     <Compile Include="PaisRepository.cs" />
     <Compile Include="HotelRepository.cs" />

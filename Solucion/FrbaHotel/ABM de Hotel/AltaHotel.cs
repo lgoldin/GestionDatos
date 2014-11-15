@@ -47,6 +47,7 @@ namespace FrbaHotel.ABM_de_Hotel
                     hotel.FechaCreacion = dateTimePicker1.Value;
                     hotel.Mail = txtMail.Text;
                     hotel.Nombre = txtNombre.Text;
+                    hotel.Telefono = txtTelefono.Text;
 
                     hotel.Regimenes = new List<Regimen>();
                     for (int i = 0; i < chListRegimenes.Items.Count; i++)
@@ -60,6 +61,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
                     HotelService service = new HotelService();
                     service.Insert(hotel);
+                    MessageBox.Show("El hotel se ha creado correctamente");
                 }
                 catch (Exception)
                 {
@@ -91,6 +93,10 @@ namespace FrbaHotel.ABM_de_Hotel
             if (string.IsNullOrEmpty(txtMail.Text))
             {
                 errorMessage += System.Environment.NewLine + "Escriba el mail";
+            }
+            if (string.IsNullOrEmpty(txtTelefono.Text))
+            {
+                errorMessage += System.Environment.NewLine + "Escriba el telefono";
             }
             if (string.IsNullOrEmpty(txtNombre.Text))
             {
@@ -139,6 +145,21 @@ namespace FrbaHotel.ABM_de_Hotel
         }
 
         private void AltaHotel_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbCiudades_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblCiudad_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPais_Click(object sender, EventArgs e)
         {
 
         }

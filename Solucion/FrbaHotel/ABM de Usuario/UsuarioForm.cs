@@ -91,7 +91,7 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void FillHoteles(Usuario usuario)
         {
-            lstHotel.DataSource = this.HotelService.GetAll();
+            lstHotel.DataSource = this.HotelService.GetAll(null, null, null, null);
             lstHotel.ValueMember = "Id";
             lstHotel.DisplayMember = "Nombre";
             if (usuario != null && usuario.Hoteles != null && usuario.Hoteles.Count > 0)

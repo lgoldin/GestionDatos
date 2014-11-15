@@ -5,13 +5,15 @@ using System.Text;
 
 namespace FrbaHotel.Entities
 {
-    public class Hotel
+    public class HotelDTO
     {
         public int Id { get; set; }
 
         public string Nombre { get; set; }
 
-        public Ciudad Ciudad { get; set; }
+        public string Ciudad { get; set; }
+
+        public string Pais { get; set; }
 
         public string Direccion { get; set; }
 
@@ -21,9 +23,7 @@ namespace FrbaHotel.Entities
 
         public string Mail { get; set; }
 
-        public DateTime FechaCreacion { get; set; }
-
-        public List<Regimen> Regimenes { get; set; }
+        public string FechaCreacion { get; set; }
 
         public string Telefono{ get; set; }
     }

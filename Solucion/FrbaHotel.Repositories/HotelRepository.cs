@@ -5,6 +5,7 @@ using System.Text;
 using FrbaHotel.Entities;
 using System.Data.SqlClient;
 using System.Data;
+using System.Transactions;
 
 namespace FrbaHotel.Repositories
 {
@@ -12,10 +13,17 @@ namespace FrbaHotel.Repositories
     {
         public override IEnumerable<Hotel> GetAll()
         {
+            return this.GetAll(null, null, null, null);
+        }
+
+        public IEnumerable<Hotel> GetAll(string nombre, int? estrellas, int? paisId, int? ciudadId )
+        {
             var hoteles = new List<Hotel>();
 
             SqlCommand command = DBConnection.CreateStoredProcedure("GetHoteles");
+            AddGetHotelParameters(nombre,estrellas, paisId, ciudadId, command);
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
             foreach (DataRow hotel in collection)
             {
                 hoteles.Add(this.CreateHotel(hotel));
@@ -24,6 +32,15 @@ namespace FrbaHotel.Repositories
             return hoteles;
         }
 
+        private void AddGetHotelParameters(string nombre, int? estrellas, int? paisId, int? ciudadId, SqlCommand command)
+        {
+            command.Parameters.AddWithValue("@ciudadId", ciudadId);
+            command.Parameters.AddWithValue("@estrellas", estrellas);
+            command.Parameters.AddWithValue("@nombre", nombre);
+            command.Parameters.AddWithValue("@paisId", paisId);
+        }
+
+        
         public override Hotel Get(int id)
         {
             return this.GetAll().FirstOrDefault(x => x.Id == id);
@@ -31,13 +48,18 @@ namespace FrbaHotel.Repositories
 
         public override int Insert(Hotel entity)
         {
-            SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotel");
-            AddHotelParameters(entity, command);
-            int hotelId = DBConnection.ExecuteScalar(command);
+            using (var transaction = new TransactionScope())
+            {
+                SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotel");
+                AddHotelParameters(entity, command);
+                int hotelId = DBConnection.ExecuteScalar(command);
 
-            InsertHotelRegimen(entity, hotelId);
+                InsertHotelRegimen(entity, hotelId);
 
-            return hotelId;
+                transaction.Complete();
+
+                return hotelId;
+            }
         }
 
         public override void Update(Hotel entity)
@@ -59,6 +81,7 @@ namespace FrbaHotel.Repositories
             command.Parameters.AddWithValue("@nombre", hotel.Nombre);
             command.Parameters.AddWithValue("@recargaEstrella", hotel.RecargaEstrella);
             command.Parameters.AddWithValue("@mail", hotel.Mail);
+            command.Parameters.AddWithValue("@telefono", hotel.Telefono);
         }
 
         private Hotel CreateHotel(DataRow row)
@@ -82,7 +105,8 @@ namespace FrbaHotel.Repositories
                 Estrellas = Convert.ToInt32(row["Estrellas"]),
                 FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]),
                 RecargaEstrella = Convert.ToInt32(row["RecargaEstrella"]),
-                Mail = row["Mail"].ToString()
+                Mail = row["Mail"].ToString(),
+                Telefono = row["Telefono"].ToString()
             };
         }
 

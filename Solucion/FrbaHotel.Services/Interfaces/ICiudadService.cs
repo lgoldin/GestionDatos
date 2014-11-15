@@ -6,10 +6,8 @@ using FrbaHotel.Entities;
 
 namespace FrbaHotel.Services.Interfaces
 {
-    public interface IPaisService
+    public interface ICiudadService
     {
-        IEnumerable<Pais> GetAll();
-
-        List<Ciudad> GetCiudades(Pais pais);
+        IEnumerable<Ciudad> GetAll();
     }
 }

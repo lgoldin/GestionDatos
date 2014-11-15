@@ -21,11 +21,6 @@ namespace FrbaHotel.Services
             return paises;
         }
 
-        public int Insert(Hotel hotel)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Ciudad> GetCiudades(Pais pais)
         {
             var ciudades = new List<Ciudad>();

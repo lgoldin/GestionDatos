@@ -79,6 +79,7 @@
             this.cmbCiudades.Name = "cmbCiudades";
             this.cmbCiudades.Size = new System.Drawing.Size(189, 21);
             this.cmbCiudades.TabIndex = 40;
+            this.cmbCiudades.SelectedIndexChanged += new System.EventHandler(this.cmbCiudades_SelectedIndexChanged);
             // 
             // estrellas
             // 
@@ -217,6 +218,7 @@
             this.lblCiudad.Size = new System.Drawing.Size(63, 20);
             this.lblCiudad.TabIndex = 30;
             this.lblCiudad.Text = "Ciudad:";
+            this.lblCiudad.Click += new System.EventHandler(this.lblCiudad_Click);
             // 
             // lblPais
             // 
@@ -227,6 +229,7 @@
             this.lblPais.Size = new System.Drawing.Size(43, 20);
             this.lblPais.TabIndex = 29;
             this.lblPais.Text = "Pais:";
+            this.lblPais.Click += new System.EventHandler(this.lblPais_Click);
             // 
             // lblRegimenes
             // 

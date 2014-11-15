@@ -55,7 +55,7 @@ namespace FrbaHotel.Repositories
         public List<Ciudad> GetCiudades(Pais pais)
         {
             List<Ciudad> ciudades = new List<Ciudad>();
-            SqlCommand command = DBConnection.CreateStoredProcedure("GetCiudades");
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetCiudadesByPaisId");
             command.Parameters.AddWithValue("@paisId", pais.Id);
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
             foreach (DataRow ciudad in collection)

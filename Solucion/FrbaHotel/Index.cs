@@ -63,5 +63,11 @@ namespace FrbaHotel
             var form = new UsuarioForm();
             DisplayForm(form);
         }
+
+        private void modificacionToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var form = new ABM_de_Hotel.ListadoHotel();
+            DisplayForm(form);
+        }
     }
 }

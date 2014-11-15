@@ -11,16 +11,14 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutilli
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetCiudades]
 
-@paisId int
-
 AS
 BEGIN
 	SET NOCOUNT ON;
 	
 SELECT [id]
       ,[nombre]
+	  ,[paisId]
   FROM [GD2C2014].[Frutillitas].[Ciudad]
-  WHERE [paisId] = @paisId
 END
 ' 
 END
