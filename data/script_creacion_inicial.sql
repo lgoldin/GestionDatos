@@ -61,6 +61,9 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Reserva_Regimen]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Reserva]'))
 ALTER TABLE [Frutillitas].[Reserva] DROP CONSTRAINT [FK_Reserva_Regimen]
 GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Reserva_Estado]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Reserva]'))
+ALTER TABLE [Frutillitas].[Reserva] DROP CONSTRAINT [FK_Reserva_Estado]
+GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Localidad_Pais]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Localidad]'))
 ALTER TABLE [Frutillitas].[Localidad] DROP CONSTRAINT [FK_Localidad_Pais]
 GO
@@ -150,6 +153,9 @@ DROP TABLE [Frutillitas].[Habitacion]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Hotel]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[Hotel]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[HotelIncrementoEstrella]') AND type in (N'U'))
+DROP TABLE [Frutillitas].[HotelIncrementoEstrella]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[HotelInhabilitacion]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[HotelInhabilitacion]
@@ -482,10 +488,21 @@ CREATE TABLE [Frutillitas].[Hotel](
 	[ciudadId] [int] NULL,
 	[direccion] [nvarchar](255) NULL,
 	[estrellas] [numeric](18, 0) NULL,
-	[recargaEstrella] [numeric](18, 0) NULL,
 	[mail] [nvarchar](255) NULL,
 	[fechaCreacion] [datetime] NULL,
 	[telefono] [nvarchar](255) NULL
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[HotelIncrementoEstrella]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [Frutillitas].[HotelIncrementoEstrella](
+	[id] [int] IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	[incremento] [numeric](18, 0) NULL
 ) ON [PRIMARY]
 END
 GO
@@ -668,7 +685,8 @@ ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Regimen FOREIGN KE
 GO
 ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Hotel FOREIGN KEY (hotelId) REFERENCES [Frutillitas].[Hotel](id)
 GO
-/*estadoId?*/
+ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Estado FOREIGN KEY (estadoId) REFERENCES [Frutillitas].[ReservaEstado](id)
+GO
 ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Cliente FOREIGN KEY (clienteId) REFERENCES [Frutillitas].[Cliente](id)
 GO
 ALTER TABLE [Frutillitas].[Localidad] ADD CONSTRAINT FK_Localidad_Pais FOREIGN KEY (paisId) REFERENCES [Frutillitas].[Pais](id)
@@ -757,9 +775,13 @@ SELECT DISTINCT [Regimen_Descripcion], [Regimen_Precio], 1
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
 
-INSERT INTO [Frutillitas].[Hotel]([nombre], [ciudadId], [direccion], [estrellas], [recargaEstrella], [mail], [fechaCreacion])
-SELECT DISTINCT NULL /*Lo dejo en null pero podría ir la dir*/, (SELECT [id] FROM [Frutillitas].[Ciudad] WHERE [nombre] LIKE [Hotel_Ciudad]), [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255)), [Hotel_CantEstrella], [Hotel_Recarga_Estrella], NULL, GETDATE()
+INSERT INTO [Frutillitas].[Hotel]([nombre], [ciudadId], [direccion], [estrellas], [mail], [fechaCreacion])
+SELECT DISTINCT NULL /*Lo dejo en null pero podría ir la dir*/, (SELECT [id] FROM [Frutillitas].[Ciudad] WHERE [nombre] LIKE [Hotel_Ciudad]), [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255)), [Hotel_CantEstrella], NULL, GETDATE()
 FROM [GD2C2014].[gd_esquema].[Maestra]
+GO
+
+INSERT INTO [Frutillitas].[HotelIncrementoEstrella]([incremento])
+SELECT TOP 1 [Hotel_Recarga_Estrella] FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
 
 /*Por ahora dejo un todos contra todos, después hay que preguntar si solo ponemos los minimos*/
@@ -778,12 +800,25 @@ SELECT DISTINCT (SELECT [id] FROM [Frutillitas].[Hotel] WHERE [direccion] = [Hot
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
 
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Correcta')
+GO
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Modificada')
+GO
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Cancelada-Recepcion')
+GO
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Cancelada-Cliente')
+GO
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Cancelada-No-Show')
+GO
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Efectivizada')
+GO
+
 INSERT INTO [Frutillitas].[Reserva]([codigo], [fechaDesde], [fechaHasta], [regimenCodigo], [hotelId], [estadoId], [clienteId], [fechaCreacion])
 SELECT DISTINCT [Reserva_Codigo], [Reserva_Fecha_Inicio], DATEADD(day, [Reserva_Cant_Noches], [Reserva_Fecha_Inicio]),	
 	(SELECT [codigo] FROM [Frutillitas].[Regimen] WHERE [descripcion] = [Regimen_Descripcion]),
-	(SELECT [id] FROM [Frutillitas].[Hotel] WHERE [direccion] = [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255))),
-	c.[id],
-    NULL /*Hay que ver que ponemos acá*/,
+	(SELECT [id] FROM [Frutillitas].[Hotel] WHERE [direccion] = [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255))),	
+    (SELECT [id] FROM [Frutillitas].[ReservaEstado] WHERE [descripcion] = 'Correcta'),
+    c.[id],
 	GETDATE()
 FROM [GD2C2014].[gd_esquema].[Maestra]
 INNER JOIN [Frutillitas].[Cliente] c ON [numeroDocumento] = [Cliente_Pasaporte_Nro] AND [nombre] = [Cliente_Nombre] AND [apellido] = [Cliente_Apellido]
@@ -794,6 +829,12 @@ SELECT DISTINCT [Reserva_Codigo], [Estadia_Fecha_Inicio], DATEADD(day, [Estadia_
 FROM [GD2C2014].[gd_esquema].[Maestra]
 WHERE [Estadia_Fecha_Inicio] IS NOT NULL AND [Estadia_Cant_Noches] IS NOT NULL
 GO
+
+UPDATE [Frutillitas].[Reserva] SET [estadoId] = (SELECT [id] FROM [Frutillitas].[ReservaEstado] WHERE [descripcion] = 'Efectivizada')
+WHERE [codigo] IN (SELECT DISTINCT [reservaCodigo] FROM [Frutillitas].[Estadia])
+
+UPDATE [Frutillitas].[Reserva] SET [estadoId] = (SELECT [id] FROM [Frutillitas].[ReservaEstado] WHERE [descripcion] = 'Cancelada-No-Show')
+WHERE [fechaDesde] < GETDATE()
 
 INSERT INTO [Frutillitas].[EstadiaConsumible]([estadiaId], [consumibleCodigo])
 SELECT DISTINCT [id], [Consumible_Codigo] FROM [Frutillitas].[Estadia]
