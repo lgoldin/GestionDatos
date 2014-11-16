@@ -82,6 +82,9 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Habitacion_TipoHabitacion]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Habitacion]'))
 ALTER TABLE [Frutillitas].[Habitacion] DROP CONSTRAINT [FK_Habitacion_TipoHabitacion]
 GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[UQ_Habitacion_Hotel_Numero]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Habitacion]'))
+ALTER TABLE [Frutillitas].[Habitacion] DROP CONSTRAINT [UQ_Habitacion_Hotel_Numero]
+GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Factura_Estadia]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Factura]'))
 ALTER TABLE [Frutillitas].[Factura] DROP CONSTRAINT [FK_Factura_Estadia]
 GO
@@ -681,6 +684,8 @@ GO
 ALTER TABLE [Frutillitas].[Habitacion] ADD CONSTRAINT FK_Habitacion_Hotel FOREIGN KEY (hotelId) REFERENCES [Frutillitas].[Hotel](id)
 GO
 ALTER TABLE [Frutillitas].[Habitacion] ADD CONSTRAINT FK_Habitacion_TipoHabitacion FOREIGN KEY (tipoCodigo) REFERENCES [Frutillitas].[TipoHabitacion](codigo)
+GO
+ALTER TABLE [Frutillitas].[Habitacion] ADD CONSTRAINT UQ_Habitacion_Hotel_Numero UNIQUE (hotelId, numero)
 GO
 ALTER TABLE [Frutillitas].[Factura] ADD CONSTRAINT FK_Factura_Estadia FOREIGN KEY (estadiaId) REFERENCES [Frutillitas].[Estadia](id)
 GO

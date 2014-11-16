@@ -1,6 +1,5 @@
-- Cliente mail unique (verificar si se puede con indice de unicidad o sino trigger).
-- Cliente tipo y numero de identificación unique (verificar si se puede con indice de unicidad o sino trigger).
-- Habitación numero unique (verificar si se puede con indice de unicidad o sino trigger).
+- Cliente mail unique (trigger).
+- Cliente tipo y numero de identificación unique (trigger).
 - "un incremento en función de la categoría del Hotel (cantidad de estrellas)". Hay que crear una tabla con el incremento.
 - Ver qué hacer cuando se modifica una reserva para grabar el usuario, me parece que no vamos a tener la info del mismo como para hacerlo con un trigger, supongo que será mejor hacerlo con SP.
 - Estados de la reserva (Correcta, Modificada, Cancelada por Recepción, Cancelada por Cliente, Cancelada por No-Show, Con ingreso (efectivizada)).
