@@ -74,5 +74,11 @@ namespace FrbaHotel
         {
 
         }
+
+        private void listadoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new ListadoUsuario();
+            DisplayForm(form);
+        }
     }
 }

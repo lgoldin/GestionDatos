@@ -55,7 +55,8 @@
             this.btnGuardar = new System.Windows.Forms.Button();
             this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.lstHotel = new System.Windows.Forms.CheckedListBox();
-            this.btnBorrar = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.ckbHabilitado = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -282,23 +283,33 @@
             this.lstHotel.Size = new System.Drawing.Size(120, 139);
             this.lstHotel.TabIndex = 29;
             // 
-            // btnBorrar
+            // label14
             // 
-            this.btnBorrar.Enabled = false;
-            this.btnBorrar.Location = new System.Drawing.Point(554, 501);
-            this.btnBorrar.Name = "btnBorrar";
-            this.btnBorrar.Size = new System.Drawing.Size(115, 41);
-            this.btnBorrar.TabIndex = 30;
-            this.btnBorrar.Text = "Borrar";
-            this.btnBorrar.UseVisualStyleBackColor = true;
-            this.btnBorrar.Click += new System.EventHandler(this.btnBorrar_Click);
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(104, 399);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(54, 13);
+            this.label14.TabIndex = 31;
+            this.label14.Text = "Habilitado";
+            // 
+            // ckbHabilitado
+            // 
+            this.ckbHabilitado.AutoSize = true;
+            this.ckbHabilitado.Checked = true;
+            this.ckbHabilitado.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbHabilitado.Location = new System.Drawing.Point(260, 399);
+            this.ckbHabilitado.Name = "ckbHabilitado";
+            this.ckbHabilitado.Size = new System.Drawing.Size(15, 14);
+            this.ckbHabilitado.TabIndex = 32;
+            this.ckbHabilitado.UseVisualStyleBackColor = true;
             // 
             // UsuarioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(824, 610);
-            this.Controls.Add(this.btnBorrar);
+            this.Controls.Add(this.ckbHabilitado);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.lstHotel);
             this.Controls.Add(this.dtpFechaNacimiento);
             this.Controls.Add(this.btnGuardar);
@@ -363,6 +374,7 @@
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
         private System.Windows.Forms.CheckedListBox lstHotel;
-        private System.Windows.Forms.Button btnBorrar;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.CheckBox ckbHabilitado;
     }
 }

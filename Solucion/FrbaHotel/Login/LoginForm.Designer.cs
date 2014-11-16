@@ -31,48 +31,60 @@
             this.TextBoxUsername = new System.Windows.Forms.TextBox();
             this.TextBoxPassword = new System.Windows.Forms.MaskedTextBox();
             this.ButtonIngresar = new System.Windows.Forms.Button();
-            this.LabelError = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // TextBoxUsername
             // 
-            this.TextBoxUsername.Location = new System.Drawing.Point(228, 122);
+            this.TextBoxUsername.Location = new System.Drawing.Point(211, 35);
             this.TextBoxUsername.Name = "TextBoxUsername";
             this.TextBoxUsername.Size = new System.Drawing.Size(224, 20);
             this.TextBoxUsername.TabIndex = 0;
             // 
             // TextBoxPassword
             // 
-            this.TextBoxPassword.Location = new System.Drawing.Point(228, 171);
+            this.TextBoxPassword.Location = new System.Drawing.Point(211, 84);
             this.TextBoxPassword.Name = "TextBoxPassword";
+            this.TextBoxPassword.PasswordChar = '*';
             this.TextBoxPassword.Size = new System.Drawing.Size(224, 20);
             this.TextBoxPassword.TabIndex = 2;
             // 
             // ButtonIngresar
             // 
-            this.ButtonIngresar.Location = new System.Drawing.Point(104, 244);
+            this.ButtonIngresar.Location = new System.Drawing.Point(12, 146);
             this.ButtonIngresar.Name = "ButtonIngresar";
-            this.ButtonIngresar.Size = new System.Drawing.Size(434, 23);
+            this.ButtonIngresar.Size = new System.Drawing.Size(601, 72);
             this.ButtonIngresar.TabIndex = 3;
             this.ButtonIngresar.Text = "Ingresar";
             this.ButtonIngresar.UseVisualStyleBackColor = true;
             this.ButtonIngresar.Click += new System.EventHandler(this.ButtonIngresar_Click);
             // 
-            // LabelError
+            // label1
             // 
-            this.LabelError.AutoSize = true;
-            this.LabelError.ForeColor = System.Drawing.Color.Red;
-            this.LabelError.Location = new System.Drawing.Point(225, 96);
-            this.LabelError.Name = "LabelError";
-            this.LabelError.Size = new System.Drawing.Size(0, 13);
-            this.LabelError.TabIndex = 4;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(153, 38);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Usuario";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(153, 87);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Password";
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(710, 375);
-            this.Controls.Add(this.LabelError);
+            this.ClientSize = new System.Drawing.Size(625, 230);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.ButtonIngresar);
             this.Controls.Add(this.TextBoxPassword);
             this.Controls.Add(this.TextBoxUsername);
@@ -88,6 +100,7 @@
         private System.Windows.Forms.TextBox TextBoxUsername;
         private System.Windows.Forms.MaskedTextBox TextBoxPassword;
         private System.Windows.Forms.Button ButtonIngresar;
-        private System.Windows.Forms.Label LabelError;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }

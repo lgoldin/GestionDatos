@@ -48,7 +48,6 @@ namespace FrbaHotel.ABM_de_Usuario
             Usuario usuario = null;
             if (this.IdUsuario > 0)
             {
-                btnBorrar.Enabled = true;
                 usuario = this.UsuarioService.Get(this.IdUsuario);
             }
 
@@ -78,6 +77,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 txtTelefono.Text = usuario.Telefono;
                 txtDireccion.Text = usuario.Direccion.Calle;
                 dtpFechaNacimiento.Value = usuario.FechaNacimiento;
+                ckbHabilitado.Checked = usuario.Habilitado;
             }
         }
 
@@ -116,13 +116,6 @@ namespace FrbaHotel.ABM_de_Usuario
                 int idUsuario = this.UsuarioService.Save(this.GetUsuario());
                 
                 MessageBox.Show("El usuario fue guardado correctamente", "Success", MessageBoxButtons.OK);
-                
-                var form = new UsuarioForm(idUsuario);
-                form.Location = this.Location;
-                form.StartPosition = FormStartPosition.Manual;
-                form.FormClosing += delegate { this.Show(); };
-                form.Show();
-                this.Close();
             }
             catch (FormException formException)
             {
@@ -230,7 +223,8 @@ namespace FrbaHotel.ABM_de_Usuario
                 Rol = new Rol { Id = (int)cmbRol.SelectedValue },
                 Telefono = txtTelefono.Text,
                 TipoDocumento = new TipoDocumento { Id = (int)cmbTipoDocumento.SelectedValue },
-                Username = txtUsername.Text
+                Username = txtUsername.Text,
+                Habilitado = ckbHabilitado.Checked
             };
 
             foreach(Hotel hotel in lstHotel.CheckedItems)

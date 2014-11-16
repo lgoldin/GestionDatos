@@ -43,10 +43,33 @@ namespace FrbaHotel.Services
             repository.Delete(usuario);
         }
 
-        public IEnumerable<Usuario> GetAll(string username, string nombre, string apellido, int? tipoDocumentoId, string numeroDocumento, string mail, string telefono, string direccion, DateTime? fechaNacimiento, int? rolId)
+        public IEnumerable<UsuarioDTO> GetAll(string username, string nombre, string apellido, int? tipoDocumentoId, string numeroDocumento, string mail, string telefono, string direccion, DateTime? fechaNacimiento, int? rolId)
         {
+            var usuariosDTO = new List<UsuarioDTO>();
+
             var repository = new UsuarioRepository();
-            return repository.GetAll(username, nombre, apellido, tipoDocumentoId, numeroDocumento, mail, telefono, direccion, fechaNacimiento, rolId);
+            IEnumerable<Usuario> usuarios = repository.GetAll(username, nombre, apellido, tipoDocumentoId, numeroDocumento, mail, telefono, direccion, fechaNacimiento, rolId);
+
+            foreach (Usuario usuario in usuarios)
+            {
+                usuariosDTO.Add(new UsuarioDTO
+                {
+                    Apellido = usuario.Apellido,
+                    Direccion = usuario.Direccion.Calle,
+                    FechaNacimiento = usuario.FechaNacimiento.ToShortDateString(),
+                    Id = usuario.Id,
+                    Mail = usuario.Mail,
+                    Modificar = "Modificar",
+                    Nombre = usuario.Nombre,
+                    NumeroDocumento = usuario.NumeroDocumento,
+                    Telefono = usuario.Telefono,
+                    TipoDocumento = usuario.TipoDocumento.Nombre,
+                    Username = usuario.Username,
+                    Habilitado = usuario.Habilitado
+                });
+            }
+
+            return usuariosDTO;
         }
 
         private byte[] HashPassword(string password)

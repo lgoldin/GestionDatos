@@ -22,7 +22,8 @@ CREATE PROCEDURE [Frutillitas].[UpdateUsuario]
 @telefono nvarchar(255),
 @direccion nvarchar(255),
 @fechaNacimiento smalldatetime,
-@rolId int
+@rolId int,
+@habilitado bit
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -38,7 +39,8 @@ BEGIN
 		mail = @mail,
 		telefono = @telefono,
 		direccion = @direccion,
-		fechaNacimiento = @fechaNacimiento
+		fechaNacimiento = @fechaNacimiento,
+		habilitado = @habilitado
 	WHERE id = @id
 	
 	UPDATE [Frutillitas].[UsuarioRol] SET rolId = @rolId WHERE usuarioId = @id

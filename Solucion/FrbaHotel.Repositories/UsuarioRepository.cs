@@ -94,19 +94,18 @@ namespace FrbaHotel.Repositories
             return usuarios;
         }
 
-        public Usuario GetByUsernameAndPassword(string username, string password)
+        public Usuario GetByUsernameAndPassword(string username, byte[] password)
         {
-            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
-            command.Parameters.AddWithValue("@userName", username);
-            command.Parameters.AddWithValue("@password", password);
-
-            SqlDataReader reader = DBConnection.EjecutarComandoSelect(command);
-
             Usuario usuario = null;
 
-            if (reader.Read())
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetUsuarioByUsernameAndPassword");
+            command.Parameters.AddWithValue("@userName", username);
+            command.Parameters.AddWithValue("@password", password);
+            
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+            foreach (DataRow row in collection)
             {
-                return this.CreateUsuario(reader);
+                return this.CreateUsuario(row);
             }
             
             return usuario;
@@ -144,6 +143,7 @@ namespace FrbaHotel.Repositories
             usuario.Id = Convert.ToInt32(reader["id"]);
             usuario.Rol = new Rol { Id = Convert.ToInt32(reader["rolId"]), Nombre = reader["rol"].ToString() };
             usuario.Username = reader["userName"].ToString();
+            usuario.Habilitado = Convert.ToBoolean(reader["habilitado"]);
             usuario.Hoteles = new List<Hotel>();
 
             return usuario;
@@ -162,7 +162,7 @@ namespace FrbaHotel.Repositories
             command.Parameters.AddWithValue("@direccion", usuario.Direccion.Calle);
             command.Parameters.AddWithValue("@fechaNacimiento", usuario.FechaNacimiento);
             command.Parameters.AddWithValue("@rolId", usuario.Rol.Id);
-            
+            command.Parameters.AddWithValue("@habilitado", usuario.Habilitado);
         }
 
         private static void UpdateUsuarioParameters(Usuario usuario, SqlCommand command)

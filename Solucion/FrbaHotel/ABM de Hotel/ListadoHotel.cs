@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Services;
 using FrbaHotel.Entities;
+using FrbaHotel.Entities.DTOs;
 
 namespace FrbaHotel.ABM_de_Hotel
 {

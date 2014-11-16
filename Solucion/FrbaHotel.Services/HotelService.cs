@@ -5,6 +5,7 @@ using System.Text;
 using FrbaHotel.Services.Interfaces;
 using FrbaHotel.Repositories;
 using FrbaHotel.Entities;
+using FrbaHotel.Entities.DTOs;
 
 namespace FrbaHotel.Services
 {

@@ -21,7 +21,8 @@ CREATE PROCEDURE [Frutillitas].[InsertUsuario]
 @telefono nvarchar(255),
 @direccion nvarchar(255),
 @fechaNacimiento smalldatetime,
-@rolId int
+@rolId int,
+@habilitado bit
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -44,7 +45,7 @@ BEGIN
 	(
 		@username,
 		@password,
-		1,
+		@habilitado,
 		@nombre,
 		@apellido,
 		@tipoDocumentoId,

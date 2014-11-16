@@ -14,6 +14,6 @@ namespace FrbaHotel.Services.Interfaces
 
         void Delete(Usuario usuario);
 
-        IEnumerable<Usuario> GetAll(string username, string nombre, string apellido, int? tipoDocumentoId, string numeroDocumento, string mail, string telefono, string direccion, DateTime? fechaNacimiento, int? rolId);
+        IEnumerable<UsuarioDTO> GetAll(string username, string nombre, string apellido, int? tipoDocumentoId, string numeroDocumento, string mail, string telefono, string direccion, DateTime? fechaNacimiento, int? rolId);
     }
 }

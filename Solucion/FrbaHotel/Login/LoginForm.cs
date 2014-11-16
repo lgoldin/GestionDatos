@@ -30,14 +30,22 @@ namespace FrbaHotel.Login
 
             if (usuario != null)
             {
-                var clienteForm = new ClienteForm();
-                clienteForm.Activate();
-                clienteForm.Show();
-
-                Application.OpenForms["LoginForm"].Hide();
+                var form = new Index();
+                this.DisplayForm(form);
             }
+            else
+            {
+                MessageBox.Show("Ingrese los datos correctamente", "Error", MessageBoxButtons.OK);
+            }
+        }
 
-            this.LabelError.Text = "Ingrese los datos correctamente";
+        private void DisplayForm(Form form)
+        {
+            form.Location = this.Location;
+            form.StartPosition = FormStartPosition.Manual;
+            form.FormClosing += delegate { this.Show(); };
+            form.Show();
+            this.Hide();
         }
     }
 }
