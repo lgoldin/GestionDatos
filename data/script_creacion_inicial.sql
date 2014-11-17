@@ -398,7 +398,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Reserva]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [Frutillitas].[Reserva](
-	[codigo] [numeric](18, 0) NOT NULL PRIMARY KEY,
+	[codigo] [numeric](18, 0) IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[fechaDesde] [datetime] NULL,
 	[fechaHasta] [datetime] NULL,
 	[regimenCodigo] [numeric](18, 0) NULL,
@@ -813,6 +813,8 @@ GO
 INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Efectivizada')
 GO
 
+SET IDENTITY_INSERT [Frutillitas].[Reserva] ON
+GO
 INSERT INTO [Frutillitas].[Reserva]([codigo], [fechaDesde], [fechaHasta], [regimenCodigo], [hotelId], [estadoId], [clienteId], [fechaCreacion])
 SELECT DISTINCT [Reserva_Codigo], [Reserva_Fecha_Inicio], DATEADD(day, [Reserva_Cant_Noches], [Reserva_Fecha_Inicio]),	
 	(SELECT [codigo] FROM [Frutillitas].[Regimen] WHERE [descripcion] = [Regimen_Descripcion]),
@@ -822,6 +824,8 @@ SELECT DISTINCT [Reserva_Codigo], [Reserva_Fecha_Inicio], DATEADD(day, [Reserva_
 	GETDATE()
 FROM [GD2C2014].[gd_esquema].[Maestra]
 INNER JOIN [Frutillitas].[Cliente] c ON [numeroDocumento] = [Cliente_Pasaporte_Nro] AND [nombre] = [Cliente_Nombre] AND [apellido] = [Cliente_Apellido]
+GO
+SET IDENTITY_INSERT [Frutillitas].[Reserva] OFF
 GO
 
 INSERT INTO [Frutillitas].[Estadia]([reservaCodigo], [fechaDesde], [fechaHasta])
