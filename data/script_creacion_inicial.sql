@@ -841,7 +841,7 @@ UPDATE [Frutillitas].[Reserva] SET [estadoId] = (SELECT [id] FROM [Frutillitas].
 WHERE [fechaDesde] < GETDATE()
 
 INSERT INTO [Frutillitas].[EstadiaConsumible]([estadiaId], [consumibleCodigo])
-SELECT DISTINCT [id], [Consumible_Codigo] FROM [Frutillitas].[Estadia]
+SELECT [id], [Consumible_Codigo] FROM [Frutillitas].[Estadia]
 INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [reservaCodigo] = [Reserva_Codigo]
 WHERE [Consumible_Codigo] IS NOT NULL
 GO
