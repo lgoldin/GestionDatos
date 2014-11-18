@@ -733,6 +733,16 @@ GO
 INSERT INTO [Frutillitas].[Pais]([nombre], [nacionalidad]) VALUES ('Argentina', 'Argentino')
 GO
 
+INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Administrador', 1)
+GO
+INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Recepcionista', 1)
+GO
+INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Guest', 1)
+GO
+
+INSERT INTO [Frutillitas].[Usuario]([username]/*, [password]*/, [habilitado]) VALUES ('admin'/*, 'w23e'*/, 1)
+GO
+
 INSERT INTO [Frutillitas].[Ciudad]([nombre], [paisId])
 SELECT DISTINCT [Hotel_Ciudad], 1 /*El único pais que hay*/
 FROM [GD2C2014].[gd_esquema].[Maestra]
@@ -790,7 +800,7 @@ SELECT h.[id], r.[codigo]
 FROM [Frutillitas].[Hotel] h, [Frutillitas].[Regimen] r
 GO
 
-INSERT INTO [Frutillitas].[TipoHabitacion]([codigo], [descripcion], [procentual])
+INSERT INTO [Frutillitas].[TipoHabitacion]([codigo], [descripcion], [porcentual])
 SELECT DISTINCT [Habitacion_Tipo_Codigo], [Habitacion_Tipo_Descripcion], [Habitacion_Tipo_Porcentual]
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
