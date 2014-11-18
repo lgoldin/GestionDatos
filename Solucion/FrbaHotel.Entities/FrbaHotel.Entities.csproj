@@ -49,6 +49,9 @@
   <ItemGroup>
     <Compile Include="Cliente.cs" />
     <Compile Include="Ciudad.cs" />
+    <Compile Include="DTOs\HabitacionDTO.cs" />
+    <Compile Include="TipoHabitacion.cs" />
+    <Compile Include="Habitacion.cs" />
     <Compile Include="DTOs\HotelDTO.cs" />
     <Compile Include="DTOs\Usuario.cs" />
     <Compile Include="Regimen.cs" />

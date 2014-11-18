@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FrbaHotel.Services.Interfaces;
 using FrbaHotel.Entities;
+using FrbaHotel.Entities.DTOs;
 using FrbaHotel.Repositories;
 using System.Security.Cryptography;
 
