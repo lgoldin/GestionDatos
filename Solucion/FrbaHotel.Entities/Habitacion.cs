@@ -7,7 +7,7 @@ namespace FrbaHotel.Entities
 {
     public class Habitacion
     {
-        public int Codigo { get; set; }
+        public int Id { get; set; }
 
         public Hotel Hotel { get; set; }
 

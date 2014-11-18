@@ -51,8 +51,8 @@ namespace FrbaHotel.ABM_de_Habitacion
         {
             int? hotelId = (int)cmbHotel.SelectedValue <= 0 ? (int?)null : (int)cmbHotel.SelectedValue;
             int? tipoHabitacion = (int)cmbTipoHabitacion.SelectedValue <= 0 ? (int?)null : (int)cmbTipoHabitacion.SelectedValue;
-            string numero = string.IsNullOrEmpty(txtNumero.Text) ? null : txtNumero.Text;
-            string piso = string.IsNullOrEmpty(txtPiso.Text) ? null : txtPiso.Text;
+            int? numero = string.IsNullOrEmpty(txtNumero.Text) ? (int?)null : Convert.ToInt32(txtNumero.Text);
+            int? piso = string.IsNullOrEmpty(txtPiso.Text) ? (int?)null : Convert.ToInt32(txtPiso.Text);
             bool frente = chkFrente.Checked;
             string descripcion = string.IsNullOrEmpty(txtDescripcion.Text) ? null : txtDescripcion.Text;
 

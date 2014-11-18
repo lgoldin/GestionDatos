@@ -11,7 +11,7 @@ namespace FrbaHotel.Services
 {
     public class HabitacionService : IHabitacionService
     {
-        public IEnumerable<HabitacionDTO> GetAll(bool frente, string numero, string piso, string descripcion, int? hotelId, int? tipoHabitacion)
+        public IEnumerable<HabitacionDTO> GetAll(bool frente, int? numero, int? piso, string descripcion, int? hotelId, int? tipoHabitacion)
         {
             var habitacionesDTO = new List<HabitacionDTO>();
 
@@ -23,7 +23,7 @@ namespace FrbaHotel.Services
                 habitacionesDTO.Add(new HabitacionDTO 
                                         {
                                             Activa = habitacion.Activa,
-                                            Codigo = habitacion.Codigo,
+                                            Codigo = habitacion.Id,
                                             Descripcion = habitacion.Descripcion,
                                             Frente = habitacion.Frente,
                                             Hotel = habitacion.Hotel.Nombre,

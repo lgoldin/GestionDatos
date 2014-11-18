@@ -23,17 +23,6 @@ namespace FrbaHotel.Repositories
             return tipos;
         }
 
-        private TipoHabitacion CreateTipoHabitacion(DataRow tipo)
-        {
-            return new TipoHabitacion
-            {
-                CantidadHuespedes = Convert.ToInt32(tipo["cantHuespedes"]),
-                Codigo = Convert.ToInt32(tipo["codigo"]),
-                Descripcion = tipo["descripcion"].ToString(),
-                Porcentual = Convert.ToDecimal(tipo["porcentual"])
-            };
-        }
-
         public override TipoHabitacion Get(int id)
         {
             throw new NotImplementedException();
@@ -52,6 +41,17 @@ namespace FrbaHotel.Repositories
         public override void Delete(TipoHabitacion entity)
         {
             throw new NotImplementedException();
+        }
+
+        private TipoHabitacion CreateTipoHabitacion(DataRow tipo)
+        {
+            return new TipoHabitacion
+            {
+                CantidadHuespedes = Convert.ToInt32(tipo["cantHuespedes"]),
+                Codigo = Convert.ToInt32(tipo["codigo"]),
+                Descripcion = tipo["descripcion"].ToString(),
+                Porcentual = Convert.ToDecimal(tipo["porcentual"])
+            };
         }
     }
 }
