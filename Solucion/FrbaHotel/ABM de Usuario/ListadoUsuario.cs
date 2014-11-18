@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Services.Interfaces;
 using FrbaHotel.Services;
-using FrbaHotel.Entities;
+using FrbaHotel.Entities.DTOs;
 
 namespace FrbaHotel.ABM_de_Usuario
 {
@@ -103,6 +103,20 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             var form = new UsuarioForm();
             this.DisplayForm(form);
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtUsername.Text = string.Empty;
+            txtNombre.Text = string.Empty;
+            txtApellido.Text = string.Empty;
+            txtNumeroDocumento.Text = string.Empty;
+            txtMail.Text = string.Empty;
+            txtTelefono.Text = string.Empty;
+            txtDireccion.Text = string.Empty;
+            txtFechaNacimiento.Text = string.Empty;
+            cmbRol.SelectedValue = "0";
+            cmbTipoDocumento.SelectedValue = "0";
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FrbaHotel.Entities
+namespace FrbaHotel.Entities.DTOs
 {
     public class UsuarioDTO
     {
