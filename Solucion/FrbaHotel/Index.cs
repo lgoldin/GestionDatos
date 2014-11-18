@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using FrbaHotel.Login;
 using FrbaHotel.ABM_de_Rol;
 using FrbaHotel.ABM_de_Usuario;
+using FrbaHotel.ABM_de_Habitacion;
 
 namespace FrbaHotel
 {
@@ -78,6 +79,12 @@ namespace FrbaHotel
         private void listadoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = new ListadoUsuario();
+            DisplayForm(form);
+        }
+
+        private void listadoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var form = new ListadoHabitacion();
             DisplayForm(form);
         }
     }

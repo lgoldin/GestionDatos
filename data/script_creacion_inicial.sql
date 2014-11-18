@@ -286,7 +286,7 @@ BEGIN
 CREATE TABLE [Frutillitas].[TipoHabitacion](
 	[codigo] [numeric](18, 0) NOT NULL PRIMARY KEY,
 	[descripcion] [nvarchar](255) NULL,
-	[procentual] [numeric](18, 2) NULL
+	[porcentual] [numeric](18, 2) NULL
 ) ON [PRIMARY]
 END
 GO
