@@ -733,6 +733,25 @@ GO
 INSERT INTO [Frutillitas].[Pais]([nombre], [nacionalidad]) VALUES ('Argentina', 'Argentino')
 GO
 
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Usuario')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Hotel')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Habitacion')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Regimen')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Cliente')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Reserva')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Estadia')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('EstadiaConsumible')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Factura')
+GO
+
 INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Administrador', 1)
 GO
 INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Recepcionista', 1)
@@ -740,7 +759,31 @@ GO
 INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Guest', 1)
 GO
 
+INSERT INTO [Frutillitas].[RolFuncionalidad]([rolId], [funcionalidadId])
+SELECT r.[id], f.[id]
+FROM [Frutillitas].[Rol] r, [Frutillitas].[Funcionalidad] f
+WHERE r.[nombre] = 'Administrador'
+GO
+
+INSERT INTO [Frutillitas].[RolFuncionalidad]([rolId], [funcionalidadId])
+SELECT r.[id], f.[id]
+FROM [Frutillitas].[Rol] r, [Frutillitas].[Funcionalidad] f
+WHERE r.[nombre] = 'Recepcionista' AND f.[nombre] IN ('Cliente', 'Reserva', 'Estadia', 'EstadiaConsumible', 'Factura')
+GO
+
+INSERT INTO [Frutillitas].[RolFuncionalidad]([rolId], [funcionalidadId])
+SELECT r.[id], f.[id]
+FROM [Frutillitas].[Rol] r, [Frutillitas].[Funcionalidad] f
+WHERE r.[nombre] = 'Guest' AND f.[nombre] = 'Reserva'
+GO
+
 INSERT INTO [Frutillitas].[Usuario]([username], [password], [habilitado]) VALUES ('admin', 0xE6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7, 1)
+GO
+
+INSERT INTO [Frutillitas].[UsuarioRol]([usuarioId], [rolId])
+SELECT u.[id], r.[id]
+FROM [Frutillitas].[Usuario] u, [Frutillitas].[Rol] r
+WHERE u.[username] = 'admin' AND r.[nombre] = 'Administrador'
 GO
 
 INSERT INTO [Frutillitas].[Ciudad]([nombre], [paisId])
