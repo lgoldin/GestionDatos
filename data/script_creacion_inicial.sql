@@ -740,7 +740,7 @@ GO
 INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Guest', 1)
 GO
 
-INSERT INTO [Frutillitas].[Usuario]([username]/*, [password]*/, [habilitado]) VALUES ('admin'/*, 'w23e'*/, 1)
+INSERT INTO [Frutillitas].[Usuario]([username], [password], [habilitado]) VALUES ('admin', 0xE6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7, 1)
 GO
 
 INSERT INTO [Frutillitas].[Ciudad]([nombre], [paisId])
