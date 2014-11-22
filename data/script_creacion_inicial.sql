@@ -46,11 +46,14 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaHistorial_Usuario]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaHistorial]'))
 ALTER TABLE [Frutillitas].[ReservaHistorial] DROP CONSTRAINT [FK_ReservaHistorial_Usuario]
 GO
-IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaCancelacion_Reserva]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaCancelacion]'))
-ALTER TABLE [Frutillitas].[ReservaCancelacion] DROP CONSTRAINT [FK_ReservaCancelacion_Reserva]
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaLog_Reserva]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]'))
+ALTER TABLE [Frutillitas].[ReservaLog] DROP CONSTRAINT [FK_ReservaLog_Reserva]
 GO
-IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaCancelacion_Usuario]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaCancelacion]'))
-ALTER TABLE [Frutillitas].[ReservaCancelacion] DROP CONSTRAINT [FK_ReservaCancelacion_Usuario]
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaLog_Usuario]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]'))
+ALTER TABLE [Frutillitas].[ReservaLog] DROP CONSTRAINT [FK_ReservaLog_Usuario]
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaLog_Tipo]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]'))
+ALTER TABLE [Frutillitas].[ReservaLog] DROP CONSTRAINT [FK_ReservaLog_Tipo]
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Reserva_Cliente]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Reserva]'))
 ALTER TABLE [Frutillitas].[Reserva] DROP CONSTRAINT [FK_Reserva_Cliente]
@@ -175,8 +178,11 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Reserva]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[Reserva]
 GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaCancelacion]') AND type in (N'U'))
-DROP TABLE [Frutillitas].[ReservaCancelacion]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaLogTipo]') AND type in (N'U'))
+DROP TABLE [Frutillitas].[ReservaLogTipo]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]') AND type in (N'U'))
+DROP TABLE [Frutillitas].[ReservaLog]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaEstado]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[ReservaEstado]
@@ -381,12 +387,25 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaCancelacion]') AND type in (N'U'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaLogTipo]') AND type in (N'U'))
 BEGIN
-CREATE TABLE [Frutillitas].[ReservaCancelacion](
+CREATE TABLE [Frutillitas].[ReservaLogTipo](
+	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[descripcion] [nvarchar](255) NULL
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [Frutillitas].[ReservaLog](
 	[reservaCodigo] [numeric](18, 0) NULL,
 	[fecha] [datetime] NULL,
 	[usuarioId] [int] NULL,
+	[tipoId] [int] NOT NULL,
 	[motivo] [nvarchar](255) NULL
 ) ON [PRIMARY]
 END
@@ -677,9 +696,11 @@ GO
 ALTER TABLE [Frutillitas].[ReservaHistorial] ADD CONSTRAINT FK_ReservaHistorial_Usuario FOREIGN KEY (usuarioId) REFERENCES [Frutillitas].[Usuario](id)
 GO
 /*accionId?*/
-ALTER TABLE [Frutillitas].[ReservaCancelacion] ADD CONSTRAINT FK_ReservaCancelacion_Reserva FOREIGN KEY (reservaCodigo) REFERENCES [Frutillitas].[Reserva](codigo)
+ALTER TABLE [Frutillitas].[ReservaLog] ADD CONSTRAINT FK_ReservaLog_Reserva FOREIGN KEY (reservaCodigo) REFERENCES [Frutillitas].[Reserva](codigo)
 GO
-ALTER TABLE [Frutillitas].[ReservaCancelacion] ADD CONSTRAINT FK_ReservaCancelacion_Usuario FOREIGN KEY (usuarioId) REFERENCES [Frutillitas].[Usuario](id)
+ALTER TABLE [Frutillitas].[ReservaLog] ADD CONSTRAINT FK_ReservaLog_Usuario FOREIGN KEY (usuarioId) REFERENCES [Frutillitas].[Usuario](id)
+GO
+ALTER TABLE [Frutillitas].[ReservaLog] ADD CONSTRAINT FK_ReservaLog_Tipo FOREIGN KEY (tipoId) REFERENCES [Frutillitas].[ReservaLogTipo](id)
 GO
 ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Regimen FOREIGN KEY (regimenCodigo) REFERENCES [Frutillitas].[Regimen](codigo)
 GO
@@ -864,6 +885,13 @@ GO
 INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Cancelada-No-Show')
 GO
 INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Efectivizada')
+GO
+
+INSERT INTO [Frutillitas].[ReservaLogTipo]([descripcion]) VALUES ('Creacion')
+GO
+INSERT INTO [Frutillitas].[ReservaLogTipo]([descripcion]) VALUES ('Modificacion')
+GO
+INSERT INTO [Frutillitas].[ReservaLogTipo]([descripcion]) VALUES ('Cancelacion')
 GO
 
 SET IDENTITY_INSERT [Frutillitas].[Reserva] ON
