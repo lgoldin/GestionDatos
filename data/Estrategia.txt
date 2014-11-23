@@ -1,0 +1,6 @@
+- Por el campo Cliente_Pasaporte_Nro se infirió unicamente el tipo de documento "Pasaporte" y que el tipo de documento de todos los clientes son el mismo.
+- Se puso a todas las direcciones de los hoteles como parte de el pais Argentina.
+- Se decidió ponerle a todos los hoteles todos los regimenes posibles y no solo los que actualmente se estaban consumiendo en la tabla maestra.
+- Para las reservas y estadías se decidió usar campos de "fecha hasta", con lo cual le sumamos la cantidad de días a la "fecha desde" que figuraba en la tabla maestra.
+- No se puso constrain de unicidad en la Tabla cliente sobre los campos numero de documento, nombre y apellido debido a los datos inconsistentes de la tabla maestra, se decidió resolverlo con un trigger.
+- Por no tener datos de tarjetas asumimos que las facturas fueron todas pagadas en efectivo.
