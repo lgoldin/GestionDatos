@@ -55,45 +55,50 @@
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(134, 38);
+            this.txtNombre.Location = new System.Drawing.Point(179, 47);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(189, 20);
+            this.txtNombre.Size = new System.Drawing.Size(251, 22);
             this.txtNombre.TabIndex = 37;
             // 
             // lblNombre
             // 
             this.lblNombre.AutoSize = true;
             this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombre.Location = new System.Drawing.Point(32, 38);
+            this.lblNombre.Location = new System.Drawing.Point(43, 47);
+            this.lblNombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(69, 20);
+            this.lblNombre.Size = new System.Drawing.Size(87, 25);
             this.lblNombre.TabIndex = 36;
             this.lblNombre.Text = "Nombre:";
             // 
             // cmbPaises
             // 
             this.cmbPaises.FormattingEnabled = true;
-            this.cmbPaises.Location = new System.Drawing.Point(134, 79);
+            this.cmbPaises.Location = new System.Drawing.Point(179, 97);
+            this.cmbPaises.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbPaises.Name = "cmbPaises";
-            this.cmbPaises.Size = new System.Drawing.Size(189, 21);
+            this.cmbPaises.Size = new System.Drawing.Size(251, 24);
             this.cmbPaises.TabIndex = 45;
             this.cmbPaises.SelectedIndexChanged += new System.EventHandler(this.cmbPaises_SelectedIndexChanged);
             // 
             // cmbCiudades
             // 
             this.cmbCiudades.FormattingEnabled = true;
-            this.cmbCiudades.Location = new System.Drawing.Point(474, 78);
+            this.cmbCiudades.Location = new System.Drawing.Point(632, 96);
+            this.cmbCiudades.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbCiudades.Name = "cmbCiudades";
-            this.cmbCiudades.Size = new System.Drawing.Size(189, 21);
+            this.cmbCiudades.Size = new System.Drawing.Size(251, 24);
             this.cmbCiudades.TabIndex = 44;
             // 
             // lblCiudad
             // 
             this.lblCiudad.AutoSize = true;
             this.lblCiudad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCiudad.Location = new System.Drawing.Point(372, 79);
+            this.lblCiudad.Location = new System.Drawing.Point(496, 97);
+            this.lblCiudad.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCiudad.Name = "lblCiudad";
-            this.lblCiudad.Size = new System.Drawing.Size(63, 20);
+            this.lblCiudad.Size = new System.Drawing.Size(81, 25);
             this.lblCiudad.TabIndex = 43;
             this.lblCiudad.Text = "Ciudad:";
             // 
@@ -101,27 +106,30 @@
             // 
             this.lblPais.AutoSize = true;
             this.lblPais.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPais.Location = new System.Drawing.Point(32, 79);
+            this.lblPais.Location = new System.Drawing.Point(43, 97);
+            this.lblPais.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPais.Name = "lblPais";
-            this.lblPais.Size = new System.Drawing.Size(43, 20);
+            this.lblPais.Size = new System.Drawing.Size(56, 25);
             this.lblPais.TabIndex = 42;
             this.lblPais.Text = "Pais:";
             // 
             // cmbEstrellas
             // 
             this.cmbEstrellas.FormattingEnabled = true;
-            this.cmbEstrellas.Location = new System.Drawing.Point(474, 36);
+            this.cmbEstrellas.Location = new System.Drawing.Point(632, 44);
+            this.cmbEstrellas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbEstrellas.Name = "cmbEstrellas";
-            this.cmbEstrellas.Size = new System.Drawing.Size(189, 21);
+            this.cmbEstrellas.Size = new System.Drawing.Size(251, 24);
             this.cmbEstrellas.TabIndex = 47;
             // 
             // lblEstrellas
             // 
             this.lblEstrellas.AutoSize = true;
             this.lblEstrellas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEstrellas.Location = new System.Drawing.Point(372, 36);
+            this.lblEstrellas.Location = new System.Drawing.Point(496, 44);
+            this.lblEstrellas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEstrellas.Name = "lblEstrellas";
-            this.lblEstrellas.Size = new System.Drawing.Size(70, 20);
+            this.lblEstrellas.Size = new System.Drawing.Size(86, 25);
             this.lblEstrellas.TabIndex = 46;
             this.lblEstrellas.Text = "Estrellas";
             // 
@@ -139,28 +147,33 @@
             this.Telefono,
             this.Direccion,
             this.FechaCreacion});
-            this.dgHoteles.Location = new System.Drawing.Point(36, 194);
+            this.dgHoteles.Location = new System.Drawing.Point(48, 239);
+            this.dgHoteles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgHoteles.Name = "dgHoteles";
-            this.dgHoteles.Size = new System.Drawing.Size(845, 150);
+            this.dgHoteles.RowTemplate.Height = 24;
+            this.dgHoteles.Size = new System.Drawing.Size(1127, 185);
             this.dgHoteles.TabIndex = 48;
             this.dgHoteles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgHoteles_CellContentClick);
             // 
             // btnLimpiar
             // 
             this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(36, 128);
+            this.btnLimpiar.Location = new System.Drawing.Point(48, 158);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(107, 34);
+            this.btnLimpiar.Size = new System.Drawing.Size(143, 42);
             this.btnLimpiar.TabIndex = 49;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnBuscar
             // 
             this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscar.Location = new System.Drawing.Point(556, 128);
+            this.btnBuscar.Location = new System.Drawing.Point(741, 158);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(107, 34);
+            this.btnBuscar.Size = new System.Drawing.Size(143, 42);
             this.btnBuscar.TabIndex = 50;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
@@ -235,15 +248,16 @@
             // 
             // FechaCreacion
             // 
+            this.FechaCreacion.DataPropertyName = "FechaCreacion";
             this.FechaCreacion.HeaderText = "Fecha de creacion";
             this.FechaCreacion.Name = "FechaCreacion";
             this.FechaCreacion.ReadOnly = true;
             // 
             // ListadoHotel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(904, 367);
+            this.ClientSize = new System.Drawing.Size(1205, 452);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.dgHoteles);
@@ -255,6 +269,7 @@
             this.Controls.Add(this.lblPais);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.lblNombre);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ListadoHotel";
             this.Text = "ListadoHotel";
             this.Load += new System.EventHandler(this.ListadoHotel_Load);

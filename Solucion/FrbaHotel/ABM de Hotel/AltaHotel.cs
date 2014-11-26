@@ -102,10 +102,7 @@ namespace FrbaHotel.ABM_de_Hotel
             {
                 errorMessage += System.Environment.NewLine + "Escriba el nombre";
             }
-            if (string.IsNullOrEmpty(txtTelefono.Text))
-            {
-                errorMessage += System.Environment.NewLine + "Escriba el telefono";
-            }
+            
             return errorMessage;
         }
 
@@ -160,6 +157,16 @@ namespace FrbaHotel.ABM_de_Hotel
         }
 
         private void lblPais_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblFechaCreacion_Click(object sender, EventArgs e)
         {
 
         }

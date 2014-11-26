@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E55A70D9-161E-4014-9AE6-3D5998BC9ACC}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -48,7 +48,9 @@
   <ItemGroup>
     <Compile Include="ClienteService.cs" />
     <Compile Include="CiudadService.cs" />
+    <Compile Include="ReservaService.cs" />
     <Compile Include="HabitacionService.cs" />
+    <Compile Include="Interfaces\IReservaService.cs" />
     <Compile Include="TipoHabitacionService.cs" />
     <Compile Include="Interfaces\IHabitacionService.cs" />
     <Compile Include="Interfaces\ITipoHabitacionService.cs" />

@@ -19,8 +19,6 @@ namespace FrbaHotel.Entities.DTOs
 
         public int Estrellas { get; set; }
 
-        public int RecargaEstrella { get; set; }
-
         public string Mail { get; set; }
 
         public string FechaCreacion { get; set; }
