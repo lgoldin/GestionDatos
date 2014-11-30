@@ -62,6 +62,13 @@ namespace FrbaHotel.Repositories
             }
         }
 
+        public int InsertHotelInhabilitado(HotelInhabilitacion hotelInhabilitado)
+        {
+                SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotelInhabilitado");
+                AddHotelInhabilitadoParameters(hotelInhabilitado, command);
+                return DBConnection.ExecuteNonQuery(command);
+        }
+
         public override void Update(Hotel entity)
         {
             using (var transaction = new TransactionScope())
@@ -92,6 +99,15 @@ namespace FrbaHotel.Repositories
             command.Parameters.AddWithValue("@nombre", hotel.Nombre);
             command.Parameters.AddWithValue("@mail", hotel.Mail);
             command.Parameters.AddWithValue("@telefono", hotel.Telefono);
+        }
+
+        private void AddHotelInhabilitadoParameters(HotelInhabilitacion hotelInhabilitado, SqlCommand command)
+        {
+            command.Parameters.AddWithValue("@hotelId", hotelInhabilitado.HotelId);
+            command.Parameters.AddWithValue("@descripcion", hotelInhabilitado.Descripcion);
+            command.Parameters.AddWithValue("@fechaCreacion", hotelInhabilitado.FechaCreacion);
+            command.Parameters.AddWithValue("@fechaFin", hotelInhabilitado.FechaFin);
+            command.Parameters.AddWithValue("@fechaInicio", hotelInhabilitado.FechaInicio);
         }
 
         private Hotel CreateHotel(DataRow row)

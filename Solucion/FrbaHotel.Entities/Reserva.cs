@@ -7,20 +7,20 @@ namespace FrbaHotel.Entities
 {
     public class Reserva
     {
-        int Codigo { get; set; }
+        public int Codigo { get; set; }
 
-        DateTime FechaDesde { get; set; }
+        public DateTime FechaDesde { get; set; }
 
-        DateTime FechaHasta { get; set; }
+        public DateTime FechaHasta { get; set; }
 
-        int RegimenCodigo { get; set; }
+        public int RegimenCodigo { get; set; }
 
-        int HotelId { get; set; }
+        public int HotelId { get; set; }
 
-        int EstadoId { get; set; }
+        public int EstadoId { get; set; }
 
-        int ClienteId { get; set; }
+        public int ClienteId { get; set; }
 
-        DateTime FechaCreacion { get; set; }
+        public DateTime FechaCreacion { get; set; }
     }
 }

@@ -21,6 +21,13 @@ namespace FrbaHotel.Services
             return regimenes;
         }
 
+
+        public int GetCountActiveReservaBetweenDatesByHotelId(int hotelId, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            ReservaRepository repository = new ReservaRepository();
+            return repository.GetActiveReservaBetweenDatesByHotelId(hotelId, fechaDesde, fechaHasta).Count;
+        }
+
         #endregion
     }
 }

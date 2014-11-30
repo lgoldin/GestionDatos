@@ -50,6 +50,7 @@
     <Compile Include="Cliente.cs" />
     <Compile Include="Ciudad.cs" />
     <Compile Include="DTOs\HabitacionDTO.cs" />
+    <Compile Include="HotelInhabilitacion.cs" />
     <Compile Include="Reserva.cs" />
     <Compile Include="TipoHabitacion.cs" />
     <Compile Include="Habitacion.cs" />

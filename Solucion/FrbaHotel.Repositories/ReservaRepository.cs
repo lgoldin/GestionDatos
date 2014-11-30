@@ -53,6 +53,24 @@ namespace FrbaHotel.Repositories
             return regimenes;
         }
 
+        public List<Reserva> GetActiveReservaBetweenDatesByHotelId(int hotelId, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            List<Reserva> reservas = new List<Reserva>();
+
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetActiveReservaBetweenDatesByHotel");
+            command.Parameters.AddWithValue("@hotelId", hotelId);
+            command.Parameters.AddWithValue("@fechaDesde", fechaDesde);
+            command.Parameters.AddWithValue("@fechaHasta", fechaHasta);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
+            foreach (DataRow reserva in collection)
+            {
+                reservas.Add(new Reserva() { Codigo = Convert.ToInt32(reserva["codigo"]), HotelId = hotelId});
+            }
+
+            return reservas;
+        }
+
         private Regimen CreateRegimen(DataRow row)
         {
             Regimen regimen = new Regimen();

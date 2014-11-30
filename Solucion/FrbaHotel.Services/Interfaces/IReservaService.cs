@@ -9,5 +9,7 @@ namespace FrbaHotel.Services.Interfaces
     public interface IReservaService
     {
         List<Regimen> GetActiveReservaRegimenesByHotelId(int hotelId);
+
+        int GetCountActiveReservaBetweenDatesByHotelId(int hotelId, DateTime fechaDesde, DateTime fechaHasta);
     }
 }

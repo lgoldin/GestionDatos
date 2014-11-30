@@ -71,6 +71,13 @@ namespace FrbaHotel.Services
             return this.GetAll(null,null,null,null).FirstOrDefault(x => x.Id == id);
         }
 
+
+        public int InsertHotelInhabilitado(HotelInhabilitacion hotelInhabilitado)
+        {
+            var repository = new HotelRepository();
+            return repository.InsertHotelInhabilitado(hotelInhabilitado);
+        }
+
         #endregion
     }
 }
