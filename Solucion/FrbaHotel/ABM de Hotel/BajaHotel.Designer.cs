@@ -35,6 +35,8 @@
             this.dateHasta = new System.Windows.Forms.DateTimePicker();
             this.lblFechaHasta = new System.Windows.Forms.Label();
             this.btnCrear = new System.Windows.Forms.Button();
+            this.lblDescripcion = new System.Windows.Forms.Label();
+            this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblNombre
@@ -60,7 +62,7 @@
             // 
             // dateDesde
             // 
-            this.dateDesde.Location = new System.Drawing.Point(164, 127);
+            this.dateDesde.Location = new System.Drawing.Point(164, 76);
             this.dateDesde.Margin = new System.Windows.Forms.Padding(4);
             this.dateDesde.Name = "dateDesde";
             this.dateDesde.Size = new System.Drawing.Size(265, 22);
@@ -70,7 +72,7 @@
             // 
             this.lblFechaDesde.AutoSize = true;
             this.lblFechaDesde.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFechaDesde.Location = new System.Drawing.Point(28, 127);
+            this.lblFechaDesde.Location = new System.Drawing.Point(28, 76);
             this.lblFechaDesde.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFechaDesde.Name = "lblFechaDesde";
             this.lblFechaDesde.Size = new System.Drawing.Size(135, 25);
@@ -79,7 +81,7 @@
             // 
             // dateHasta
             // 
-            this.dateHasta.Location = new System.Drawing.Point(164, 174);
+            this.dateHasta.Location = new System.Drawing.Point(164, 123);
             this.dateHasta.Margin = new System.Windows.Forms.Padding(4);
             this.dateHasta.Name = "dateHasta";
             this.dateHasta.Size = new System.Drawing.Size(265, 22);
@@ -89,7 +91,7 @@
             // 
             this.lblFechaHasta.AutoSize = true;
             this.lblFechaHasta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFechaHasta.Location = new System.Drawing.Point(28, 174);
+            this.lblFechaHasta.Location = new System.Drawing.Point(28, 123);
             this.lblFechaHasta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFechaHasta.Name = "lblFechaHasta";
             this.lblFechaHasta.Size = new System.Drawing.Size(129, 25);
@@ -102,16 +104,37 @@
             this.btnCrear.Location = new System.Drawing.Point(33, 241);
             this.btnCrear.Margin = new System.Windows.Forms.Padding(4);
             this.btnCrear.Name = "btnCrear";
-            this.btnCrear.Size = new System.Drawing.Size(156, 37);
+            this.btnCrear.Size = new System.Drawing.Size(224, 37);
             this.btnCrear.TabIndex = 51;
-            this.btnCrear.Text = "Crear Hotel";
+            this.btnCrear.Text = "Inhabilitar Hotel";
             this.btnCrear.UseVisualStyleBackColor = true;
+            this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
+            // 
+            // lblDescripcion
+            // 
+            this.lblDescripcion.AutoSize = true;
+            this.lblDescripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescripcion.Location = new System.Drawing.Point(28, 169);
+            this.lblDescripcion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDescripcion.Name = "lblDescripcion";
+            this.lblDescripcion.Size = new System.Drawing.Size(125, 25);
+            this.lblDescripcion.TabIndex = 52;
+            this.lblDescripcion.Text = "Descripcion: ";
+            // 
+            // txtDescripcion
+            // 
+            this.txtDescripcion.Location = new System.Drawing.Point(161, 171);
+            this.txtDescripcion.Name = "txtDescripcion";
+            this.txtDescripcion.Size = new System.Drawing.Size(268, 22);
+            this.txtDescripcion.TabIndex = 53;
             // 
             // BajaHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 310);
+            this.Controls.Add(this.txtDescripcion);
+            this.Controls.Add(this.lblDescripcion);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.dateHasta);
             this.Controls.Add(this.lblFechaHasta);
@@ -136,5 +159,7 @@
         private System.Windows.Forms.DateTimePicker dateHasta;
         private System.Windows.Forms.Label lblFechaHasta;
         private System.Windows.Forms.Button btnCrear;
+        private System.Windows.Forms.Label lblDescripcion;
+        private System.Windows.Forms.TextBox txtDescripcion;
     }
 }

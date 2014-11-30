@@ -124,7 +124,7 @@ namespace FrbaHotel.ABM_de_Hotel
                         MessageBox.Show("El hotel se ha modificado correctamente");
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     MessageBox.Show("Ocurrió un error al modificar el hotel");
                 }
