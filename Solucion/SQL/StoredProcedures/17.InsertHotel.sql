@@ -17,7 +17,6 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[InsertHote
 @estrellas numeric(18, 0),
 @fechaCreacion datetime,
 @nombre nvarchar(255),
-@recargaEstrella numeric(18, 0),
 @mail nvarchar(255),
 @telefono nvarchar(255)
 
@@ -32,7 +31,6 @@ INSERT INTO [Frutillitas].[Hotel]
            ,[ciudadId]
            ,[direccion]
            ,[estrellas]
-           ,[recargaEstrella]
            ,[mail]
            ,[fechaCreacion]
 		   ,[telefono])
@@ -41,7 +39,6 @@ INSERT INTO [Frutillitas].[Hotel]
 		   ,@ciudadId
            ,@direccion
            ,@estrellas
-           ,@recargaEstrella
            ,@mail
            ,@fechaCreacion
 		   ,@telefono)

@@ -100,13 +100,33 @@ namespace FrbaHotel.ABM_de_Hotel
             var grid = (DataGridView)sender;
             if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                Form form = this.isUpdate ? new ABM_de_Hotel.ModificacionHotel(Convert.ToInt32(grid.Rows[e.RowIndex].Cells[1].Value)) : null;
+                Form form;
+                int hotelId = Convert.ToInt32(grid.Rows[e.RowIndex].Cells[1].Value);
+                string hotelName = (grid.Rows[e.RowIndex].Cells[2].Value).ToString();
+                if (this.isUpdate)
+                {
+                    form = new ABM_de_Hotel.ModificacionHotel(hotelId);
+                }
+                else
+                {
+                    form = new ABM_de_Hotel.BajaHotel(hotelId, hotelName);
+                }
+
                 form.Location = this.Location;
                 form.StartPosition = FormStartPosition.Manual;
                 form.FormClosing += delegate { this.Show(); };
                 form.Show();
                 this.Hide();
             }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            this.cmbCiudades.SelectedIndex = 0;
+            this.cmbEstrellas.SelectedIndex = 0;
+            this.cmbPaises.SelectedIndex = 0;
+            txtNombre.Text = string.Empty;
+            this.dgHoteles.DataSource = null;
         }
     }
 }

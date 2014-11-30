@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BAFE3016-AC06-4C43-ABEF-87F21AB5699B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -72,6 +72,12 @@
     </Compile>
     <Compile Include="ABM de Hotel\AltaHotel.Designer.cs">
       <DependentUpon>AltaHotel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Hotel\BajaHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Hotel\BajaHotel.Designer.cs">
+      <DependentUpon>BajaHotel.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Hotel\ListadoHotel.cs">
       <SubType>Form</SubType>
@@ -162,6 +168,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\AltaHotel.resx">
       <DependentUpon>AltaHotel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Hotel\BajaHotel.resx">
+      <DependentUpon>BajaHotel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\ListadoHotel.resx">

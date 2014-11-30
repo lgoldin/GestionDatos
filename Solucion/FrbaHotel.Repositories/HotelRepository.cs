@@ -64,7 +64,17 @@ namespace FrbaHotel.Repositories
 
         public override void Update(Hotel entity)
         {
-            throw new NotImplementedException();
+            using (var transaction = new TransactionScope())
+            {
+                SqlCommand command = DBConnection.CreateStoredProcedure("UpdateHotel");
+                AddHotelParameters(entity, command);
+                command.Parameters.AddWithValue("@id", entity.Id);
+                DBConnection.ExecuteNonQuery(command);
+
+                InsertHotelRegimen(entity, entity.Id);
+
+                transaction.Complete();
+            }
         }
 
         public override void Delete(Hotel entity)
@@ -77,9 +87,9 @@ namespace FrbaHotel.Repositories
             command.Parameters.AddWithValue("@ciudadId", hotel.Ciudad.Id);
             command.Parameters.AddWithValue("@direccion", hotel.Direccion);
             command.Parameters.AddWithValue("@estrellas", hotel.Estrellas);
+            if(hotel.FechaCreacion.Year > 1900)
             command.Parameters.AddWithValue("@fechaCreacion", hotel.FechaCreacion);
             command.Parameters.AddWithValue("@nombre", hotel.Nombre);
-            command.Parameters.AddWithValue("@recargaEstrella", hotel.RecargaEstrella);
             command.Parameters.AddWithValue("@mail", hotel.Mail);
             command.Parameters.AddWithValue("@telefono", hotel.Telefono);
         }
@@ -104,7 +114,6 @@ namespace FrbaHotel.Repositories
                 },
                 Estrellas = Convert.ToInt32(row["Estrellas"]),
                 FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]),
-                RecargaEstrella = Convert.ToInt32(row["RecargaEstrella"]),
                 Mail = row["Mail"].ToString(),
                 Telefono = row["Telefono"].ToString()
             };

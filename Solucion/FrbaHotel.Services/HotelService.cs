@@ -56,6 +56,13 @@ namespace FrbaHotel.Services
             return hotelesDTO;
         }
 
+        public void Update(Hotel hotel)
+        {
+            var repository = new HotelRepository();
+            repository.Update(hotel);
+            
+        }
+
         #region IHotelService Members
 
 

@@ -39,7 +39,6 @@ namespace FrbaHotel.ABM_de_Hotel
             rb3.Checked = hotel.Estrellas == 3;
             rb4.Checked = hotel.Estrellas == 4;
             rb5.Checked = hotel.Estrellas == 5;
-            dateTimePicker1.Value = hotel.FechaCreacion;
 
             chListRegimenes.Items.Clear();
             RegimenService regimenservice = new RegimenService();
@@ -77,7 +76,115 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
+            string error = ValidateForm();
+            if (string.IsNullOrEmpty(error))
+            {
+                try
+                {
+                    Hotel hotel = new Hotel();
+                    hotel.Id = this.hotelId;
+                    hotel.Ciudad = (Ciudad)cmbCiudades.SelectedItem;
+                    hotel.Direccion = txtDireccion.Text;
+                    hotel.Estrellas = GetEstrellas();
+                    hotel.Mail = txtMail.Text;
+                    hotel.Nombre = txtNombre.Text;
+                    hotel.Telefono = txtTelefono.Text;
 
+                    hotel.Regimenes = new List<Regimen>();
+                    for (int i = 0; i < chListRegimenes.Items.Count; i++)
+                    {
+                        if (chListRegimenes.GetItemChecked(i))
+                        {
+                            Regimen regimen = (Regimen)chListRegimenes.Items[i];
+                            hotel.Regimenes.Add(regimen);
+                        }
+                    }
+
+                    ReservaService reservaService = new ReservaService();
+                    List<Regimen> regimenes = reservaService.GetActiveReservaRegimenesByHotelId(this.hotelId);
+
+                    string message = string.Empty;
+                    foreach (Regimen regimen in regimenes)
+                    {
+                        if (!hotel.Regimenes.Any(x => x.Codigo == regimen.Codigo))
+                        {
+                            message += "No puede eliminar el regimen " + regimen.Descripcion + System.Environment.NewLine;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(message))
+                    {
+                        message += "tiene reservas asignadas.";
+                        MessageBox.Show(message);
+                    }
+                    else
+                    {
+                        HotelService hotelService = new HotelService();
+                        hotelService.Update(hotel);
+                        MessageBox.Show("El hotel se ha modificado correctamente");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ocurrió un error al modificar el hotel");
+                }
+            }
+            else
+            {
+                MessageBox.Show(error);
+            }
+        }
+
+        private int GetEstrellas()
+        {
+            if (rb1.Checked)
+                return 1;
+
+            if (rb2.Checked)
+                return 2;
+
+            if (rb3.Checked)
+                return 3;
+
+            if (rb4.Checked)
+            {
+                return 4;
+            }
+            else
+            {
+                return 5;
+            }
+        }
+
+        private string ValidateForm()
+        {
+            string errorMessage = string.Empty;
+            if (cmbCiudades.SelectedValue == null)
+            {
+                errorMessage += "Seleccione una ciudad";
+            }
+            if (cmbPaises.SelectedValue == null)
+            {
+                errorMessage += System.Environment.NewLine + "Seleccione un país";
+            }
+            if (string.IsNullOrEmpty(txtDireccion.Text))
+            {
+                errorMessage += System.Environment.NewLine + "Escriba la dirección";
+            }
+            if (string.IsNullOrEmpty(txtMail.Text))
+            {
+                errorMessage += System.Environment.NewLine + "Escriba el mail";
+            }
+            if (string.IsNullOrEmpty(txtTelefono.Text))
+            {
+                errorMessage += System.Environment.NewLine + "Escriba el telefono";
+            }
+            if (string.IsNullOrEmpty(txtNombre.Text))
+            {
+                errorMessage += System.Environment.NewLine + "Escriba el nombre";
+            }
+            
+            return errorMessage;
         }
 
         private void cmbPaises_SelectedIndexChanged(object sender, EventArgs e)
