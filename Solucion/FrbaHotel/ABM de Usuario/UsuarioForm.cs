@@ -90,7 +90,7 @@ namespace FrbaHotel.ABM_de_Usuario
             cmbTipoDocumento.DataSource = this.TipoDocumentoService.GetAll();
             cmbTipoDocumento.ValueMember = "Id";
             cmbTipoDocumento.DisplayMember = "Nombre";
-            cmbTipoDocumento.SelectedValue = usuario != null ? usuario.TipoDocumento.Id : 0;
+            cmbTipoDocumento.SelectedValue = usuario != null && usuario.TipoDocumento != null ? usuario.TipoDocumento.Id : 0;
         }
 
         private void FillHoteles(Usuario usuario)

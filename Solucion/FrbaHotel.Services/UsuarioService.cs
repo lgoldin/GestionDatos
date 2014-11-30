@@ -64,7 +64,7 @@ namespace FrbaHotel.Services
                     Nombre = usuario.Nombre,
                     NumeroDocumento = usuario.NumeroDocumento,
                     Telefono = usuario.Telefono,
-                    TipoDocumento = usuario.TipoDocumento.Nombre,
+                    TipoDocumento = usuario.TipoDocumento != null ? usuario.TipoDocumento.Nombre : string.Empty,
                     Username = usuario.Username,
                     Habilitado = usuario.Habilitado
                 });
