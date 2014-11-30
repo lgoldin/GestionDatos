@@ -62,6 +62,16 @@ namespace FrbaHotel.Repositories
             return habitaciones;
         }
 
+        public bool Exists(int hotelId, int numero, int piso)
+        {
+            SqlCommand command = DBConnection.CreateStoredProcedure("ExistsHabitacion");
+            command.Parameters.AddWithValue("@hotelId", hotelId);
+            command.Parameters.AddWithValue("@numero", numero);
+            command.Parameters.AddWithValue("@piso", piso);
+
+            return DBConnection.ExecuteScalar(command) == 1 ? true : false;
+        }
+
         private Habitacion CreateHabitacion(DataRow row)
         {
             return new Habitacion
