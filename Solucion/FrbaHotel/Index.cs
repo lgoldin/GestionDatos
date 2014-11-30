@@ -97,7 +97,11 @@ namespace FrbaHotel
 
         private void altaToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            ABM_de_Cliente.AltaCliente form = new ABM_de_Cliente.AltaCliente();
+        }
+
+        private void modificaciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ABM_de_Cliente.ListadoCliente form = new ABM_de_Cliente.ListadoCliente();
             DisplayForm(form);
         }
     }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BAFE3016-AC06-4C43-ABEF-87F21AB5699B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -54,6 +54,12 @@
     </Compile>
     <Compile Include="ABM de Cliente\AltaCliente.Designer.cs">
       <DependentUpon>AltaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Cliente\ListadoCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Cliente\ListadoCliente.Designer.cs">
+      <DependentUpon>ListadoCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Habitacion\HabitacionForm.cs">
       <SubType>Form</SubType>
@@ -157,8 +163,13 @@
       <DependentUpon>AltaCliente.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Cliente\ListadoCliente.resx">
+      <DependentUpon>ListadoCliente.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM de Habitacion\HabitacionForm.resx">
       <DependentUpon>HabitacionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Habitacion\ListadoHabitacion.resx">
       <DependentUpon>ListadoHabitacion.cs</DependentUpon>
@@ -182,6 +193,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Reserva\ListadoReserva.resx">
       <DependentUpon>ListadoReserva.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Rol\AltaRolForm.resx">
       <DependentUpon>AltaRolForm.cs</DependentUpon>

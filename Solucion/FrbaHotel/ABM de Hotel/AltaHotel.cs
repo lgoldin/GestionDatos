@@ -78,11 +78,11 @@ namespace FrbaHotel.ABM_de_Hotel
         private string ValidateForm()
         {
             string errorMessage = string.Empty;
-            if (cmbCiudades.SelectedValue == null)
+            if (Convert.ToInt32(cmbCiudades.SelectedValue) == 0)
             {
                 errorMessage = "Seleccione una ciudad";
             }
-            if (cmbPaises.SelectedValue == null)
+            if (Convert.ToInt32(cmbPaises.SelectedValue) == 0)
             {
                 errorMessage += System.Environment.NewLine + "Seleccione un país";
             }
