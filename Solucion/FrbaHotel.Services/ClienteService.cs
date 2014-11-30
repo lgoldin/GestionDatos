@@ -21,5 +21,11 @@ namespace FrbaHotel.Services
             ClienteRepository clienteRepository = new ClienteRepository();
             return clienteRepository.Insert(cliente);
         }
+
+        public Cliente GetByTipoYNumeroDocumento(int tipoDocumento, string numeroDocumento)
+        {
+            ClienteRepository clienteRepository = new ClienteRepository();
+            return clienteRepository.GetByTipoYNumeroDocumento(tipoDocumento, numeroDocumento);
+        }
     }
 }

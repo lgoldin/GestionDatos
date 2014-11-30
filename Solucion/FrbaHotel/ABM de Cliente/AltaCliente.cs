@@ -53,8 +53,15 @@ namespace FrbaHotel.ABM_de_Cliente
                     cliente.Telefono = txtTelefono.Text;
                     cliente.TipoDeDocumento = new TipoDocumento();
                     cliente.TipoDeDocumento.Id = Convert.ToInt32(cmbTipoDocumento.SelectedValue);
-                    clienteService.Insert(cliente);
-                    MessageBox.Show("El cliente se ha dado de alta");
+                    if (clienteService.GetByTipoYNumeroDocumento(cliente.TipoDeDocumento.Id, cliente.NumeroDocumento).Id == 0)
+                    {
+                        clienteService.Insert(cliente);
+                        MessageBox.Show("El cliente se ha dado de alta");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ya existe un usuario con ese número y tipo de documento");
+                    }
                 }
                 else
                 {

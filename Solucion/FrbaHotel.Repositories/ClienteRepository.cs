@@ -78,5 +78,17 @@ namespace FrbaHotel.Repositories
             cliente = CreateCliente(collection[0]);
             return cliente;
         }
+
+        public Cliente GetByTipoYNumeroDocumento(int tipoDocumento, string numeroDocumento)
+        {
+            Cliente cliente = new Cliente();
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetClienteByTipoYNumeroDocumento");
+            command.Parameters.AddWithValue("@tipoDocoumentoId", tipoDocumento);
+            command.Parameters.AddWithValue("@numeroDocumento", numeroDocumento);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+            if (collection.Count > 0)
+                cliente = CreateCliente(collection[0]);
+            return cliente;
+        }
     }
 }
