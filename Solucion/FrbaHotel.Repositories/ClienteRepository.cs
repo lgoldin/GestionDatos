@@ -12,7 +12,7 @@ namespace FrbaHotel.Repositories
     {
         public override IEnumerable<Cliente> GetAll()
         {
-            throw new NotImplementedException();
+            return this.GetAll(null, null, null, null, null);
         }
 
         public override Cliente Get(int id)
@@ -89,6 +89,31 @@ namespace FrbaHotel.Repositories
             if (collection.Count > 0)
                 cliente = CreateCliente(collection[0]);
             return cliente;
+        }
+
+        public List<Cliente> GetAll(string nombre, string apellido, string mail, string numeroDocumento, int? tipoDocumento)
+        {
+            var clientes = new List<Cliente>();
+
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetClientes");
+            AddGetClientesParameters(nombre, apellido, mail, numeroDocumento, tipoDocumento, command);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
+            foreach (DataRow cliente in collection)
+            {
+                clientes.Add(this.CreateCliente(cliente));
+            }
+
+            return clientes;
+        }
+
+        private void AddGetClientesParameters(string nombre, string apellido, string mail, string numeroDocumento, int? tipoDocumento, SqlCommand command)
+        {
+            command.Parameters.AddWithValue("@nombre", nombre);
+            command.Parameters.AddWithValue("@apellido", apellido);
+            command.Parameters.AddWithValue("@mail", mail);
+            command.Parameters.AddWithValue("@numeroDocumento", numeroDocumento);
+            command.Parameters.AddWithValue("@tipoDocumentoId", tipoDocumento);
         }
     }
 }
