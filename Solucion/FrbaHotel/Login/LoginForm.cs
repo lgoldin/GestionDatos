@@ -21,11 +21,14 @@ namespace FrbaHotel.Login
 
             this.LoginService = new LoginService();
             this.FuncionalidadService = new FuncionalidadService();
+            this.RolService = new RolService();
         }
 
         public ILoginService LoginService { get; set; }
 
         public IFuncionalidadService FuncionalidadService { get; set; }
+
+        public IRolService RolService { get; set; }
 
         private void ButtonIngresar_Click(object sender, EventArgs e)
         {
@@ -51,6 +54,24 @@ namespace FrbaHotel.Login
             form.FormClosing += delegate { this.Show(); };
             form.Show();
             this.Hide();
+        }
+
+        private void btnGuest_Click(object sender, EventArgs e)
+        {
+            var usuario = new Usuario
+                              {
+                                  Rol = this.RolService.GetAll().FirstOrDefault(x => x.Nombre == "Guest"),
+                                  Nombre = "Guest",
+                                  Username = "Guest",
+                                  Apellido = "Guest"
+                              };
+
+            usuario.Rol.Funcionalidades = this.FuncionalidadService.GetByRolId(usuario.Rol.Id);
+
+            Session.Usuario = usuario;
+            
+            var form = new Index();
+            this.DisplayForm(form);
         }
     }
 }

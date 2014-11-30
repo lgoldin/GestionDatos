@@ -33,6 +33,7 @@
             this.ButtonIngresar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnGuest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // TextBoxUsername
@@ -78,11 +79,22 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Password";
             // 
+            // btnGuest
+            // 
+            this.btnGuest.Location = new System.Drawing.Point(12, 224);
+            this.btnGuest.Name = "btnGuest";
+            this.btnGuest.Size = new System.Drawing.Size(601, 72);
+            this.btnGuest.TabIndex = 7;
+            this.btnGuest.Text = "Ingresar como invitado";
+            this.btnGuest.UseVisualStyleBackColor = true;
+            this.btnGuest.Click += new System.EventHandler(this.btnGuest_Click);
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 230);
+            this.ClientSize = new System.Drawing.Size(625, 308);
+            this.Controls.Add(this.btnGuest);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ButtonIngresar);
@@ -102,5 +114,6 @@
         private System.Windows.Forms.Button ButtonIngresar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnGuest;
     }
 }

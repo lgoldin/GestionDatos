@@ -92,7 +92,33 @@ namespace FrbaHotel
 
         private void Index_Load(object sender, EventArgs e)
         {
-            var funcionalidades = Session.Usuario.Rol.Funcionalidades;
+            this.usuarioToolStripMenuItem.Visible = false;
+            this.hotelToolStripMenuItem.Visible = false;
+            this.rolToolStripMenuItem.Visible = false;
+            this.habitacionToolStripMenuItem.Visible = false;
+            this.clienteToolStripMenuItem.Visible = false;
+           
+            List<Funcionalidad> funcionalidades = Session.Usuario.Rol.Funcionalidades;
+            if (funcionalidades.Any(x => x.Nombre == "Usuario"))
+            {
+                this.usuarioToolStripMenuItem.Visible = true;
+                this.rolToolStripMenuItem.Visible = true;
+            }
+
+            if (funcionalidades.Any(x => x.Nombre == "Hotel"))
+            {
+                this.hotelToolStripMenuItem.Visible = true;
+            }
+
+            if (funcionalidades.Any(x => x.Nombre == "Habitacion"))
+            {
+                this.habitacionToolStripMenuItem.Visible = true;
+            }
+
+            if (funcionalidades.Any(x => x.Nombre == "Cliente"))
+            {
+                this.clienteToolStripMenuItem.Visible = true;
+            }
         }
 
         private void altaToolStripMenuItem_Click_1(object sender, EventArgs e)
