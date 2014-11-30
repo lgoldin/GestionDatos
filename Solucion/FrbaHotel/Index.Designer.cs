@@ -39,9 +39,9 @@
             this.altaToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.bajaToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.modificacionToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
             this.habitacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listadoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -135,16 +135,6 @@
             this.modificacionToolStripMenuItem2.Text = "Modificacion";
             this.modificacionToolStripMenuItem2.Click += new System.EventHandler(this.modificacionToolStripMenuItem2_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(23, 78);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(324, 20);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Bienvenido al administrador de hoteles!";
-            // 
             // habitacionToolStripMenuItem
             // 
             this.habitacionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -156,9 +146,19 @@
             // listadoToolStripMenuItem1
             // 
             this.listadoToolStripMenuItem1.Name = "listadoToolStripMenuItem1";
-            this.listadoToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.listadoToolStripMenuItem1.Size = new System.Drawing.Size(112, 22);
             this.listadoToolStripMenuItem1.Text = "Listado";
             this.listadoToolStripMenuItem1.Click += new System.EventHandler(this.listadoToolStripMenuItem1_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(23, 78);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(324, 20);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Bienvenido al administrador de hoteles!";
             // 
             // Index
             // 
@@ -170,6 +170,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Index";
             this.Text = "Index";
+            this.Load += new System.EventHandler(this.Index_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

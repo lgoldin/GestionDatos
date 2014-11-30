@@ -20,9 +20,12 @@ namespace FrbaHotel.Login
             InitializeComponent();
 
             this.LoginService = new LoginService();
+            this.FuncionalidadService = new FuncionalidadService();
         }
 
         public ILoginService LoginService { get; set; }
+
+        public IFuncionalidadService FuncionalidadService { get; set; }
 
         private void ButtonIngresar_Click(object sender, EventArgs e)
         {
@@ -30,6 +33,8 @@ namespace FrbaHotel.Login
 
             if (usuario != null)
             {
+                usuario.Rol.Funcionalidades = this.FuncionalidadService.GetByRolId(usuario.Rol.Id);
+                Session.Usuario = usuario;
                 var form = new Index();
                 this.DisplayForm(form);
             }

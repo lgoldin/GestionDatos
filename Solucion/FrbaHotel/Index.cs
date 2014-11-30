@@ -10,6 +10,7 @@ using FrbaHotel.Login;
 using FrbaHotel.ABM_de_Rol;
 using FrbaHotel.ABM_de_Usuario;
 using FrbaHotel.ABM_de_Habitacion;
+using FrbaHotel.Entities;
 
 namespace FrbaHotel
 {
@@ -87,6 +88,11 @@ namespace FrbaHotel
         {
             var form = new ListadoHabitacion();
             DisplayForm(form);
+        }
+
+        private void Index_Load(object sender, EventArgs e)
+        {
+            var funcionalidades = Session.Usuario.Rol.Funcionalidades;
         }
     }
 }
