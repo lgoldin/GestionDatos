@@ -71,5 +71,31 @@ namespace FrbaHotel.ABM_de_Habitacion
             chkFrente.Checked = false;
             txtDescripcion.Text = string.Empty;
         }
+
+        private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            var form = new HabitacionForm();
+            this.DisplayForm(form);
+        }
+
+        private void DisplayForm(Form form)
+        {
+            form.Location = this.Location;
+            form.StartPosition = FormStartPosition.Manual;
+            form.FormClosing += delegate { this.Show(); };
+            form.Show();
+            this.Hide();
+        }
+
+        private void dvgHabitacion_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                DataGridViewRow row = dvgHabitacion.Rows[e.RowIndex];
+                DataGridViewCell cell = row.Cells["Codigo"];
+                var form = new HabitacionForm((int)cell.Value);
+                this.DisplayForm(form);
+            }
+        }
     }
 }

@@ -22,5 +22,10 @@ namespace FrbaHotel.Entities
         public string Descripcion { get; set; }
 
         public bool Activa { get; set; }
+
+        public bool IsNew()
+        {
+            return this.Id == 0;
+        }
     }
 }
