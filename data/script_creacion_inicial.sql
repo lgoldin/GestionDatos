@@ -999,10 +999,10 @@ INSERT INTO [Frutillitas].[FacturaTipoPago]([descripcion]) VALUES ('Tarjeta')
 GO
 
 INSERT INTO [Frutillitas].[Factura]([numero], [fecha], [total], [estadiaId], [tipoPagoId])
-SELECT DISTINCT [Factura_Nro], [Factura_Fecha], [Factura_Total], [id], (SELECT [id] FROM [Frutillitas].[FacturaTipoPago] WHERE [descripcion] = 'Efectivo')
+SELECT DISTINCT [Factura_Nro], [Factura_Fecha], [Factura_Total] + [Item_Factura_Monto], [id], (SELECT [id] FROM [Frutillitas].[FacturaTipoPago] WHERE [descripcion] = 'Efectivo')
 FROM [Frutillitas].[Estadia]
 INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [reservaCodigo] = [Reserva_Codigo]
-WHERE [Factura_Nro] IS NOT NULL
+WHERE [Factura_Nro] IS NOT NULL AND [Consumible_Precio] IS NULL AND [Item_Factura_Monto] IS NOT NULL
 GO
 
 INSERT INTO [Frutillitas].[FacturaItem]([facturaNumero], [descripcion], [precio])
