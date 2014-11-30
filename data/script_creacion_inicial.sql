@@ -67,9 +67,6 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Reserva_Estado]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Reserva]'))
 ALTER TABLE [Frutillitas].[Reserva] DROP CONSTRAINT [FK_Reserva_Estado]
 GO
-IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Localidad_Pais]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Localidad]'))
-ALTER TABLE [Frutillitas].[Localidad] DROP CONSTRAINT [FK_Localidad_Pais]
-GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_HotelRegimen_Hotel]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[HotelRegimen]'))
 ALTER TABLE [Frutillitas].[HotelRegimen] DROP CONSTRAINT [FK_HotelRegimen_Hotel]
 GO
@@ -117,9 +114,6 @@ ALTER TABLE [Frutillitas].[EstadiaCliente] DROP CONSTRAINT [FK_EstadiaCliente_Es
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Estadia_Reserva]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Estadia]'))
 ALTER TABLE [Frutillitas].[Estadia] DROP CONSTRAINT [FK_Estadia_Reserva]
-GO
-IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Cliente_Localidad]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Cliente]'))
-ALTER TABLE [Frutillitas].[Cliente] DROP CONSTRAINT [FK_Cliente_Localidad]
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Cliente_Pais]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Cliente]'))
 ALTER TABLE [Frutillitas].[Cliente] DROP CONSTRAINT [FK_Cliente_Pais]
@@ -183,9 +177,6 @@ DROP TABLE [Frutillitas].[HotelInhabilitacion]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[HotelRegimen]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[HotelRegimen]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Localidad]') AND type in (N'U'))
-DROP TABLE [Frutillitas].[Localidad]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Pais]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[Pais]
@@ -477,19 +468,6 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Localidad]') AND type in (N'U'))
-BEGIN
-CREATE TABLE [Frutillitas].[Localidad](
-	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[nombre] [nvarchar](255) NULL,
-	[paisId] [int] NULL
-) ON [PRIMARY]
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[HotelRegimen]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [Frutillitas].[HotelRegimen](
@@ -710,7 +688,6 @@ CREATE TABLE [Frutillitas].[Cliente](
 	[fechaNacimiento] [datetime] NULL,
 	[mail] [nvarchar](255) NULL,
 	[direccion] [nvarchar](255) NULL,
-	[localidadId] [int] NULL,
 	[nacionalidadId] [int] NULL,
 	[habilitado] [bit] NULL,
 	[telefono] [nvarchar](255) NULL
@@ -770,8 +747,6 @@ ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Estado FOREIGN KEY
 GO
 ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Cliente FOREIGN KEY (clienteId) REFERENCES [Frutillitas].[Cliente](id)
 GO
-ALTER TABLE [Frutillitas].[Localidad] ADD CONSTRAINT FK_Localidad_Pais FOREIGN KEY (paisId) REFERENCES [Frutillitas].[Pais](id)
-GO
 ALTER TABLE [Frutillitas].[HotelRegimen] ADD CONSTRAINT FK_HotelRegimen_Hotel FOREIGN KEY (hotelId) REFERENCES [Frutillitas].[Hotel](id)
 GO
 ALTER TABLE [Frutillitas].[HotelRegimen] ADD CONSTRAINT FK_HotelRegimen_Regimen FOREIGN KEY (regimenCodigo) REFERENCES [Frutillitas].[Regimen](codigo)
@@ -805,8 +780,6 @@ GO
 ALTER TABLE [Frutillitas].[Estadia] ADD CONSTRAINT FK_Estadia_Reserva FOREIGN KEY (reservaCodigo) REFERENCES [Frutillitas].[Reserva](codigo)
 GO
 ALTER TABLE [Frutillitas].[Cliente] ADD CONSTRAINT FK_Cliente_TipoDocumento FOREIGN KEY (tipoDocumentoId) REFERENCES [Frutillitas].[TipoDocumento](id)
-GO
-ALTER TABLE [Frutillitas].[Cliente] ADD CONSTRAINT FK_Cliente_Localidad FOREIGN KEY (localidadId) REFERENCES [Frutillitas].[Localidad](id)
 GO
 ALTER TABLE [Frutillitas].[Cliente] ADD CONSTRAINT FK_Cliente_Pais FOREIGN KEY (nacionalidadId) REFERENCES [Frutillitas].[Pais](id)
 GO
@@ -886,7 +859,6 @@ INSERT INTO [Frutillitas].[Cliente](
 	[fechaNacimiento],
 	[mail],
 	[direccion],
-	[localidadId],
 	[nacionalidadId],
 	[habilitado],
 	[telefono])
@@ -898,7 +870,6 @@ SELECT DISTINCT
     [Cliente_Fecha_Nac],
     [Cliente_Mail],
     [Cliente_Dom_Calle] + ' ' + CAST([Cliente_Nro_Calle] as nvarchar(255)) + ' ' + CAST([Cliente_Piso] as nvarchar(255)) + ' ' + [Cliente_Depto],
-    NULL,
     1/*[Cliente_Nacionalidad]*/,
     1,
     NULL
