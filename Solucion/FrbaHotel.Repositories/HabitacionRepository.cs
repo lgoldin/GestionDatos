@@ -12,22 +12,27 @@ namespace FrbaHotel.Repositories
     {
         public override IEnumerable<Habitacion> GetAll()
         {
-            throw new NotImplementedException();
+            return this.GetAll(null, null, null, null, null, null, null);
         }
 
         public override Habitacion Get(int id)
         {
-            throw new NotImplementedException();
+            return this.GetAll().FirstOrDefault(x => x.Id == id);
         }
 
         public override int Insert(Habitacion entity)
         {
-            throw new NotImplementedException();
+            SqlCommand command = DBConnection.CreateStoredProcedure("InsertHabitacion");
+            InsertHabitacionParameters(entity, command);
+            return DBConnection.ExecuteScalar(command);
+
         }
 
         public override void Update(Habitacion entity)
         {
-            throw new NotImplementedException();
+            SqlCommand command = DBConnection.CreateStoredProcedure("UpdateHabitacion");
+            UpdateHabitacionParameters(entity, command);
+            DBConnection.ExecuteNonQuery(command);
         }
 
         public override void Delete(Habitacion entity)
@@ -35,7 +40,7 @@ namespace FrbaHotel.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Habitacion> GetAll(bool frente, int? numero, int? piso, string descripcion, int? hotelId, int? tipoHabitacion, bool activa)
+        public IEnumerable<Habitacion> GetAll(bool? frente, int? numero, int? piso, string descripcion, int? hotelId, int? tipoHabitacion, bool? activa)
         {
             var habitaciones = new List<Habitacion>();
 
@@ -105,6 +110,29 @@ namespace FrbaHotel.Repositories
                 Descripcion = tipo["DescripcionTipoHabitacion"].ToString(),
                 Porcentual = Convert.ToDecimal(tipo["Porcentual"])
             };
+        }
+
+        private static void InsertHabitacionParameters(Habitacion habitacion, SqlCommand command)
+        {
+            command.Parameters.AddWithValue("@frente", habitacion.Frente);
+            command.Parameters.AddWithValue("@activa", habitacion.Activa);
+            command.Parameters.AddWithValue("@numero", habitacion.Numero);
+            command.Parameters.AddWithValue("@piso", habitacion.Piso);
+            command.Parameters.AddWithValue("@descripcion", habitacion.Descripcion);
+            command.Parameters.AddWithValue("@tipoHabitacionCodigo", habitacion.TipoHabitacion.Codigo);
+            command.Parameters.AddWithValue("@hotelId", habitacion.Hotel.Id);
+        }
+
+        private static void UpdateHabitacionParameters(Habitacion habitacion, SqlCommand command)
+        {
+            command.Parameters.AddWithValue("@id", habitacion.Id);
+            command.Parameters.AddWithValue("@frente", habitacion.Frente);
+            command.Parameters.AddWithValue("@activa", habitacion.Activa);
+            command.Parameters.AddWithValue("@numero", habitacion.Numero);
+            command.Parameters.AddWithValue("@piso", habitacion.Piso);
+            command.Parameters.AddWithValue("@descripcion", habitacion.Descripcion);
+            command.Parameters.AddWithValue("@tipoHabitacionCodigo", habitacion.TipoHabitacion.Codigo);
+            command.Parameters.AddWithValue("@hotelId", habitacion.Hotel.Id);
         }
     }
 }
