@@ -15,5 +15,11 @@ namespace FrbaHotel.Services
             ClienteRepository clienteRepository = new ClienteRepository();
             return clienteRepository.GetByEmail(mail);
         }
+
+        public int Insert(Cliente cliente)
+        {
+            ClienteRepository clienteRepository = new ClienteRepository();
+            return clienteRepository.Insert(cliente);
+        }
     }
 }

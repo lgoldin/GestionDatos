@@ -9,5 +9,6 @@ namespace FrbaHotel.Services.Interfaces
     public interface IClienteService
     {
         Cliente GetByMail(string mail);
+        int Insert(Cliente cliente);
     }
 }

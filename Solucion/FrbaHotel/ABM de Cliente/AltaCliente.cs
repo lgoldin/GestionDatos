@@ -40,7 +40,7 @@ namespace FrbaHotel.ABM_de_Cliente
             if (string.IsNullOrEmpty(error))
             {
                 ClienteService clienteService = new ClienteService();
-                if (clienteService.GetByMail(txtMail.Text) == null)
+                if (clienteService.GetByMail(txtMail.Text).Id == 0)
                 {
                     Cliente cliente = new Cliente();
                     cliente.Apellido = txtApellido.Text;
@@ -51,6 +51,10 @@ namespace FrbaHotel.ABM_de_Cliente
                     cliente.Nombre = txtNombre.Text;
                     cliente.NumeroDocumento = txtNumeroDocumento.Text;
                     cliente.Telefono = txtTelefono.Text;
+                    cliente.TipoDeDocumento = new TipoDocumento();
+                    cliente.TipoDeDocumento.Id = Convert.ToInt32(cmbTipoDocumento.SelectedValue);
+                    clienteService.Insert(cliente);
+                    MessageBox.Show("El cliente se ha dado de alta");
                 }
                 else
                 {
@@ -66,11 +70,11 @@ namespace FrbaHotel.ABM_de_Cliente
         private string ValidateForm()
         {
             string errorMessage = string.Empty;
-            if (cmbNacionalidad.SelectedValue == null)
+            if (Convert.ToInt32(cmbNacionalidad.SelectedValue) == 0)
             {
                 errorMessage = "Seleccione una nacionalidad";
             }
-            if (cmbTipoDocumento.SelectedValue == null)
+            if (Convert.ToInt32(cmbTipoDocumento.SelectedValue) == 0)
             {
                 errorMessage += System.Environment.NewLine + "Seleccione un tipo de documento";
             }

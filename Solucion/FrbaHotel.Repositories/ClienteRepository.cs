@@ -22,16 +22,14 @@ namespace FrbaHotel.Repositories
 
         public override int Insert(Cliente entity)
         {
-            SqlCommand _comando = DBConnection.CreateStoredProcedure("NombreDelSP");
-            AddClienteParameters(entity, _comando);
-            return DBConnection.ExecuteNonQuery(_comando);
+            SqlCommand command = DBConnection.CreateStoredProcedure("InsertCliente");
+            AddClienteParameters(entity, command);
+            return DBConnection.ExecuteScalar(command);
         }
 
         public override void Update(Cliente entity)
         {
-            SqlCommand _comando = DBConnection.CreateStoredProcedure("NombreDelSP");
-            AddClienteParameters(entity, _comando);
-            DBConnection.ExecuteNonQuery(_comando);
+            throw new NotImplementedException();
         }
 
         public override void Delete(Cliente entity)
@@ -47,9 +45,9 @@ namespace FrbaHotel.Repositories
             cliente.Apellido = row["apellido"].ToString();
             cliente.FechaNacimiento = Convert.ToDateTime(row["fechaNacimiento"]);
             cliente.Mail = row["mail"].ToString();
-            cliente.Nacionalidad = Convert.ToInt32(row["nacionalidad"]);
+            cliente.Nacionalidad = Convert.ToInt32(row["nacionalidadId"]);
             cliente.Nombre = row["nombre"].ToString();
-            cliente.NumeroDocumento = row["numeroDocumente"].ToString();
+            cliente.NumeroDocumento = row["numeroDocumento"].ToString();
             cliente.Telefono = row["telefono"].ToString();
             cliente.TipoDeDocumento = new TipoDocumento() { Id = Convert.ToInt32(row["tipoDocumentoId"]), Nombre = (row["tipoDocumentoNombre"]).ToString() };
             cliente.Direccion = (row["direccion"]).ToString();
@@ -57,31 +55,28 @@ namespace FrbaHotel.Repositories
             return cliente;
         }
 
-        private static void AddClienteParameters(Cliente cliente, SqlCommand _comando)
+        private static void AddClienteParameters(Cliente cliente, SqlCommand command)
         {
-            /*
-            _comando.Parameters.AddWithValue("@nombre", cliente.Nombre);
-            _comando.Parameters.AddWithValue("@apellido", cliente.Apellido);
-            _comando.Parameters.AddWithValue("@direccionCalle", cliente.Direccion.Calle);
-            _comando.Parameters.AddWithValue("@direccionNumero", cliente.Direccion.Numero);
-            _comando.Parameters.AddWithValue("@fechaNacimiento", cliente.FechaNacimiento);
-            _comando.Parameters.AddWithValue("@mail", cliente.Mail);
-            _comando.Parameters.AddWithValue("@nacionalidad", cliente.Nacionalidad);
-            _comando.Parameters.AddWithValue("@numeroDocumento", cliente.NumeroDocumento);
-            _comando.Parameters.AddWithValue("@telefono", cliente.Telefono);
-            _comando.Parameters.AddWithValue("@tipoDocumento", (int)cliente.TipoDeDocumento);
-            */
+            command.Parameters.AddWithValue("@nombre", cliente.Nombre);
+            command.Parameters.AddWithValue("@apellido", cliente.Apellido);
+            command.Parameters.AddWithValue("@direccion", cliente.Direccion);
+            command.Parameters.AddWithValue("@fechaNacimiento", cliente.FechaNacimiento);
+            command.Parameters.AddWithValue("@mail", cliente.Mail);
+            command.Parameters.AddWithValue("@nacionalidadId", cliente.Nacionalidad);
+            command.Parameters.AddWithValue("@numeroDocumento", cliente.NumeroDocumento);
+            command.Parameters.AddWithValue("@telefono", cliente.Telefono);
+            command.Parameters.AddWithValue("@tipoDocumentoId", cliente.TipoDeDocumento.Id);
         }
 
         public Cliente GetByEmail(string mail)
         {
             Cliente cliente = new Cliente();
-            SqlCommand command = DBConnection.CreateStoredProcedure("GetClienteByMail");
-            command.Parameters.AddWithValue("@email", cliente.Mail);
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetClienteByEmail");
+            command.Parameters.AddWithValue("@email", mail);
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
-            //Id = Convert.ToInt32(row["Id"])
-            CreateCliente(collection[0]);
-            return null;
+            if(collection.Count > 0)
+            cliente = CreateCliente(collection[0]);
+            return cliente;
         }
     }
 }
