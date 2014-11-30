@@ -16,9 +16,20 @@ namespace FrbaHotel.Repositories
             throw new NotImplementedException();
         }
 
-        public override Reserva Get(int id)
+        public override Reserva Get(int codigo)
         {
-            throw new NotImplementedException();
+            Reserva reserva = null;
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetReservaByCodigo");
+            command.Parameters.AddWithValue("@codigo", codigo);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
+            if (collection.Count > 0)
+            {
+                DataRow reader = collection[0];
+                reserva = new Reserva() { Codigo = Convert.ToInt32(reader["codigo"]), FechaDesde = Convert.ToDateTime(reader["fechaDesde"]), FechaHasta = Convert.ToDateTime(reader["fechaHasta"]), RegimenCodigo = Convert.ToInt32(reader["regimenCodigo"]) };
+            }
+
+            return reserva;
         }
 
         public override int Insert(Reserva entity)

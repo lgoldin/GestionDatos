@@ -13,7 +13,7 @@ namespace FrbaHotel.Services
         public IEnumerable<Pais> GetAll()
         {
             var paises = new List<Pais>();
-            paises.Add(new Pais { Id = 0, Nombre = "- No Especificado -" });
+            paises.Add(new Pais { Id = 0, Nombre = "- No Especificado -", Nacionalidad = "- No Especificado -" });
 
             var repository = new PaisRepository();
             repository.GetAll().ToList().ForEach(paises.Add);
