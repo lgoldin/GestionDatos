@@ -28,6 +28,7 @@ BEGIN
 	INNER JOIN [Frutillitas].Rol r ON r.id = ur.rolId
 	WHERE 
 		u.username = @username AND
-		u.password = @password
+		u.password = @password AND
+		u.habilitado = 1
 END
 GO

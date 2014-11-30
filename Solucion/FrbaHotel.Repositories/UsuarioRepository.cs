@@ -105,8 +105,16 @@ namespace FrbaHotel.Repositories
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
             foreach (DataRow row in collection)
             {
+                command = DBConnection.CreateStoredProcedure("DeleteUsuarioLog");
+                command.Parameters.AddWithValue("@userName", username);
+                DBConnection.ExecuteNonQuery(command);
+ 
                 return this.CreateUsuario(row);
             }
+
+            command = DBConnection.CreateStoredProcedure("InsertUsuarioLog");
+            command.Parameters.AddWithValue("@userName", username);
+            DBConnection.ExecuteNonQuery(command);
             
             return usuario;
         }
