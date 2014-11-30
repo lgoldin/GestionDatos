@@ -47,7 +47,6 @@ namespace FrbaHotel.Repositories
         {
             return new TipoHabitacion
             {
-                CantidadHuespedes = Convert.ToInt32(tipo["cantHuespedes"]),
                 Codigo = Convert.ToInt32(tipo["codigo"]),
                 Descripcion = tipo["descripcion"].ToString(),
                 Porcentual = Convert.ToDecimal(tipo["porcentual"])

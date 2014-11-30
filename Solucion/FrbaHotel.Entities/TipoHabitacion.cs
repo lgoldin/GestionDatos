@@ -12,7 +12,5 @@ namespace FrbaHotel.Entities
         public string Descripcion { get; set; }
 
         public decimal Porcentual { get; set; }
-
-        public int CantidadHuespedes { get; set; }
     }
 }

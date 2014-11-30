@@ -35,11 +35,19 @@ namespace FrbaHotel.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Habitacion> GetAll(bool frente, int? numero, int? piso, string descripcion, int? hotelId, int? tipoHabitacion)
+        public IEnumerable<Habitacion> GetAll(bool frente, int? numero, int? piso, string descripcion, int? hotelId, int? tipoHabitacion, bool activa)
         {
             var habitaciones = new List<Habitacion>();
 
             SqlCommand command = DBConnection.CreateStoredProcedure("GetHabitaciones");
+            command.Parameters.AddWithValue("@frente", frente);
+            command.Parameters.AddWithValue("@numero", numero);
+            command.Parameters.AddWithValue("@piso", piso);
+            command.Parameters.AddWithValue("@descripcion", descripcion);
+            command.Parameters.AddWithValue("@hotelId", hotelId);
+            command.Parameters.AddWithValue("@tipoHabitacion", tipoHabitacion);
+            command.Parameters.AddWithValue("@activa", activa);
+
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
             foreach (DataRow habitacion in collection)
             {
@@ -69,7 +77,7 @@ namespace FrbaHotel.Repositories
             return new Hotel
             {
                 Id = Convert.ToInt32(row["IdHotel"]),
-                Nombre = !string.IsNullOrEmpty(row["Nombre"].ToString()) ? row["Nombre"].ToString() : "Hotel" + row["Id"].ToString(),
+                Nombre = !string.IsNullOrEmpty(row["Nombre"].ToString()) ? row["Nombre"].ToString() : "Hotel" + row["IdHotel"].ToString(),
                 Direccion = row["Direccion"].ToString(),
                 Ciudad = new Ciudad 
                 { 
@@ -84,7 +92,6 @@ namespace FrbaHotel.Repositories
                 },
                 Estrellas = Convert.ToInt32(row["Estrellas"]),
                 FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]),
-                RecargaEstrella = Convert.ToInt32(row["RecargaEstrella"]),
                 Mail = row["Mail"].ToString(),
                 Telefono = row["Telefono"].ToString()
             };
@@ -94,7 +101,6 @@ namespace FrbaHotel.Repositories
         {
             return new TipoHabitacion
             {
-                CantidadHuespedes = Convert.ToInt32(tipo["CantidadHuespedes"]),
                 Codigo = Convert.ToInt32(tipo["CodigoTipoHabitacion"]),
                 Descripcion = tipo["DescripcionTipoHabitacion"].ToString(),
                 Porcentual = Convert.ToDecimal(tipo["Porcentual"])
