@@ -88,5 +88,11 @@ namespace FrbaHotel
             var form = new ListadoHabitacion();
             DisplayForm(form);
         }
+
+        private void altaToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ABM_de_Cliente.AltaCliente form = new ABM_de_Cliente.AltaCliente();
+            DisplayForm(form);
+        }
     }
 }
