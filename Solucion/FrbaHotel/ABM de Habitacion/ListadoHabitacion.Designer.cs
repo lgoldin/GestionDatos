@@ -48,6 +48,7 @@
             this.dvgHabitacion = new System.Windows.Forms.DataGridView();
             this.btnNuevo = new System.Windows.Forms.Button();
             this.Modificar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hotel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TipoHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -228,6 +229,7 @@
             this.dvgHabitacion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgHabitacion.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Modificar,
+            this.Id,
             this.Codigo,
             this.Hotel,
             this.TipoHabitacion,
@@ -240,6 +242,7 @@
             this.dvgHabitacion.Name = "dvgHabitacion";
             this.dvgHabitacion.Size = new System.Drawing.Size(779, 255);
             this.dvgHabitacion.TabIndex = 5;
+            this.dvgHabitacion.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgHabitacion_CellContentClick_1);
             // 
             // btnNuevo
             // 
@@ -249,6 +252,7 @@
             this.btnNuevo.TabIndex = 6;
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = true;
+            this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
             // 
             // Modificar
             // 
@@ -256,6 +260,14 @@
             this.Modificar.Frozen = true;
             this.Modificar.HeaderText = "Modificar";
             this.Modificar.Name = "Modificar";
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Codigo";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
             // 
             // Codigo
             // 
@@ -355,6 +367,7 @@
         private System.Windows.Forms.CheckBox chkActiva;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridViewButtonColumn Modificar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hotel;
         private System.Windows.Forms.DataGridViewTextBoxColumn TipoHabitacion;

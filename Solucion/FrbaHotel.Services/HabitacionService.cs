@@ -36,5 +36,29 @@ namespace FrbaHotel.Services
 
             return habitacionesDTO;
         }
+
+        public Habitacion Get(int idHabitacion)
+        {
+            var repository = new HabitacionRepository();
+            return repository.Get(idHabitacion);
+        }
+
+        public int Save(Habitacion habitacion)
+        {
+            int id = habitacion.Id;
+
+            var repository = new HabitacionRepository();
+
+            if (habitacion.IsNew())
+            {
+                id = repository.Insert(habitacion);
+            }
+            else
+            {
+                repository.Update(habitacion);
+            }
+
+            return id;
+        }
     }
 }
