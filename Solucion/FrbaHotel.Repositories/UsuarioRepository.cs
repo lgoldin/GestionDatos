@@ -133,12 +133,12 @@ namespace FrbaHotel.Repositories
         {
             Usuario usuario = new Usuario();
             usuario.Apellido = reader["apellido"].ToString();
-            usuario.FechaNacimiento = Convert.ToDateTime(reader["fechaNacimiento"]);
+            usuario.FechaNacimiento = !string.IsNullOrEmpty(reader["fechaNacimiento"].ToString()) ? Convert.ToDateTime(reader["fechaNacimiento"]) : (DateTime?)null;
             usuario.Mail = reader["mail"].ToString();
             usuario.Nombre = reader["nombre"].ToString();
             usuario.NumeroDocumento = reader["numeroDocumento"].ToString();
             usuario.Telefono = reader["telefono"].ToString();
-            usuario.TipoDocumento = new TipoDocumento { Id = Convert.ToInt32(reader["TipoDocumentoId"]), Nombre = reader["TipoDocumentoNombre"].ToString() };
+            usuario.TipoDocumento = !string.IsNullOrEmpty(reader["TipoDocumentoId"].ToString()) ? new TipoDocumento { Id = Convert.ToInt32(reader["TipoDocumentoId"]), Nombre = reader["TipoDocumentoNombre"].ToString() } : null;
             usuario.Direccion = new Direccion { Calle = reader["direccion"].ToString() };
             usuario.Id = Convert.ToInt32(reader["id"]);
             usuario.Rol = new Rol { Id = Convert.ToInt32(reader["rolId"]), Nombre = reader["rol"].ToString() };
@@ -211,7 +211,6 @@ namespace FrbaHotel.Repositories
                 },
                 Estrellas = Convert.ToInt32(row["Estrellas"]),
                 FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]),
-                RecargaEstrella = Convert.ToInt32(row["RecargaEstrella"]),
                 Mail = row["Mail"].ToString()
             };
         }

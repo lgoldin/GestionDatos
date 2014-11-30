@@ -18,6 +18,24 @@ CREATE PROCEDURE [Frutillitas].[GetHabitaciones]
 @activa bit = null
 AS
 BEGIN
+	
+	DECLARE @EsFrente nvarchar(1)
+	IF @frente IS NULL
+	BEGIN
+		SET @EsFrente = null
+	END
+	ELSE
+	BEGIN
+		IF @frente = 1
+		BEGIN
+			SET @EsFrente = 'S'
+		END
+		ELSE
+		BEGIN
+			SET @EsFrente = 'N'
+		END
+	END
+		
 	SET NOCOUNT ON;
 	
 	SELECT
@@ -25,12 +43,10 @@ BEGIN
 		tipo.codigo AS CodigoTipoHabitacion,
 		tipo.descripcion AS DescripcionTipoHabitacion,
 		tipo.porcentual AS Porcentual,
-		tipo.cantHuespedes AS CantidadHuespedes,
 		hotel.id AS IdHotel,
 		hotel.nombre AS Nombre,
 		hotel.direccion AS Direccion,
 		hotel.estrellas AS Estrellas,
-		hotel.recargaEstrella AS RecargaEstrella,
 		hotel.mail AS Mail,
 		hotel.fechaCreacion AS FechaCreacion,
 		hotel.telefono AS Telefono,
@@ -45,11 +61,12 @@ BEGIN
 	LEFT JOIN [Frutillitas].Ciudad c ON c.id = hotel.ciudadId
 	LEFT JOIN [Frutillitas].Pais p ON p.id = c.paisId
 	WHERE
-		(@frente IS NULL OR habitacion.frente = @frente) AND
+		(@EsFrente IS NULL OR habitacion.frente = @EsFrente) AND
 		(@activa IS NULL OR habitacion.activa = @activa) AND
 		(@numero IS NULL OR habitacion.numero = @numero) AND
 		(@piso IS NULL OR habitacion.piso = @piso) AND
 		(@descripcion IS NULL OR habitacion.descripcion LIKE '%' + @descripcion + '%') AND
 		(@hotelId IS NULL OR habitacion.hotelId = @hotelId) AND
 		(@tipoHabitacion IS NULL OR habitacion.tipoCodigo = @tipoHabitacion)
+	ORDER BY hotel.id
 END

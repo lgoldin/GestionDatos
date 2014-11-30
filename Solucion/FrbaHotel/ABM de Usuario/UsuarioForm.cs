@@ -76,7 +76,11 @@ namespace FrbaHotel.ABM_de_Usuario
                 txtMail.Text = usuario.Mail;
                 txtTelefono.Text = usuario.Telefono;
                 txtDireccion.Text = usuario.Direccion.Calle;
-                dtpFechaNacimiento.Value = usuario.FechaNacimiento;
+                if (usuario.FechaNacimiento.HasValue)
+                {
+                    dtpFechaNacimiento.Value = usuario.FechaNacimiento.Value;
+                }
+
                 ckbHabilitado.Checked = usuario.Habilitado;
             }
         }

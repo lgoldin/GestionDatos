@@ -55,8 +55,9 @@ namespace FrbaHotel.ABM_de_Habitacion
             int? piso = string.IsNullOrEmpty(txtPiso.Text) ? (int?)null : Convert.ToInt32(txtPiso.Text);
             bool frente = chkFrente.Checked;
             string descripcion = string.IsNullOrEmpty(txtDescripcion.Text) ? null : txtDescripcion.Text;
+            bool activa = chkActiva.Checked;
 
-            IEnumerable<HabitacionDTO> habitaciones = this.HabitacionService.GetAll(frente, numero, piso, descripcion, hotelId, tipoHabitacion);
+            IEnumerable<HabitacionDTO> habitaciones = this.HabitacionService.GetAll(frente, numero, piso, descripcion, hotelId, tipoHabitacion, activa);
             dvgHabitacion.AutoGenerateColumns = false;
             dvgHabitacion.DataSource = habitaciones;
         }

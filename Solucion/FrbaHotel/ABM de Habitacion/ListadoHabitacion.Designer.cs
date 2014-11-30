@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkActiva = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.chkFrente = new System.Windows.Forms.CheckBox();
@@ -60,6 +62,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkActiva);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.txtDescripcion);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.chkFrente);
@@ -74,10 +78,30 @@
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Location = new System.Drawing.Point(12, 25);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(779, 107);
+            this.groupBox1.Size = new System.Drawing.Size(779, 123);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de busqueda";
+            // 
+            // chkActiva
+            // 
+            this.chkActiva.AutoSize = true;
+            this.chkActiva.Checked = true;
+            this.chkActiva.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkActiva.Location = new System.Drawing.Point(688, 97);
+            this.chkActiva.Name = "chkActiva";
+            this.chkActiva.Size = new System.Drawing.Size(15, 14);
+            this.chkActiva.TabIndex = 59;
+            this.chkActiva.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(532, 97);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(37, 13);
+            this.label5.TabIndex = 58;
+            this.label5.Text = "Activa";
             // 
             // txtDescripcion
             // 
@@ -278,7 +302,7 @@
             // 
             // Frente
             // 
-            this.Frente.DataPropertyName = "Activa";
+            this.Frente.DataPropertyName = "Frente";
             this.Frente.HeaderText = "Frente";
             this.Frente.Name = "Frente";
             this.Frente.ReadOnly = true;
@@ -328,6 +352,8 @@
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.DataGridView dvgHabitacion;
         private System.Windows.Forms.Button btnNuevo;
+        private System.Windows.Forms.CheckBox chkActiva;
+        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridViewButtonColumn Modificar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hotel;

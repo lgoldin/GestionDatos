@@ -29,7 +29,7 @@ namespace FrbaHotel.Entities
 
         public Direccion Direccion { get; set; }
        
-        public DateTime FechaNacimiento { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
         
         public List<Hotel> Hoteles { get; set; }
 

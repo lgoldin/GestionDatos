@@ -11,12 +11,12 @@ namespace FrbaHotel.Services
 {
     public class HabitacionService : IHabitacionService
     {
-        public IEnumerable<HabitacionDTO> GetAll(bool frente, int? numero, int? piso, string descripcion, int? hotelId, int? tipoHabitacion)
+        public IEnumerable<HabitacionDTO> GetAll(bool frente, int? numero, int? piso, string descripcion, int? hotelId, int? tipoHabitacion, bool activa)
         {
             var habitacionesDTO = new List<HabitacionDTO>();
 
             var repository = new HabitacionRepository();
-            IEnumerable<Habitacion> habitaciones = repository.GetAll(frente, numero, piso, descripcion, hotelId, tipoHabitacion);
+            IEnumerable<Habitacion> habitaciones = repository.GetAll(frente, numero, piso, descripcion, hotelId, tipoHabitacion, activa);
 
             foreach (Habitacion habitacion in habitaciones)
             {

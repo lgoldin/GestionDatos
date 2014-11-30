@@ -57,7 +57,7 @@ namespace FrbaHotel.Services
                 {
                     Apellido = usuario.Apellido,
                     Direccion = usuario.Direccion.Calle,
-                    FechaNacimiento = usuario.FechaNacimiento.ToShortDateString(),
+                    FechaNacimiento = usuario.FechaNacimiento.HasValue ? usuario.FechaNacimiento.Value.ToShortDateString() : string.Empty,
                     Id = usuario.Id,
                     Mail = usuario.Mail,
                     Modificar = "Modificar",
