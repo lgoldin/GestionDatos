@@ -28,6 +28,16 @@ namespace FrbaHotel.Services
             return repository.GetActiveReservaBetweenDatesByHotelId(hotelId, fechaDesde, fechaHasta).Count;
         }
 
+        public ReservaDTO GetReservaByCodigo(int codigo)
+        {
+            ReservaRepository repository = new ReservaRepository();
+            RegimenRepository regimenRepository = new RegimenRepository();
+            Reserva reserva = repository.Get(codigo);
+            if (reserva != null)
+                return new ReservaDTO() { Codigo = reserva.Codigo, FechaDesde = reserva.FechaDesde.ToShortDateString(), FechaHasta = reserva.FechaHasta.ToShortDateString(), Regimen = regimenRepository.Get(reserva.RegimenCodigo).Descripcion };
+            else return null;
+        }
+
         #endregion
     }
 }
