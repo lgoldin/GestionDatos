@@ -14,9 +14,18 @@ namespace FrbaHotel.ABM_de_Cliente
 {
     public partial class ListadoCliente : Form
     {
-        public ListadoCliente()
+        private bool IsForUpdate = true;
+        public int ClienteId = 0;
+
+        public ListadoCliente(bool isForUpdate)
         {
             InitializeComponent();
+            this.IsForUpdate = isForUpdate;
+            if (!IsForUpdate)
+            {
+                DataGridViewButtonColumn column = (DataGridViewButtonColumn) dgClientes.Columns[0];
+                column.Text = "Seleccionar";
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -89,16 +98,22 @@ namespace FrbaHotel.ABM_de_Cliente
             var grid = (DataGridView)sender;
             if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                Form form;
-                int clienteId = Convert.ToInt32(grid.Rows[e.RowIndex].Cells[0].Value);
+                int clienteId = Convert.ToInt32(grid.Rows[e.RowIndex].Cells["Id"].Value);
+                ClienteId = clienteId;
+                if (IsForUpdate)
+                {
+                    Form form = new ABM_de_Cliente.ModificacionCliente(clienteId);
 
-                form = new ABM_de_Cliente.ModificacionCliente(clienteId);
-               
-                form.Location = this.Location;
-                form.StartPosition = FormStartPosition.Manual;
-                form.FormClosing += delegate { this.Show(); };
-                form.Show();
-                this.Hide();
+                    form.Location = this.Location;
+                    form.StartPosition = FormStartPosition.Manual;
+                    form.FormClosing += delegate { this.Show(); };
+                    form.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    this.Close();
+                }
             }
         }
     }

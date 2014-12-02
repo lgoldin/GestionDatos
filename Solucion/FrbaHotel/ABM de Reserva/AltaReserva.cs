@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using FrbaHotel.Services;
 using FrbaHotel.Services.Interfaces;
 using FrbaHotel.Entities;
+using FrbaHotel.ABM_de_Cliente;
 namespace FrbaHotel.ABM_de_Reserva
 {
     public partial class AltaReserva : Form
@@ -63,7 +64,6 @@ namespace FrbaHotel.ABM_de_Reserva
             DateTime fechaDesde = dateFechaDesde.Value;
             DateTime fechaHasta = dateFechaHasta.Value;
             int tipoHabitacionCodigo = (int) cmbTipoHabitacion.SelectedValue;
-            int regimenCodigo = cmbRegimen.SelectedValue == null ? 0 : (int)cmbRegimen.SelectedValue;
 
             if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo))
             {
@@ -71,14 +71,53 @@ namespace FrbaHotel.ABM_de_Reserva
             }
             else
             {
-                decimal diasEstadia = (decimal) (fechaHasta - fechaDesde).TotalDays;
-                decimal precio = ((decimal) HotelCargoPorEstrellaService.GetCargo()) * ((Hotel) cmbHotel.SelectedItem).Estrellas * diasEstadia;
-                if (regimenCodigo > 0)
-                {
-                    precio += ((TipoHabitacion)cmbTipoHabitacion.SelectedItem).Porcentual * ((Regimen)cmbRegimen.SelectedItem).Precio * diasEstadia;
-                }
-                MessageBox.Show("El precio es de " + precio + " USD");
+                MessageBox.Show("El precio es de " + GenerarPrecio() + " USD");
             }
+        }
+
+        private void btnReservar_Click(object sender, EventArgs e)
+        {
+            int hotelId = (int)cmbHotel.SelectedValue;
+            DateTime fechaDesde = dateFechaDesde.Value;
+            DateTime fechaHasta = dateFechaHasta.Value;
+            int tipoHabitacionCodigo = (int)cmbTipoHabitacion.SelectedValue;            
+
+            if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo))
+            {
+                MessageBox.Show("No hay disponibilidad para los parametros solicitados");
+            }
+            else
+            {
+                ListadoCliente form = new ListadoCliente(false);
+                form.ShowDialog();
+                int clienteId = form.ClienteId;
+                
+                Reserva reserva = new Reserva();
+                reserva.ClienteId = clienteId;
+                reserva.HotelId = hotelId;
+                reserva.FechaDesde = fechaDesde;
+                reserva.FechaHasta = fechaHasta;
+                reserva.RegimenCodigo = (int) cmbRegimen.SelectedValue;
+                reserva.FechaCreacion = DateTime.Now;
+                // TODO: Ver como obtener
+                reserva.EstadoId = 1;
+
+                int codigo = ReservaService.Insert(reserva);
+                MessageBox.Show("Su codigo de reserva es '" + codigo + "'.");
+            }
+        }
+
+        private decimal GenerarPrecio()
+        {
+            DateTime fechaDesde = dateFechaDesde.Value;
+            DateTime fechaHasta = dateFechaHasta.Value;            
+            decimal diasEstadia = (decimal)(fechaHasta - fechaDesde).TotalDays;
+            decimal precio = ((decimal)HotelCargoPorEstrellaService.GetCargo()) * ((Hotel)cmbHotel.SelectedItem).Estrellas * diasEstadia;
+            if (cmbRegimen.SelectedItem != null)
+            {
+                precio += ((TipoHabitacion)cmbTipoHabitacion.SelectedItem).Porcentual * ((Regimen)cmbRegimen.SelectedItem).Precio * diasEstadia;
+            }
+            return precio;
         }
     }
 }

@@ -32,9 +32,25 @@ namespace FrbaHotel.Repositories
             return reserva;
         }
 
-        public override int Insert(Reserva entity)
+        public override int Insert(Reserva reserva)
         {
-            throw new NotImplementedException();
+            int codigo;
+            using (var transaction = new TransactionScope())
+            {
+                SqlCommand command = DBConnection.CreateStoredProcedure("InsertReserva");
+                command.Parameters.AddWithValue("@fechaDesde", reserva.FechaDesde);
+                command.Parameters.AddWithValue("@fechaHasta", reserva.FechaHasta);
+                command.Parameters.AddWithValue("@regimenCodigo", reserva.RegimenCodigo);
+                command.Parameters.AddWithValue("@hotelId", reserva.HotelId);
+                command.Parameters.AddWithValue("@estadoId", reserva.EstadoId);
+                command.Parameters.AddWithValue("@clienteId", reserva.ClienteId);
+                command.Parameters.AddWithValue("@fechaCreacion", reserva.FechaCreacion);
+                codigo = DBConnection.ExecuteScalar(command);
+
+                transaction.Complete();
+            }
+
+            return codigo;
         }
 
         public override void Update(Reserva entity)

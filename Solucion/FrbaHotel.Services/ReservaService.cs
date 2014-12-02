@@ -14,6 +14,12 @@ namespace FrbaHotel.Services
 
         #region IReservaService Members
 
+        public int Insert(Reserva reserva)
+        {
+            ReservaRepository repository = new ReservaRepository();
+            return repository.Insert(reserva);
+        }
+
         public List<Regimen> GetActiveReservaRegimenesByHotelId(int hotelId)
         {
             ReservaRepository repository = new ReservaRepository();
