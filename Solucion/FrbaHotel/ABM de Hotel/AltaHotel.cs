@@ -60,7 +60,7 @@ namespace FrbaHotel.ABM_de_Hotel
                     }
 
                     HotelService service = new HotelService();
-                    service.Insert(hotel);
+                    service.Insert(hotel, Session.Usuario.Id);
                     MessageBox.Show("El hotel se ha creado correctamente");
                 }
                 catch (Exception)

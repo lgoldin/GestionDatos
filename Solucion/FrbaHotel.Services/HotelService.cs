@@ -22,10 +22,10 @@ namespace FrbaHotel.Services
             return hoteles;
         }
 
-        public int Insert(Hotel hotel)
+        public int Insert(Hotel hotel, int usuarioId)
         {
             HotelRepository repository = new HotelRepository();
-            return repository.Insert(hotel);
+            return repository.Insert(hotel, usuarioId);
         }
 
         public List<HotelDTO> GetAllDTO(string nombre, int? estrellas, int? pais, int? ciudad)
