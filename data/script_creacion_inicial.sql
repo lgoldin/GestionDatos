@@ -3,11 +3,11 @@ GO
 
 /************ DROP SPs **************************/
 DECLARE @CantidadSPs int
-SELECT @CantidadSPs = COUNT(*) FROM sys.objects WHERE type in (N'P', N'PC')
+SELECT @CantidadSPs = COUNT(*) FROM sys.objects WHERE type in (N'P', N'PC') AND SCHEMA_NAME(schema_id) = N'Frutillitas'
 WHILE @CantidadSPs > 0
 BEGIN
 	DECLARE @SPName nvarchar(max)
-	SELECT TOP 1 @SPName = name FROM sys.objects WHERE type in (N'P', N'PC')
+	SELECT TOP 1 @SPName = name FROM sys.objects WHERE type in (N'P', N'PC') AND SCHEMA_NAME(schema_id) = N'Frutillitas'
 	DECLARE @Sql nvarchar(max)
 	SET @Sql = 'DROP PROCEDURE [Frutillitas].' + @SPName
 	exec sp_executesql @Sql
@@ -946,6 +946,12 @@ GO
 SET IDENTITY_INSERT [Frutillitas].[Reserva] OFF
 GO
 
+INSERT INTO [Frutillitas].[ReservaTipoHabitacion]([reservaCodigo], [tipoHabitacionCodigo])
+SELECT DISTINCT r.[codigo], [Habitacion_Tipo_Codigo]
+FROM [Frutillitas].[Reserva] r
+INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON r.[codigo] = [Reserva_Codigo]
+GO
+
 INSERT INTO [Frutillitas].[Estadia]([reservaCodigo], [fechaDesde], [fechaHasta])
 SELECT DISTINCT [Reserva_Codigo], [Estadia_Fecha_Inicio], DATEADD(day, [Estadia_Cant_Noches], [Estadia_Fecha_Inicio])
 FROM [GD2C2014].[gd_esquema].[Maestra]
@@ -970,7 +976,7 @@ INSERT INTO [Frutillitas].[FacturaTipoPago]([descripcion]) VALUES ('Tarjeta')
 GO
 
 INSERT INTO [Frutillitas].[Factura]([numero], [fecha], [total], [estadiaId], [tipoPagoId])
-SELECT DISTINCT [Factura_Nro], [Factura_Fecha], [Factura_Total] + [Item_Factura_Monto], [id], (SELECT [id] FROM [Frutillitas].[FacturaTipoPago] WHERE [descripcion] = 'Efectivo')
+SELECT DISTINCT [Factura_Nro], [Factura_Fecha], [Factura_Total] + ([Item_Factura_Monto] * [Estadia_Cant_Noches]), [id], (SELECT [id] FROM [Frutillitas].[FacturaTipoPago] WHERE [descripcion] = 'Efectivo')
 FROM [Frutillitas].[Estadia]
 INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [reservaCodigo] = [Reserva_Codigo]
 WHERE [Factura_Nro] IS NOT NULL AND [Consumible_Precio] IS NULL AND [Item_Factura_Monto] IS NOT NULL
@@ -985,7 +991,7 @@ INNER JOIN [Frutillitas].[Consumible] c ON c.[codigo] = ec.[consumibleCodigo]
 GO
 
 INSERT INTO [Frutillitas].[FacturaItem]([facturaNumero], [descripcion], [precio])
-SELECT f.[numero], 'Estadia: ' + STR([Estadia_Cant_Noches]) + ' noches', [Item_Factura_Monto]
+SELECT f.[numero], 'Estadia: ' + STR([Estadia_Cant_Noches]) + ' noches', [Item_Factura_Monto] * [Estadia_Cant_Noches]
 FROM [Frutillitas].[Factura] f
 INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [Factura_Nro] = f.[numero]
 WHERE [Consumible_Precio] IS NULL AND [Item_Factura_Monto] IS NOT NULL

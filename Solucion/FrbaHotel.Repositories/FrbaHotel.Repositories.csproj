@@ -51,6 +51,7 @@
     <Compile Include="CiudadRepository.cs" />
     <Compile Include="ConsumibleRepository.cs" />
     <Compile Include="EstadiaRepository.cs" />
+    <Compile Include="HotelCargoPorEstrellaRepository.cs" />
     <Compile Include="ReservaRepository.cs" />
     <Compile Include="HabitacionRepository.cs" />
     <Compile Include="RegimenRepository.cs" />

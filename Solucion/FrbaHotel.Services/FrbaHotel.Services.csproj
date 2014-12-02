@@ -52,6 +52,8 @@
     <Compile Include="EstadiaService.cs" />
     <Compile Include="Interfaces\IConsumibleService.cs" />
     <Compile Include="Interfaces\IEstadiaService.cs" />
+    <Compile Include="HotelCargoPorEstrellaService.cs" />
+    <Compile Include="Interfaces\IHotelCargoPorEstrellaService.cs" />
     <Compile Include="ReservaService.cs" />
     <Compile Include="HabitacionService.cs" />
     <Compile Include="Interfaces\IReservaService.cs" />

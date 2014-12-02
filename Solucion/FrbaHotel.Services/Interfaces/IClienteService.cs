@@ -8,9 +8,11 @@ namespace FrbaHotel.Services.Interfaces
 {
     public interface IClienteService
     {
+        void Update(Cliente cliente);
         IEnumerable<Cliente> GetAll(string nombre, string apellido, string mail, string numeroDocumento, int? tipoDocumento);
         Cliente GetByMail(string mail);
         Cliente GetByTipoYNumeroDocumento(int tipoDocumento, string numeroDocumento);
         int Insert(Cliente cliente);
+        Cliente GetById(int id);
     }
 }

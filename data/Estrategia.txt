@@ -4,3 +4,4 @@
 - Para las reservas y estadías se decidió usar campos de "fecha hasta", con lo cual le sumamos la cantidad de días a la "fecha desde" que figuraba en la tabla maestra.
 - No se puso constrain de unicidad en la Tabla cliente sobre los campos numero de documento, nombre y apellido debido a los datos inconsistentes de la tabla maestra, se decidió resolverlo con un trigger.
 - Por no tener datos de tarjetas asumimos que las facturas fueron todas pagadas en efectivo.
+- Para la reserva, al Guest no tener un Hotel asociado decidimos que lo más coherente es que lo elija y no mostrar toda la información de todos.

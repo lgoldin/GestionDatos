@@ -1,4 +1,3 @@
-use GD2C2014
 USE [GD2C2014]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetReservaByCodigo]') AND type in (N'P', N'PC'))

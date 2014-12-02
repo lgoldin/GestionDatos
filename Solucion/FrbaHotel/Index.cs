@@ -24,7 +24,7 @@ namespace FrbaHotel
 
         private void altaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ABM_de_Hotel.AltaHotel form = new FrbaHotel.ABM_de_Hotel.AltaHotel();
+            var form = new ABM_de_Hotel.ListadoHotel(false);
             DisplayForm(form);
         }
 
@@ -134,7 +134,7 @@ namespace FrbaHotel
 
         private void modificaciónToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ABM_de_Cliente.ListadoCliente form = new ABM_de_Cliente.ListadoCliente();
+            ABM_de_Cliente.ListadoCliente form = new ABM_de_Cliente.ListadoCliente(true);
             DisplayForm(form);
         }
 

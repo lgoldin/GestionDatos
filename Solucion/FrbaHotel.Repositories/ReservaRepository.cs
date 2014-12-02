@@ -32,9 +32,25 @@ namespace FrbaHotel.Repositories
             return reserva;
         }
 
-        public override int Insert(Reserva entity)
+        public override int Insert(Reserva reserva)
         {
-            throw new NotImplementedException();
+            int codigo;
+            using (var transaction = new TransactionScope())
+            {
+                SqlCommand command = DBConnection.CreateStoredProcedure("InsertReserva");
+                command.Parameters.AddWithValue("@fechaDesde", reserva.FechaDesde);
+                command.Parameters.AddWithValue("@fechaHasta", reserva.FechaHasta);
+                command.Parameters.AddWithValue("@regimenCodigo", reserva.RegimenCodigo);
+                command.Parameters.AddWithValue("@hotelId", reserva.HotelId);
+                command.Parameters.AddWithValue("@estadoId", reserva.EstadoId);
+                command.Parameters.AddWithValue("@clienteId", reserva.ClienteId);
+                command.Parameters.AddWithValue("@fechaCreacion", reserva.FechaCreacion);
+                codigo = DBConnection.ExecuteScalar(command);
+
+                transaction.Complete();
+            }
+
+            return codigo;
         }
 
         public override void Update(Reserva entity)
@@ -80,6 +96,20 @@ namespace FrbaHotel.Repositories
             }
 
             return reservas;
+        }
+
+        public bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo)
+        {
+            SqlCommand command = DBConnection.CreateStoredProcedure("CountPosibleReserva");
+            command.Parameters.AddWithValue("@hotelId", hotelId);
+            command.Parameters.AddWithValue("@fechaDesde", fechaDesde);
+            command.Parameters.AddWithValue("@fechaHasta", fechaHasta);
+            command.Parameters.AddWithValue("@tipoHabitacionCodigo", tipoHabitacionCodigo);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
+            DataRow reader = collection[0];
+
+            return Convert.ToInt32(reader[0]) > 0;
         }
 
         private Regimen CreateRegimen(DataRow row)
