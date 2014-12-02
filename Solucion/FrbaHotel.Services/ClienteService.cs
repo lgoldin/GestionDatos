@@ -58,8 +58,7 @@ namespace FrbaHotel.Services
                         Nombre = c.Nombre,
                         NumeroDocumento = c.NumeroDocumento,
                         TipoDeDocumento = c.TipoDeDocumento.Nombre,
-                        Modificar = "Modificar",
-                        Eliminar = "Eliminar"
+                        Modificar = "Modificar"
                     });
                 }
             }

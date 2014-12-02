@@ -92,15 +92,8 @@ namespace FrbaHotel.ABM_de_Cliente
                 Form form;
                 int clienteId = Convert.ToInt32(grid.Rows[e.RowIndex].Cells[0].Value);
 
-                if (e.ColumnIndex == 0)
-                {
-                    form = new ABM_de_Cliente.ModificacionCliente(clienteId);
-                }
-                else
-                {
-                    form = new ABM_de_Cliente.ModificacionCliente(clienteId);
-                }
-
+                form = new ABM_de_Cliente.ModificacionCliente(clienteId);
+               
                 form.Location = this.Location;
                 form.StartPosition = FormStartPosition.Manual;
                 form.FormClosing += delegate { this.Show(); };

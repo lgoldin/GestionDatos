@@ -22,7 +22,5 @@ namespace FrbaHotel.Entities.DTOs
         public string Mail { get; set; }
 
         public string Modificar { get; set; }
-
-        public string Eliminar { get; set; }
     }
 }
