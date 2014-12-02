@@ -11,11 +11,13 @@ namespace FrbaHotel.Services.Interfaces
     {
         int Insert(Reserva reserva);
 
+        Reserva GetReservaByCodigo(int codigo);
+
         List<Regimen> GetActiveReservaRegimenesByHotelId(int hotelId);
 
         int GetCountActiveReservaBetweenDatesByHotelId(int hotelId, DateTime fechaDesde, DateTime fechaHasta);
 
-        ReservaDTO GetReservaByCodigo(int codigo);
+        ReservaDTO GetReservaDTOByCodigo(int codigo);
 
         bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo);
     }

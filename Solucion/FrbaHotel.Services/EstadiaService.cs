@@ -21,5 +21,11 @@ namespace FrbaHotel.Services
             var repository = new EstadiaRepository();
             repository.RegistrarConsumibles(consumibles, idEstadia);
         }
+
+        public Estadia GetById(int id)
+        {
+            var repository = new EstadiaRepository();
+            return repository.Get(id);
+        }
     }
 }

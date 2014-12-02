@@ -34,7 +34,7 @@ namespace FrbaHotel.ABM_de_Reserva
             string codigo = txtCodigo.Text;
             if (!string.IsNullOrEmpty(codigo))
             {
-                ReservaDTO reserva = ReservaService.GetReservaByCodigo(Convert.ToInt32(codigo));
+                ReservaDTO reserva = ReservaService.GetReservaDTOByCodigo(Convert.ToInt32(codigo));
                 if (reserva != null)
                 {
                     dgvReserva.DataSource = new List<ReservaDTO> { reserva };

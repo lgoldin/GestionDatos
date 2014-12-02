@@ -143,5 +143,11 @@ namespace FrbaHotel
             var form = new RegistrarConsumibleForm();
             DisplayForm(form);
         }
+
+        private void ingresarReservaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new Facturacion.Facturacion();
+            DisplayForm(form);
+        }
     }
 }

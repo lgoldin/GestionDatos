@@ -33,7 +33,17 @@ namespace FrbaHotel.Repositories
 
         public override Estadia Get(int id)
         {
-            throw new NotImplementedException();
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetEstadiaById");
+            command.Parameters.AddWithValue("@id", id);
+
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
+            foreach (DataRow row in collection)
+            {
+                return this.CreateEstadia(row);
+            }
+
+            return null;
         }
 
         public Estadia GetByCodigoReserva(int codigoReserva)
