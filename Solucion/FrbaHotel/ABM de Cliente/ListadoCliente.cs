@@ -83,5 +83,23 @@ namespace FrbaHotel.ABM_de_Cliente
             txtApellido.Text = string.Empty;
             cmbTipoDocumento.SelectedValue = 0;
         }
+
+        private void dgClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var grid = (DataGridView)sender;
+            if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            {
+                Form form;
+                int clienteId = Convert.ToInt32(grid.Rows[e.RowIndex].Cells[0].Value);
+
+                form = new ABM_de_Cliente.ModificacionCliente(clienteId);
+               
+                form.Location = this.Location;
+                form.StartPosition = FormStartPosition.Manual;
+                form.FormClosing += delegate { this.Show(); };
+                form.Show();
+                this.Hide();
+            }
+        }
     }
 }

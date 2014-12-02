@@ -14,5 +14,7 @@ namespace FrbaHotel.Services.Interfaces
         Habitacion Get(int idHabitacion);
 
         int Save(Habitacion habitacion);
+
+        bool ExistsHabitacion(int hotelId, int numero, int piso);
     }
 }

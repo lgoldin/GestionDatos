@@ -60,5 +60,11 @@ namespace FrbaHotel.Services
 
             return id;
         }
+
+        public bool ExistsHabitacion(int hotelId, int numero, int piso)
+        {
+            var repository = new HabitacionRepository();
+            return repository.Exists(hotelId, numero, piso);
+        }
     }
 }

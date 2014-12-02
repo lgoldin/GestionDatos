@@ -58,13 +58,24 @@ namespace FrbaHotel.Services
                         Nombre = c.Nombre,
                         NumeroDocumento = c.NumeroDocumento,
                         TipoDeDocumento = c.TipoDeDocumento.Nombre,
-                        Modificar = "Modificar",
-                        Eliminar = "Eliminar"
+                        Modificar = "Modificar"
                     });
                 }
             }
 
             return clientesDTO;
+        }
+
+        public Cliente GetById(int id)
+        {
+            ClienteRepository clienteRepository = new ClienteRepository();
+            return clienteRepository.Get(id);   
+        }
+
+        public void Update(Cliente cliente)
+        {
+            ClienteRepository clienteRepository = new ClienteRepository();
+            clienteRepository.Update(cliente);   
         }
     }
 }

@@ -45,6 +45,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             if (this.IdHabitacion > 0)
             {
                 habitacion = this.HabitacionService.Get(this.IdHabitacion);
+                this.cmbTipoHabitacion.Enabled = false;
             }
 
             this.FillHoteles(habitacion);
@@ -140,14 +141,35 @@ namespace FrbaHotel.ABM_de_Habitacion
                 builder.AppendLine("Ingrese un numero");
             }
 
+            int numero;
+            if (!int.TryParse(txtNumero.Text, out numero))
+            {
+                builder.AppendLine("El campo numero debe ser numerico");
+            }
+
             if (string.IsNullOrEmpty(txtPiso.Text))
             {
                 builder.AppendLine("Ingrese un piso");
             }
 
+            int piso;
+            if (!int.TryParse(txtPiso.Text, out piso))
+            {
+                builder.AppendLine("El campo piso debe ser numerico");
+            }
+
             if (string.IsNullOrEmpty(txtDescripcion.Text))
             {
                 builder.AppendLine("Ingrese una descripcion");
+            }
+
+            if (!string.IsNullOrEmpty(txtNumero.Text) && 
+                !string.IsNullOrEmpty(txtPiso.Text) && 
+                int.TryParse(txtNumero.Text, out numero) && 
+                int.TryParse(txtPiso.Text, out piso) && 
+                this.HabitacionService.ExistsHabitacion((int)cmbHotel.SelectedValue, Convert.ToInt32(txtNumero.Text), Convert.ToInt32(txtPiso.Text)))
+            {
+                builder.AppendLine("Ya existe la habitacion para el hotel");
             }
 
             if (!string.IsNullOrEmpty(builder.ToString()))

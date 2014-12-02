@@ -17,7 +17,13 @@ namespace FrbaHotel.Repositories
 
         public override Cliente Get(int id)
         {
-            throw new NotImplementedException();
+            Cliente cliente = new Cliente();
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetClienteById");
+            command.Parameters.AddWithValue("@id", id);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+            if (collection.Count > 0)
+                cliente = CreateCliente(collection[0]);
+            return cliente;
         }
 
         public override int Insert(Cliente entity)
@@ -29,7 +35,11 @@ namespace FrbaHotel.Repositories
 
         public override void Update(Cliente entity)
         {
-            throw new NotImplementedException();
+            SqlCommand command = DBConnection.CreateStoredProcedure("UpdateCliente");
+            command.Parameters.AddWithValue("@habilitado", entity.Habilitado);
+            command.Parameters.AddWithValue("@id", entity.Id);
+            AddClienteParameters(entity, command);
+            DBConnection.ExecuteNonQuery(command);
         }
 
         public override void Delete(Cliente entity)
@@ -52,6 +62,7 @@ namespace FrbaHotel.Repositories
             cliente.TipoDeDocumento = new TipoDocumento() { Id = Convert.ToInt32(row["tipoDocumentoId"]), Nombre = (row["tipoDocumentoNombre"]).ToString() };
             cliente.Direccion = (row["direccion"]).ToString();
             cliente.Id = Convert.ToInt32(row["id"]);
+            cliente.Habilitado = Convert.ToBoolean(row["habilitado"]);
             return cliente;
         }
 

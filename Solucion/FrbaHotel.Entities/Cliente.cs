@@ -26,5 +26,7 @@ namespace FrbaHotel.Entities
         public int Nacionalidad { get; set; }
 
         public string Direccion { get; set; }
+
+        public bool Habilitado { get; set; }
     }
 }
