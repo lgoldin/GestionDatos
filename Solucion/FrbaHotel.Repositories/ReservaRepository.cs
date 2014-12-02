@@ -82,6 +82,20 @@ namespace FrbaHotel.Repositories
             return reservas;
         }
 
+        public bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo)
+        {
+            SqlCommand command = DBConnection.CreateStoredProcedure("CountPosibleReserva");
+            command.Parameters.AddWithValue("@hotelId", hotelId);
+            command.Parameters.AddWithValue("@fechaDesde", fechaDesde);
+            command.Parameters.AddWithValue("@fechaHasta", fechaHasta);
+            command.Parameters.AddWithValue("@tipoHabitacionCodigo", tipoHabitacionCodigo);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
+            DataRow reader = collection[0];
+
+            return Convert.ToInt32(reader[0]) > 0;
+        }
+
         private Regimen CreateRegimen(DataRow row)
         {
             Regimen regimen = new Regimen();

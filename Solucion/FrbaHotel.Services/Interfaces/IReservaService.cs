@@ -14,5 +14,7 @@ namespace FrbaHotel.Services.Interfaces
         int GetCountActiveReservaBetweenDatesByHotelId(int hotelId, DateTime fechaDesde, DateTime fechaHasta);
 
         ReservaDTO GetReservaByCodigo(int codigo);
+
+        bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo);
     }
 }
