@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.lblNombre = new System.Windows.Forms.Label();
@@ -40,7 +41,9 @@
             this.dgHoteles = new System.Windows.Forms.DataGridView();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.Seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnCrearHotel = new System.Windows.Forms.Button();
+            this.Modificar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Inhabilitar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Pais = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,8 +58,8 @@
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(179, 47);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNombre.Location = new System.Drawing.Point(179, 74);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(4);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(251, 22);
             this.txtNombre.TabIndex = 37;
@@ -65,7 +68,7 @@
             // 
             this.lblNombre.AutoSize = true;
             this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombre.Location = new System.Drawing.Point(43, 47);
+            this.lblNombre.Location = new System.Drawing.Point(43, 74);
             this.lblNombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNombre.Name = "lblNombre";
             this.lblNombre.Size = new System.Drawing.Size(87, 25);
@@ -75,8 +78,8 @@
             // cmbPaises
             // 
             this.cmbPaises.FormattingEnabled = true;
-            this.cmbPaises.Location = new System.Drawing.Point(179, 97);
-            this.cmbPaises.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbPaises.Location = new System.Drawing.Point(179, 124);
+            this.cmbPaises.Margin = new System.Windows.Forms.Padding(4);
             this.cmbPaises.Name = "cmbPaises";
             this.cmbPaises.Size = new System.Drawing.Size(251, 24);
             this.cmbPaises.TabIndex = 45;
@@ -85,8 +88,8 @@
             // cmbCiudades
             // 
             this.cmbCiudades.FormattingEnabled = true;
-            this.cmbCiudades.Location = new System.Drawing.Point(632, 96);
-            this.cmbCiudades.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbCiudades.Location = new System.Drawing.Point(632, 123);
+            this.cmbCiudades.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCiudades.Name = "cmbCiudades";
             this.cmbCiudades.Size = new System.Drawing.Size(251, 24);
             this.cmbCiudades.TabIndex = 44;
@@ -95,7 +98,7 @@
             // 
             this.lblCiudad.AutoSize = true;
             this.lblCiudad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCiudad.Location = new System.Drawing.Point(496, 97);
+            this.lblCiudad.Location = new System.Drawing.Point(496, 124);
             this.lblCiudad.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCiudad.Name = "lblCiudad";
             this.lblCiudad.Size = new System.Drawing.Size(81, 25);
@@ -106,7 +109,7 @@
             // 
             this.lblPais.AutoSize = true;
             this.lblPais.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPais.Location = new System.Drawing.Point(43, 97);
+            this.lblPais.Location = new System.Drawing.Point(43, 124);
             this.lblPais.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPais.Name = "lblPais";
             this.lblPais.Size = new System.Drawing.Size(56, 25);
@@ -116,8 +119,8 @@
             // cmbEstrellas
             // 
             this.cmbEstrellas.FormattingEnabled = true;
-            this.cmbEstrellas.Location = new System.Drawing.Point(632, 44);
-            this.cmbEstrellas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbEstrellas.Location = new System.Drawing.Point(632, 71);
+            this.cmbEstrellas.Margin = new System.Windows.Forms.Padding(4);
             this.cmbEstrellas.Name = "cmbEstrellas";
             this.cmbEstrellas.Size = new System.Drawing.Size(251, 24);
             this.cmbEstrellas.TabIndex = 47;
@@ -126,7 +129,7 @@
             // 
             this.lblEstrellas.AutoSize = true;
             this.lblEstrellas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEstrellas.Location = new System.Drawing.Point(496, 44);
+            this.lblEstrellas.Location = new System.Drawing.Point(496, 71);
             this.lblEstrellas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEstrellas.Name = "lblEstrellas";
             this.lblEstrellas.Size = new System.Drawing.Size(86, 25);
@@ -137,7 +140,8 @@
             // 
             this.dgHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgHoteles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Seleccionar,
+            this.Modificar,
+            this.Inhabilitar,
             this.Id,
             this.Nombre,
             this.Pais,
@@ -147,8 +151,8 @@
             this.Telefono,
             this.Direccion,
             this.FechaCreacion});
-            this.dgHoteles.Location = new System.Drawing.Point(48, 239);
-            this.dgHoteles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgHoteles.Location = new System.Drawing.Point(48, 266);
+            this.dgHoteles.Margin = new System.Windows.Forms.Padding(4);
             this.dgHoteles.Name = "dgHoteles";
             this.dgHoteles.RowTemplate.Height = 24;
             this.dgHoteles.Size = new System.Drawing.Size(1127, 185);
@@ -158,8 +162,8 @@
             // btnLimpiar
             // 
             this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(48, 158);
-            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLimpiar.Location = new System.Drawing.Point(48, 185);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(143, 42);
             this.btnLimpiar.TabIndex = 49;
@@ -170,8 +174,8 @@
             // btnBuscar
             // 
             this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscar.Location = new System.Drawing.Point(741, 158);
-            this.btnBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBuscar.Location = new System.Drawing.Point(741, 185);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(143, 42);
             this.btnBuscar.TabIndex = 50;
@@ -179,16 +183,37 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // Seleccionar
+            // btnCrearHotel
             // 
-            this.Seleccionar.DataPropertyName = "Seleccionar";
+            this.btnCrearHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCrearHotel.Location = new System.Drawing.Point(48, 12);
+            this.btnCrearHotel.Name = "btnCrearHotel";
+            this.btnCrearHotel.Size = new System.Drawing.Size(134, 38);
+            this.btnCrearHotel.TabIndex = 51;
+            this.btnCrearHotel.Text = "Crear Hotel";
+            this.btnCrearHotel.UseVisualStyleBackColor = true;
+            this.btnCrearHotel.Click += new System.EventHandler(this.btnCrearHotel_Click);
+            // 
+            // Modificar
+            // 
+            this.Modificar.DataPropertyName = "Modificar";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            this.Modificar.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Modificar.HeaderText = "";
+            this.Modificar.Name = "Modificar";
+            this.Modificar.ReadOnly = true;
+            // 
+            // Inhabilitar
+            // 
+            this.Inhabilitar.DataPropertyName = "Inhabilitar";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.Gray;
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            this.Seleccionar.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Seleccionar.HeaderText = "";
-            this.Seleccionar.Name = "Seleccionar";
-            this.Seleccionar.ReadOnly = true;
+            this.Inhabilitar.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Inhabilitar.HeaderText = "";
+            this.Inhabilitar.Name = "Inhabilitar";
             // 
             // Id
             // 
@@ -257,7 +282,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1205, 452);
+            this.ClientSize = new System.Drawing.Size(1205, 485);
+            this.Controls.Add(this.btnCrearHotel);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.dgHoteles);
@@ -269,7 +295,7 @@
             this.Controls.Add(this.lblPais);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.lblNombre);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ListadoHotel";
             this.Text = "ListadoHotel";
             this.Load += new System.EventHandler(this.ListadoHotel_Load);
@@ -292,7 +318,9 @@
         private System.Windows.Forms.DataGridView dgHoteles;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.DataGridViewButtonColumn Seleccionar;
+        private System.Windows.Forms.Button btnCrearHotel;
+        private System.Windows.Forms.DataGridViewButtonColumn Modificar;
+        private System.Windows.Forms.DataGridViewButtonColumn Inhabilitar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn Pais;

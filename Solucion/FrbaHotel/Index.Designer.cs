@@ -33,8 +33,6 @@
             this.listadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hotelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.altaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bajaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.modificacionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.rolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.altaToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.bajaToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,9 +78,7 @@
             // hotelToolStripMenuItem
             // 
             this.hotelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.altaToolStripMenuItem1,
-            this.bajaToolStripMenuItem1,
-            this.modificacionToolStripMenuItem1});
+            this.altaToolStripMenuItem1});
             this.hotelToolStripMenuItem.Name = "hotelToolStripMenuItem";
             this.hotelToolStripMenuItem.Size = new System.Drawing.Size(53, 22);
             this.hotelToolStripMenuItem.Text = "Hotel";
@@ -90,23 +86,9 @@
             // altaToolStripMenuItem1
             // 
             this.altaToolStripMenuItem1.Name = "altaToolStripMenuItem1";
-            this.altaToolStripMenuItem1.Size = new System.Drawing.Size(153, 22);
-            this.altaToolStripMenuItem1.Text = "Alta";
+            this.altaToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.altaToolStripMenuItem1.Text = "Listado";
             this.altaToolStripMenuItem1.Click += new System.EventHandler(this.altaToolStripMenuItem1_Click);
-            // 
-            // bajaToolStripMenuItem1
-            // 
-            this.bajaToolStripMenuItem1.Name = "bajaToolStripMenuItem1";
-            this.bajaToolStripMenuItem1.Size = new System.Drawing.Size(153, 22);
-            this.bajaToolStripMenuItem1.Text = "Baja";
-            this.bajaToolStripMenuItem1.Click += new System.EventHandler(this.bajaToolStripMenuItem1_Click);
-            // 
-            // modificacionToolStripMenuItem1
-            // 
-            this.modificacionToolStripMenuItem1.Name = "modificacionToolStripMenuItem1";
-            this.modificacionToolStripMenuItem1.Size = new System.Drawing.Size(153, 22);
-            this.modificacionToolStripMenuItem1.Text = "Modificacion";
-            this.modificacionToolStripMenuItem1.Click += new System.EventHandler(this.modificacionToolStripMenuItem1_Click);
             // 
             // rolToolStripMenuItem
             // 
@@ -150,7 +132,7 @@
             // listadoToolStripMenuItem1
             // 
             this.listadoToolStripMenuItem1.Name = "listadoToolStripMenuItem1";
-            this.listadoToolStripMenuItem1.Size = new System.Drawing.Size(112, 22);
+            this.listadoToolStripMenuItem1.Size = new System.Drawing.Size(121, 22);
             this.listadoToolStripMenuItem1.Text = "Listado";
             this.listadoToolStripMenuItem1.Click += new System.EventHandler(this.listadoToolStripMenuItem1_Click);
             // 
@@ -165,7 +147,7 @@
             // modificaciónToolStripMenuItem
             // 
             this.modificaciónToolStripMenuItem.Name = "modificaciónToolStripMenuItem";
-            this.modificaciónToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.modificaciónToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.modificaciónToolStripMenuItem.Text = "Listado";
             this.modificaciónToolStripMenuItem.Click += new System.EventHandler(this.modificaciónToolStripMenuItem_Click);
             // 
@@ -180,7 +162,6 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Bienvenido al administrador de hoteles!";
             // 
-
             // Index
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -206,8 +187,6 @@
         private System.Windows.Forms.ToolStripMenuItem usuarioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hotelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem altaToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem bajaToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem modificacionToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem rolToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem altaToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem bajaToolStripMenuItem2;

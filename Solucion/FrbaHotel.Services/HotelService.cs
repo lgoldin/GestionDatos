@@ -48,7 +48,8 @@ namespace FrbaHotel.Services
                             Nombre = h.Nombre,
                             Pais = h.Ciudad.Pais.Nombre,
                             Telefono = h.Telefono,
-                            Seleccionar = "Seleccionar"
+                            Modificar = "Modificar",
+                            Inhabilitar = "Inhabilitar"
                         });
                 }
             }
