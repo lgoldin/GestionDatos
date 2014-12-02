@@ -48,6 +48,11 @@ namespace FrbaHotel.Repositories
 
         public override int Insert(Hotel entity)
         {
+            throw new NotImplementedException();
+        }
+
+        public int Insert(Hotel entity, int usuarioId)
+        {
             using (var transaction = new TransactionScope())
             {
                 SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotel");
@@ -55,11 +60,20 @@ namespace FrbaHotel.Repositories
                 int hotelId = DBConnection.ExecuteScalar(command);
 
                 InsertHotelRegimen(entity, hotelId);
+                InsertHotelUsuario(hotelId, usuarioId);
 
                 transaction.Complete();
 
                 return hotelId;
             }
+        }
+
+        private void InsertHotelUsuario(int hotelId, int usuarioId)
+        {
+            SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotelUsuario");
+            command.Parameters.AddWithValue("@hotelId", hotelId);
+            command.Parameters.AddWithValue("@usuarioId", usuarioId);
+            DBConnection.ExecuteNonQuery(command);
         }
 
         public int InsertHotelInhabilitado(HotelInhabilitacion hotelInhabilitado)

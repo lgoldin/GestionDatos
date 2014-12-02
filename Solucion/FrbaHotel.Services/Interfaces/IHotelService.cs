@@ -11,5 +11,6 @@ namespace FrbaHotel.Services.Interfaces
         IEnumerable<Hotel> GetAll(string nombre, int? esttrellas, int? paisId, int? ciudadId);
         Hotel GetById(int id);
         int InsertHotelInhabilitado(HotelInhabilitacion hotelInhabilitado);
+        int Insert(Hotel hotel, int usuarioId);
     }
 }

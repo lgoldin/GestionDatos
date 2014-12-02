@@ -23,7 +23,7 @@ namespace FrbaHotel
 
         private void altaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ABM_de_Hotel.AltaHotel form = new FrbaHotel.ABM_de_Hotel.AltaHotel();
+            var form = new ABM_de_Hotel.ListadoHotel(false);
             DisplayForm(form);
         }
 

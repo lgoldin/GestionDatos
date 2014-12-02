@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.dgClientes = new System.Windows.Forms.DataGridView();
+            this.Modificar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.cmbTipoDocumento = new System.Windows.Forms.ComboBox();
             this.lblTipoIdentificacion = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
@@ -43,7 +44,6 @@
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.lblEmail = new System.Windows.Forms.Label();
             this.btnCrear = new System.Windows.Forms.Button();
-            this.Modificar = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgClientes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -141,6 +141,8 @@
             this.txtnroIdentificacion.Name = "txtnroIdentificacion";
             this.txtnroIdentificacion.Size = new System.Drawing.Size(189, 20);
             this.txtnroIdentificacion.TabIndex = 65;
+            this.txtnroIdentificacion.TextChanged += new System.EventHandler(this.txtnroIdentificacion_TextChanged);
+            this.txtnroIdentificacion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtnroIdentificacion_KeyPress);
             // 
             // lblNroIdentificacion
             // 

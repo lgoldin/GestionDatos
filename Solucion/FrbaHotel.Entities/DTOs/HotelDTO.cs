@@ -25,6 +25,8 @@ namespace FrbaHotel.Entities.DTOs
 
         public string Telefono{ get; set; }
 
-        public string Seleccionar { get; set; }
+        public string Modificar { get; set; }
+
+        public string Inhabilitar { get; set; }
     }
 }
