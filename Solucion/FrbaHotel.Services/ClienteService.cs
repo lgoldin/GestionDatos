@@ -66,5 +66,17 @@ namespace FrbaHotel.Services
 
             return clientesDTO;
         }
+
+        public Cliente GetById(int id)
+        {
+            ClienteRepository clienteRepository = new ClienteRepository();
+            return clienteRepository.Get(id);   
+        }
+
+        public void Update(Cliente cliente)
+        {
+            ClienteRepository clienteRepository = new ClienteRepository();
+            clienteRepository.Update(cliente);   
+        }
     }
 }
