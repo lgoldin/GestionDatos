@@ -101,5 +101,15 @@ namespace FrbaHotel.ABM_de_Cliente
                 this.Hide();
             }
         }
+
+        private void txtnroIdentificacion_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtnroIdentificacion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
     }
 }
