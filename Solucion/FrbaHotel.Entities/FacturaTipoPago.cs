@@ -5,10 +5,10 @@ using System.Text;
 
 namespace FrbaHotel.Entities
 {
-    public static class Session
+    public class FacturaTipoPago
     {
-        public static Usuario Usuario { get; set; }
+        public int Id { get; set; }
 
-        public static Hotel Hotel { get; set; }
+        public string Descripcion { get; set; }
     }
 }

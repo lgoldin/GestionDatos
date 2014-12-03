@@ -50,6 +50,7 @@ namespace FrbaHotel.Repositories
         {
             SqlCommand command = DBConnection.CreateStoredProcedure("GetEstadiaByCodigoReserva");
             command.Parameters.AddWithValue("@codigoReserva", codigoReserva);
+            command.Parameters.AddWithValue("@hotelId", Session.Hotel.Id);
 
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
 

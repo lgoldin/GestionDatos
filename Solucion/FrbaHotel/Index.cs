@@ -93,6 +93,12 @@ namespace FrbaHotel
 
         private void Index_Load(object sender, EventArgs e)
         {
+            this.lblHotel.Text = string.Empty;
+            if (Session.Hotel != null)
+            {
+                this.lblHotel.Text = "Usted se encuentra administrando el hotel: " + Session.Hotel.Nombre;
+            }
+
             this.usuarioToolStripMenuItem.Visible = false;
             this.hotelToolStripMenuItem.Visible = false;
             this.rolToolStripMenuItem.Visible = false;

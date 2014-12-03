@@ -5,16 +5,10 @@ using System.Text;
 
 namespace FrbaHotel.Entities
 {
-    public class Regimen
+    public class FacturaItem
     {
-        public int Codigo { get; set; }
-
         public string Descripcion { get; set; }
 
-        public bool Activo { get; set; }
-
         public decimal Precio { get; set; }
-
-        public bool ConsumiblesGratis { get; set; }
     }
 }

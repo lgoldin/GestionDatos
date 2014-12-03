@@ -144,7 +144,7 @@ namespace FrbaHotel.ABM_de_Reserva
         private decimal GenerarPrecio()
         {
             DateTime fechaDesde = dateFechaDesde.Value;
-            DateTime fechaHasta = dateFechaHasta.Value;            
+            DateTime fechaHasta = dateFechaHasta.Value;
             decimal diasEstadia = (decimal)(fechaHasta - fechaDesde).TotalDays;
             decimal precio = ((decimal)HotelCargoPorEstrellaService.GetCargo()) * ((Hotel)cmbHotel.SelectedItem).Estrellas * diasEstadia;
             if (cmbRegimen.SelectedItem != null)

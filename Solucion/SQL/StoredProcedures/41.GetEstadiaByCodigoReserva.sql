@@ -11,16 +11,19 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutilli
 BEGIN
 EXEC dbo.sp_executesql @statement = N'
 CREATE PROCEDURE [Frutillitas].[GetEstadiaByCodigoReserva]
-@codigoReserva numeric(18,0)
+@codigoReserva numeric(18,0),
+@hotelId numeric(18,0)
 AS
 BEGIN
 	SET NOCOUNT ON;
 	
 	SELECT
-		*
-	FROM [Frutillitas].[Estadia]
+		e.*
+	FROM [Frutillitas].[Estadia] e
+	INNER JOIN [Frutillitas].[Reserva] r ON e.reservaCodigo = r.codigo
 	WHERE
-		reservaCodigo = @codigoReserva
+		e.reservaCodigo = @codigoReserva AND
+		r.hotelId = @hotelId
 END
 ' 
 END

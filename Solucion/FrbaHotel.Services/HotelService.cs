@@ -64,6 +64,12 @@ namespace FrbaHotel.Services
             
         }
 
+        public IEnumerable<Hotel> GetByIdUsuario(int idUsuario)
+        {
+            var repository = new HotelRepository();
+            return repository.GetByIdUsuario(idUsuario);
+        }
+
         #region IHotelService Members
 
 
