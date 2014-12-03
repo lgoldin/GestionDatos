@@ -10,5 +10,6 @@ namespace FrbaHotel.Services.Interfaces
     {
         IEnumerable<Regimen> GetAll();
         List<Regimen> GetByHotelId(int hotelId);
+        Regimen GetByCodigo(int codigo);
     }
 }

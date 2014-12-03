@@ -14,6 +14,8 @@ namespace FrbaHotel.ABM_de_Reserva
 {
     public partial class ListadoReserva : Form
     {
+        private Reserva currentReserva = null;
+
         public IReservaService ReservaService { get; set; }
 
         public IHotelService HotelService { get; set; }
@@ -35,6 +37,12 @@ namespace FrbaHotel.ABM_de_Reserva
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             txtCodigo.Text = string.Empty;
+            lblHotel.Text = "";
+            lblFechaDesde.Text = "";
+            lblFechaHasta.Text = "";
+            lblRegimen.Text = "";
+            lblTipoHabitacion.Text = "";
+            currentReserva = null;
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -45,11 +53,7 @@ namespace FrbaHotel.ABM_de_Reserva
                 Reserva reserva = ReservaService.GetReservaByCodigo(Convert.ToInt32(codigo));
                 if (reserva != null)
                 {
-                    lblHotel.Text = HotelService.GetById(reserva.HotelId).Nombre;
-                    lblFechaDesde.Text = reserva.FechaDesde.ToShortDateString();
-                    lblFechaHasta.Text = reserva.FechaHasta.ToShortDateString();
-                    //lblRegimen.Text = RegimenService.GetAll
-                    lblTipoHabitacion.Text = TipoHabitacionService.GetByCodigo(reserva.TipoHabitacionCodigo).Descripcion;
+                    SetearReserva(reserva);
                 }
                 else
                 {
@@ -66,6 +70,36 @@ namespace FrbaHotel.ABM_de_Reserva
                 int codigo = Convert.ToInt32(grid.Rows[e.RowIndex].Cells["Codigo"].Value);
                 AltaReserva form = new AltaReserva(ReservaService.GetReservaByCodigo(codigo));
             }
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            if (currentReserva != null)
+            {
+                AltaReserva form = new AltaReserva(currentReserva);
+                form.ShowDialog();
+                SetearReserva(ReservaService.GetReservaByCodigo(currentReserva.Codigo));                
+            }
+            else
+            {
+                MessageBox.Show("Primero debe seleccionar una reserva.");
+            }
+        }
+
+        private void SetearReserva(Reserva reserva)
+        {
+            lblHotel.Text = HotelService.GetById(reserva.HotelId).Nombre;
+            lblFechaDesde.Text = reserva.FechaDesde.ToShortDateString();
+            lblFechaHasta.Text = reserva.FechaHasta.ToShortDateString();
+            lblRegimen.Text = RegimenService.GetByCodigo(reserva.RegimenCodigo).Descripcion;
+            lblTipoHabitacion.Text = TipoHabitacionService.GetByCodigo(reserva.TipoHabitacionCodigo).Descripcion;
+            currentReserva = reserva;
+        }
+
+        private void btnNueva_Click(object sender, EventArgs e)
+        {
+            AltaReserva form = new AltaReserva(null);
+            form.ShowDialog();              
         }
     }
 }

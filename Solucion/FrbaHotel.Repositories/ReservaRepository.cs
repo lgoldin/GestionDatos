@@ -29,6 +29,16 @@ namespace FrbaHotel.Repositories
                 reserva = new Reserva() { Codigo = Convert.ToInt32(reader["codigo"]), FechaDesde = Convert.ToDateTime(reader["fechaDesde"]), FechaHasta = Convert.ToDateTime(reader["fechaHasta"]), RegimenCodigo = Convert.ToInt32(reader["regimenCodigo"]), HotelId = Convert.ToInt32(reader["hotelId"]) };
             }
 
+            SqlCommand tipoHabitacionCommand = DBConnection.CreateStoredProcedure("GetTipoHabitacionByReserva");
+            tipoHabitacionCommand.Parameters.AddWithValue("@reservaCodigo", codigo);
+            DataRowCollection tipoHabitacionCollection = DBConnection.EjecutarStoredProcedureSelect(tipoHabitacionCommand).Rows;
+
+            if (tipoHabitacionCollection.Count > 0)
+            {
+                DataRow reader = tipoHabitacionCollection[0];
+                reserva.TipoHabitacionCodigo = Convert.ToInt32(reader["tipoHabitacionCodigo"]);
+            }           
+
             return reserva;
         }
 

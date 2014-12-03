@@ -136,8 +136,8 @@ namespace FrbaHotel.ABM_de_Reserva
 
                     ReservaService.Update(reserva);
                     MessageBox.Show("Su reserva ha sido modificada.");
-                    this.Close();
                 }
+                this.Close();
             }
         }
 
