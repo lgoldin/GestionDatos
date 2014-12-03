@@ -26,7 +26,7 @@ namespace FrbaHotel.Repositories
             if (collection.Count > 0)
             {
                 DataRow reader = collection[0];
-                reserva = new Reserva() { Codigo = Convert.ToInt32(reader["codigo"]), FechaDesde = Convert.ToDateTime(reader["fechaDesde"]), FechaHasta = Convert.ToDateTime(reader["fechaHasta"]), RegimenCodigo = Convert.ToInt32(reader["regimenCodigo"]) };
+                reserva = new Reserva() { Codigo = Convert.ToInt32(reader["codigo"]), FechaDesde = Convert.ToDateTime(reader["fechaDesde"]), FechaHasta = Convert.ToDateTime(reader["fechaHasta"]), RegimenCodigo = Convert.ToInt32(reader["regimenCodigo"]), HotelId = Convert.ToInt32(reader["hotelId"]) };
             }
 
             return reserva;
@@ -47,15 +47,40 @@ namespace FrbaHotel.Repositories
                 command.Parameters.AddWithValue("@fechaCreacion", reserva.FechaCreacion);
                 codigo = DBConnection.ExecuteScalar(command);
 
+                SqlCommand reservaHabitacionCommand = DBConnection.CreateStoredProcedure("InsertReservaTipoHabitacion");
+                reservaHabitacionCommand.Parameters.AddWithValue("@reservaCodigo", codigo);
+                reservaHabitacionCommand.Parameters.AddWithValue("@tipoHabitacionCodigo", reserva.TipoHabitacionCodigo);
+                DBConnection.ExecuteNonQuery(reservaHabitacionCommand);
+
                 transaction.Complete();
             }
 
             return codigo;
         }
 
-        public override void Update(Reserva entity)
+        public override void Update(Reserva reserva)
         {
-            throw new NotImplementedException();
+            using (var transaction = new TransactionScope())
+            {
+                SqlCommand command = DBConnection.CreateStoredProcedure("UpdateReserva");
+                command.Parameters.AddWithValue("@codigo", reserva.Codigo);
+                command.Parameters.AddWithValue("@fechaDesde", reserva.FechaDesde);
+                command.Parameters.AddWithValue("@fechaHasta", reserva.FechaHasta);
+                command.Parameters.AddWithValue("@regimenCodigo", reserva.RegimenCodigo);
+                command.Parameters.AddWithValue("@hotelId", reserva.HotelId);
+                DBConnection.ExecuteNonQuery(command);
+
+                SqlCommand reservaHabitacionDeleteCommand = DBConnection.CreateStoredProcedure("DeleteReservaTipoHabitacion");
+                reservaHabitacionDeleteCommand.Parameters.AddWithValue("@reservaCodigo", reserva.Codigo);
+                DBConnection.ExecuteNonQuery(reservaHabitacionDeleteCommand);
+
+                SqlCommand reservaHabitacionCommand = DBConnection.CreateStoredProcedure("InsertReservaTipoHabitacion");
+                reservaHabitacionCommand.Parameters.AddWithValue("@reservaCodigo", reserva.Codigo);
+                reservaHabitacionCommand.Parameters.AddWithValue("@tipoHabitacionCodigo", reserva.TipoHabitacionCodigo);
+                DBConnection.ExecuteNonQuery(reservaHabitacionCommand);
+
+                transaction.Complete();
+            }
         }
 
         public override void Delete(Reserva entity)

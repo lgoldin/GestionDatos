@@ -894,9 +894,12 @@ FROM [GD2C2014].[gd_esquema].[Maestra]
 WHERE [Regimen_Descripcion] NOT LIKE 'all inclusive%'
 GO
 
-INSERT INTO [Frutillitas].[Hotel]([nombre], [ciudadId], [direccion], [estrellas], [mail], [fechaCreacion])
-SELECT DISTINCT NULL /*Lo dejo en null pero podría ir la dir*/, (SELECT [id] FROM [Frutillitas].[Ciudad] WHERE [nombre] LIKE [Hotel_Ciudad]), [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255)), [Hotel_CantEstrella], NULL, GETDATE()
+INSERT INTO [Frutillitas].[Hotel]([ciudadId], [direccion], [estrellas], [mail], [fechaCreacion])
+SELECT DISTINCT (SELECT [id] FROM [Frutillitas].[Ciudad] WHERE [nombre] LIKE [Hotel_Ciudad]), [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255)), [Hotel_CantEstrella], NULL, GETDATE()
 FROM [GD2C2014].[gd_esquema].[Maestra]
+GO
+
+UPDATE [Frutillitas].[Hotel] SET [nombre] = ('Hotel ' + [direccion])
 GO
 
 INSERT INTO [Frutillitas].[UsuarioHotel]([usuarioId], [hotelId])

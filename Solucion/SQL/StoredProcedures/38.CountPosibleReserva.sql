@@ -28,6 +28,7 @@ BEGIN
 			WHERE hab2.hotelId = @hotelId
 				AND hab2.tipoCodigo = @tipoHabitacionCodigo 
 				AND ((res.fechaDesde BETWEEN @fechaDesde AND @fechaHasta) OR 
-					(res.fechaDesde BETWEEN @fechaDesde AND @fechaHasta)))
+					(res.fechaDesde BETWEEN @fechaDesde AND @fechaHasta))
+				AND res.estadoId = 1 OR res.estadoId = 2)
 END
 GO

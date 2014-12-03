@@ -9,5 +9,7 @@ namespace FrbaHotel.Services.Interfaces
     public interface ITipoHabitacionService
     {
         IEnumerable<TipoHabitacion> GetAll();
+
+        TipoHabitacion GetByCodigo(int codigo);
     }
 }

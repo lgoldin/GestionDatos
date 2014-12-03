@@ -55,7 +55,6 @@
     <Compile Include="Session.cs" />
     <Compile Include="DTOs\ClienteDTO.cs" />
     <Compile Include="DTOs\HabitacionDTO.cs" />
-    <Compile Include="DTOs\ReservaDTO.cs" />
     <Compile Include="HotelInhabilitacion.cs" />
     <Compile Include="Reserva.cs" />
     <Compile Include="TipoHabitacion.cs" />

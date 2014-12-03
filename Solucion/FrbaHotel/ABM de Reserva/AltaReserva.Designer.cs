@@ -156,7 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1047, 440);
+            this.ClientSize = new System.Drawing.Size(391, 440);
             this.Controls.Add(this.btnReservar);
             this.Controls.Add(this.cmbRegimen);
             this.Controls.Add(this.label5);

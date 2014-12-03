@@ -14,6 +14,8 @@ namespace FrbaHotel.ABM_de_Reserva
 {
     public partial class AltaReserva : Form
     {
+        private Reserva Reserva = null;
+
         public IHotelService HotelService { get; set; }
 
         public ITipoHabitacionService TipoHabitacionService { get; set; }
@@ -24,7 +26,7 @@ namespace FrbaHotel.ABM_de_Reserva
 
         public IHotelCargoPorEstrellaService HotelCargoPorEstrellaService { get; set; }
 
-        public AltaReserva()
+        public AltaReserva(Reserva reserva)
         {
             InitializeComponent();
             this.HotelService = new HotelService();
@@ -32,6 +34,9 @@ namespace FrbaHotel.ABM_de_Reserva
             this.RegimenService = new RegimenService();
             this.ReservaService = new ReservaService();
             this.HotelCargoPorEstrellaService = new HotelCargoPorEstrellaService();
+            this.Reserva = reserva;
+            if (Reserva != null)
+                btnReservar.Text = "Modificar";
         }
 
         private void AltaReserva_Load(object sender, EventArgs e)
@@ -39,23 +44,23 @@ namespace FrbaHotel.ABM_de_Reserva
             cmbHotel.DataSource = this.HotelService.GetAll(null, null, null, null);
             cmbHotel.ValueMember = "Id";
             cmbHotel.DisplayMember = "Nombre";
-            cmbHotel.SelectedValue = 0;
+            cmbHotel.SelectedValue = Reserva == null ? 0 : Reserva.HotelId;
 
             dateFechaDesde.MinDate = DateTime.Now.AddDays(1);
-            dateFechaDesde.Value = DateTime.Now.AddDays(1);
+            dateFechaDesde.Value = Reserva == null ? DateTime.Now.AddDays(1) : Reserva.FechaDesde;
 
             dateFechaHasta.MinDate = DateTime.Now.AddDays(1);
-            dateFechaHasta.Value = DateTime.Now.AddDays(2);
+            dateFechaHasta.Value = Reserva == null ? DateTime.Now.AddDays(2) : Reserva.FechaHasta;
 
             cmbTipoHabitacion.DataSource = this.TipoHabitacionService.GetAll();
             cmbTipoHabitacion.ValueMember = "Codigo";
             cmbTipoHabitacion.DisplayMember = "Descripcion";
-            cmbTipoHabitacion.SelectedValue = 0;
+            cmbTipoHabitacion.SelectedValue = Reserva == null ? 0 : Reserva.TipoHabitacionCodigo;
 
             cmbRegimen.DataSource = this.RegimenService.GetAll();
             cmbRegimen.ValueMember = "Codigo";
             cmbRegimen.DisplayMember = "Descripcion";
-            cmbRegimen.SelectedValue = 0;
+            cmbRegimen.SelectedValue = Reserva == null ? 0 : Reserva.RegimenCodigo;
         }
 
         private void btnDisponibilidad_Click(object sender, EventArgs e)
@@ -88,22 +93,51 @@ namespace FrbaHotel.ABM_de_Reserva
             }
             else
             {
-                ListadoCliente form = new ListadoCliente(false);
-                form.ShowDialog();
-                int clienteId = form.ClienteId;
-                
-                Reserva reserva = new Reserva();
-                reserva.ClienteId = clienteId;
-                reserva.HotelId = hotelId;
-                reserva.FechaDesde = fechaDesde;
-                reserva.FechaHasta = fechaHasta;
-                reserva.RegimenCodigo = (int) cmbRegimen.SelectedValue;
-                reserva.FechaCreacion = DateTime.Now;
-                // TODO: Ver como obtener
-                reserva.EstadoId = 1;
+                if (Reserva == null)
+                {
+                    ListadoCliente form = new ListadoCliente(false);
+                    form.ShowDialog();
+                    int clienteId = form.ClienteId;
 
-                int codigo = ReservaService.Insert(reserva);
-                MessageBox.Show("Su codigo de reserva es '" + codigo + "'.");
+                    if (clienteId == 0)
+                    {
+                        MessageBox.Show("Tiene que seleccionar un cliente");
+                    }
+                    else
+                    {
+                        Reserva reserva = new Reserva();
+                        reserva.ClienteId = clienteId;
+                        reserva.HotelId = hotelId;
+                        reserva.FechaDesde = fechaDesde;
+                        reserva.FechaHasta = fechaHasta;
+                        reserva.RegimenCodigo = (int)cmbRegimen.SelectedValue;
+                        reserva.FechaCreacion = DateTime.Now;
+                        reserva.TipoHabitacionCodigo = tipoHabitacionCodigo;
+                        // TODO: Ver como obtener
+                        reserva.EstadoId = 1;
+
+                        int codigo = ReservaService.Insert(reserva);
+                        MessageBox.Show("Su codigo de reserva es '" + codigo + "'.");
+                    }
+                }
+                else
+                {
+                    Reserva reserva = new Reserva();
+                    reserva.Codigo = Reserva.Codigo;
+                    reserva.ClienteId = Reserva.ClienteId;
+                    reserva.HotelId = hotelId;
+                    reserva.FechaDesde = fechaDesde;
+                    reserva.FechaHasta = fechaHasta;
+                    reserva.RegimenCodigo = (int)cmbRegimen.SelectedValue;
+                    reserva.FechaCreacion = Reserva.FechaCreacion;
+                    reserva.TipoHabitacionCodigo = tipoHabitacionCodigo;
+                    // TODO: Ver como obtener
+                    reserva.EstadoId = 2;
+
+                    ReservaService.Update(reserva);
+                    MessageBox.Show("Su reserva ha sido modificada.");
+                    this.Close();
+                }
             }
         }
 
