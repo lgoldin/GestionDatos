@@ -2,3 +2,5 @@
 - Cliente tipo y numero de identificación unique (trigger).
 - Ver qué hacer cuando se modifica una reserva para grabar el usuario, me parece que no vamos a tener la info del mismo como para hacerlo con un trigger, supongo que será mejor hacerlo con SP.
 - Frente S/N.
+- Muchos tipo de habitacion en reserva.
+- Cuando modifica una reserva no tener en cuenta la reserva actual para la disponibilidad.

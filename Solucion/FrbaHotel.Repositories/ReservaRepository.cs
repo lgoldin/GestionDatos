@@ -147,6 +147,28 @@ namespace FrbaHotel.Repositories
             return Convert.ToInt32(reader[0]) > 0;
         }
 
+        public void Cancelar(int codigo, string motivo, Usuario usuario)
+        {
+            using (var transaction = new TransactionScope())
+            {
+                int estadoId = usuario.Username == "guest" ? 4 /*Guest*/ : 3 /*Recepcion*/;
+                SqlCommand logCommand = DBConnection.CreateStoredProcedure("InsertReservaLog");
+                logCommand.Parameters.AddWithValue("@reservaCodigo", codigo);
+                logCommand.Parameters.AddWithValue("@fecha", DateTime.Now);
+                logCommand.Parameters.AddWithValue("@usuarioId", usuario.Id);
+                logCommand.Parameters.AddWithValue("@tipoId", 3/*Cancelacion*/);
+                logCommand.Parameters.AddWithValue("@motivo", motivo);
+                DBConnection.ExecuteNonQuery(logCommand);
+
+                SqlCommand command = DBConnection.CreateStoredProcedure("UpdateEstadoReserva");
+                command.Parameters.AddWithValue("@codigo", codigo);
+                command.Parameters.AddWithValue("@estadoId", estadoId);
+                DBConnection.ExecuteNonQuery(command);
+
+                transaction.Complete();
+            }            
+        }
+
         private Regimen CreateRegimen(DataRow row)
         {
             Regimen regimen = new Regimen();

@@ -847,6 +847,14 @@ FROM [Frutillitas].[Usuario] u, [Frutillitas].[Rol] r
 WHERE u.[username] = 'admin' AND r.[nombre] = 'Administrador'
 GO
 
+INSERT INTO [Frutillitas].[Usuario]([username], [password], [habilitado]) VALUES ('guest', 0x84983c60f7daadc1cb8698621f802c0d9f9a3c3c295c810748fb048115c186ec, 1)
+GO
+INSERT INTO [Frutillitas].[UsuarioRol]([usuarioId], [rolId])
+SELECT u.[id], r.[id]
+FROM [Frutillitas].[Usuario] u, [Frutillitas].[Rol] r
+WHERE u.[username] = 'guest' AND r.[nombre] = 'Guest'
+GO
+
 INSERT INTO [Frutillitas].[Ciudad]([nombre], [paisId])
 SELECT DISTINCT [Hotel_Ciudad], 1 /*El único pais que hay*/
 FROM [GD2C2014].[gd_esquema].[Maestra]

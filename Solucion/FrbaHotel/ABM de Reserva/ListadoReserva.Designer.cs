@@ -43,7 +43,6 @@
             this.lblFechaHasta = new System.Windows.Forms.Label();
             this.lblTipoHabitacion = new System.Windows.Forms.Label();
             this.lblRegimen = new System.Windows.Forms.Label();
-            this.btnCancelar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnNueva = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -186,15 +185,6 @@
             this.lblRegimen.Size = new System.Drawing.Size(0, 13);
             this.lblRegimen.TabIndex = 82;
             // 
-            // btnCancelar
-            // 
-            this.btnCancelar.Location = new System.Drawing.Point(199, 359);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 83;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            // 
             // btnModificar
             // 
             this.btnModificar.Location = new System.Drawing.Point(13, 359);
@@ -222,7 +212,6 @@
             this.ClientSize = new System.Drawing.Size(810, 450);
             this.Controls.Add(this.btnNueva);
             this.Controls.Add(this.btnModificar);
-            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.lblRegimen);
             this.Controls.Add(this.lblTipoHabitacion);
             this.Controls.Add(this.lblFechaHasta);
@@ -262,7 +251,6 @@
         private System.Windows.Forms.Label lblFechaHasta;
         private System.Windows.Forms.Label lblTipoHabitacion;
         private System.Windows.Forms.Label lblRegimen;
-        private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnNueva;
     }
