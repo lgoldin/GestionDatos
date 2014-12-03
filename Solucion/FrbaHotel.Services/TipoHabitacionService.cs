@@ -22,5 +22,17 @@ namespace FrbaHotel.Services
 
             return tipos;
         }
+
+        public TipoHabitacion GetByCodigo(int codigo)
+        {
+            TipoHabitacion res = null;
+            foreach (TipoHabitacion tipo in GetAll())
+            {
+                if (tipo.Codigo == codigo)
+                    res = tipo;
+            }
+            
+            return res;
+        }
     }
 }

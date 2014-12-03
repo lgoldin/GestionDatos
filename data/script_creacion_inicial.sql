@@ -559,7 +559,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Factura]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [Frutillitas].[Factura](
-	[numero] [numeric](18, 0) NOT NULL PRIMARY KEY,
+	[numero] [numeric](18, 0) IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[fecha] [datetime] NULL,
 	[total] [numeric](18, 2) NULL,
 	[estadiaId] [int] NULL,
@@ -898,9 +898,17 @@ FROM [GD2C2014].[gd_esquema].[Maestra]
 WHERE [Regimen_Descripcion] NOT LIKE 'all inclusive%'
 GO
 
-INSERT INTO [Frutillitas].[Hotel]([nombre], [ciudadId], [direccion], [estrellas], [mail], [fechaCreacion])
-SELECT DISTINCT NULL /*Lo dejo en null pero podría ir la dir*/, (SELECT [id] FROM [Frutillitas].[Ciudad] WHERE [nombre] LIKE [Hotel_Ciudad]), [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255)), [Hotel_CantEstrella], NULL, GETDATE()
+INSERT INTO [Frutillitas].[Hotel]([ciudadId], [direccion], [estrellas], [mail], [fechaCreacion])
+SELECT DISTINCT (SELECT [id] FROM [Frutillitas].[Ciudad] WHERE [nombre] LIKE [Hotel_Ciudad]), [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255)), [Hotel_CantEstrella], NULL, GETDATE()
 FROM [GD2C2014].[gd_esquema].[Maestra]
+GO
+
+UPDATE [Frutillitas].[Hotel] SET [nombre] = ('Hotel ' + [direccion])
+GO
+
+INSERT INTO [Frutillitas].[UsuarioHotel]([usuarioId], [hotelId])
+SELECT (SELECT [id] FROM [Frutillitas].[Usuario] WHERE [username] = 'admin'), [id]
+FROM [Frutillitas].[Hotel]
 GO
 
 INSERT INTO [Frutillitas].[HotelIncrementoEstrella]([incremento])
@@ -987,11 +995,15 @@ GO
 INSERT INTO [Frutillitas].[FacturaTipoPago]([descripcion]) VALUES ('Tarjeta')
 GO
 
+SET IDENTITY_INSERT [Frutillitas].[Factura] ON
+GO
 INSERT INTO [Frutillitas].[Factura]([numero], [fecha], [total], [estadiaId], [tipoPagoId])
 SELECT DISTINCT [Factura_Nro], [Factura_Fecha], [Factura_Total] + ([Item_Factura_Monto] * [Estadia_Cant_Noches]), [id], (SELECT [id] FROM [Frutillitas].[FacturaTipoPago] WHERE [descripcion] = 'Efectivo')
 FROM [Frutillitas].[Estadia]
 INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [reservaCodigo] = [Reserva_Codigo]
 WHERE [Factura_Nro] IS NOT NULL AND [Consumible_Precio] IS NULL AND [Item_Factura_Monto] IS NOT NULL
+GO
+SET IDENTITY_INSERT [Frutillitas].[Factura] OFF
 GO
 
 INSERT INTO [Frutillitas].[FacturaItem]([facturaNumero], [descripcion], [precio])

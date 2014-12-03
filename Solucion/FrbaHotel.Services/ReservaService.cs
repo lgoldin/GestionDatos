@@ -34,20 +34,9 @@ namespace FrbaHotel.Services
             return repository.GetActiveReservaBetweenDatesByHotelId(hotelId, fechaDesde, fechaHasta).Count;
         }
 
-        public ReservaDTO GetReservaDTOByCodigo(int codigo)
-        {
-            ReservaRepository repository = new ReservaRepository();
-            RegimenRepository regimenRepository = new RegimenRepository();
-            Reserva reserva = repository.Get(codigo);
-            if (reserva != null)
-                return new ReservaDTO() { Codigo = reserva.Codigo, FechaDesde = reserva.FechaDesde.ToShortDateString(), FechaHasta = reserva.FechaHasta.ToShortDateString(), Regimen = regimenRepository.Get(reserva.RegimenCodigo).Descripcion };
-            else return null;
-        }
-
         public Reserva GetReservaByCodigo(int codigo)
         {
             ReservaRepository repository = new ReservaRepository();
-            RegimenRepository regimenRepository = new RegimenRepository();
             Reserva reserva = repository.Get(codigo);
             return reserva;
         }
@@ -56,6 +45,12 @@ namespace FrbaHotel.Services
         {
             ReservaRepository repository = new ReservaRepository();
             return repository.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo);
+        }
+
+        public void Update(Reserva reserva)
+        {
+            ReservaRepository repository = new ReservaRepository();
+            repository.Update(reserva);
         }
 
         #endregion

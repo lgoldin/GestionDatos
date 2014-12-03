@@ -1,5 +1,4 @@
 - Cliente mail unique (trigger).
 - Cliente tipo y numero de identificación unique (trigger).
 - Ver qué hacer cuando se modifica una reserva para grabar el usuario, me parece que no vamos a tener la info del mismo como para hacerlo con un trigger, supongo que será mejor hacerlo con SP.
-- Ver tema de consumibles y All Inclusive.
 - Frente S/N.

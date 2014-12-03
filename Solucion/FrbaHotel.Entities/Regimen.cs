@@ -14,5 +14,7 @@ namespace FrbaHotel.Entities
         public bool Activo { get; set; }
 
         public decimal Precio { get; set; }
+
+        public bool ConsumiblesGratis { get; set; }
     }
 }
