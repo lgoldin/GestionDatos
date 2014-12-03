@@ -80,14 +80,14 @@ namespace FrbaHotel.Registrar_Estadia
                 }
                 else
                 {
-                    MessageBox.Show("No se encontro ninguna estadia para la reserva", "Error", MessageBoxButtons.OK);
+                    MessageBox.Show("No se encontro ninguna reserva", "Error", MessageBoxButtons.OK);
                 }
             }
             catch (FormException formException)
             {
                 MessageBox.Show(formException.Message, "Error", MessageBoxButtons.OK);
             }
-            catch
+            catch (Exception)
             {
                 MessageBox.Show("Ocurrio un error", "Error", MessageBoxButtons.OK);
             }
