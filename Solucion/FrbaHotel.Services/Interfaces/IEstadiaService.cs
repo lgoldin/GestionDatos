@@ -11,5 +11,7 @@ namespace FrbaHotel.Services.Interfaces
         Estadia GetByCodigoReserva(int codigoReserva);
 
         void RegistrarConsumibles(IList<Consumible> consumibles, int idEstadia);
+
+        int Save(Estadia estadia);
     }
 }

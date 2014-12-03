@@ -654,10 +654,10 @@ BEGIN
 CREATE TABLE [Frutillitas].[Estadia](
 	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[reservaCodigo] [numeric](18, 0) NULL,
-	/*[checkinId] [int] NULL,
-	[checkoutId] [int] NULL*/
 	[fechaDesde] [datetime] NULL,
-	[fechaHasta] [datetime] NULL
+	[fechaHasta] [datetime] NULL,
+	[usuarioCheckInId] [int] NULL,
+	[usuarioCheckOutId] [int] NULL
 ) ON [PRIMARY]
 END
 GO
@@ -785,6 +785,10 @@ GO
 ALTER TABLE [Frutillitas].[Cliente] ADD CONSTRAINT FK_Cliente_Pais FOREIGN KEY (nacionalidadId) REFERENCES [Frutillitas].[Pais](id)
 GO
 ALTER TABLE [Frutillitas].[Ciudad] ADD CONSTRAINT FK_Ciudad_Pais FOREIGN KEY (paisId) REFERENCES [Frutillitas].[Pais](id)
+GO
+ALTER TABLE [Frutillitas].[Estadia] ADD CONSTRAINT FK_Estadia_UsuarioCheckIn FOREIGN KEY (usuarioCheckInId) REFERENCES [Frutillitas].[Usuario](id)
+GO
+ALTER TABLE [Frutillitas].[Estadia] ADD CONSTRAINT FK_Estadia_UsuarioCheckOut FOREIGN KEY (usuarioCheckOutId) REFERENCES [Frutillitas].[Usuario](id)
 GO
 
 /******************* MIGRATION **********************/

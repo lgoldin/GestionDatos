@@ -12,6 +12,7 @@ using FrbaHotel.ABM_de_Usuario;
 using FrbaHotel.ABM_de_Habitacion;
 using FrbaHotel.Entities;
 using FrbaHotel.Registrar_Consumible;
+using FrbaHotel.Registrar_Estadia;
 
 namespace FrbaHotel
 {
@@ -105,7 +106,9 @@ namespace FrbaHotel
             this.habitacionToolStripMenuItem.Visible = false;
             this.clienteToolStripMenuItem.Visible = false;
             this.consumiblesToolStripMenuItem.Visible = false;
-           
+            this.registrarEstToolStripMenuItem.Visible = false;
+            this.facturarEstadíaToolStripMenuItem.Visible = false;
+
             List<Funcionalidad> funcionalidades = Session.Usuario.Rol.Funcionalidades;
             if (funcionalidades.Any(x => x.Nombre == "Usuario"))
             {
@@ -132,6 +135,16 @@ namespace FrbaHotel
             {
                 this.consumiblesToolStripMenuItem.Visible = true;
             }
+
+            if (funcionalidades.Any(x => x.Nombre == "Estadia"))
+            {
+                this.registrarEstToolStripMenuItem.Visible = true;
+            }
+
+            if (funcionalidades.Any(x => x.Nombre == "Factura"))
+            {
+                this.facturarEstadíaToolStripMenuItem.Visible = true;
+            }
         }
 
         private void altaToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -154,6 +167,11 @@ namespace FrbaHotel
         {
             var form = new Facturacion.Facturacion();
             DisplayForm(form);
+        }
+
+        private void registrarEstToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisplayForm(new RegistrarEstadia());
         }
     }
 }

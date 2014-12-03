@@ -14,5 +14,10 @@ namespace FrbaHotel.Entities
         public DateTime FechaDesde { get; set; }
 
         public DateTime FechaHasta { get; set; }
+
+        public bool IsNew
+        {
+            get { return this.Id == 0; }
+        }
     }
 }

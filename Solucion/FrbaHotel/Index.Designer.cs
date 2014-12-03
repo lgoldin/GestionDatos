@@ -46,6 +46,7 @@
             this.ingresarReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.lblHotel = new System.Windows.Forms.Label();
+            this.registrarEstToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,10 +59,11 @@
             this.habitacionToolStripMenuItem,
             this.clienteToolStripMenuItem,
             this.consumiblesToolStripMenuItem,
-            this.facturarEstadíaToolStripMenuItem});
+            this.facturarEstadíaToolStripMenuItem,
+            this.registrarEstToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(481, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(682, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -197,11 +199,18 @@
             this.lblHotel.Size = new System.Drawing.Size(0, 16);
             this.lblHotel.TabIndex = 4;
             // 
+            // registrarEstToolStripMenuItem
+            // 
+            this.registrarEstToolStripMenuItem.Name = "registrarEstToolStripMenuItem";
+            this.registrarEstToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
+            this.registrarEstToolStripMenuItem.Text = "Registrar Estadia";
+            this.registrarEstToolStripMenuItem.Click += new System.EventHandler(this.registrarEstToolStripMenuItem_Click);
+            // 
             // Index
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 290);
+            this.ClientSize = new System.Drawing.Size(682, 290);
             this.Controls.Add(this.lblHotel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
@@ -236,6 +245,7 @@
         private System.Windows.Forms.ToolStripMenuItem facturarEstadíaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ingresarReservaToolStripMenuItem;
         private System.Windows.Forms.Label lblHotel;
+        private System.Windows.Forms.ToolStripMenuItem registrarEstToolStripMenuItem;
     }
 }
 

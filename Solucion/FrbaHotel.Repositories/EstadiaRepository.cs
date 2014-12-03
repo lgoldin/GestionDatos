@@ -13,12 +13,19 @@ namespace FrbaHotel.Repositories
     {
         public override int Insert(Estadia entity)
         {
-            throw new NotImplementedException();
+            SqlCommand command = DBConnection.CreateStoredProcedure("InsertEstadia");
+            command.Parameters.AddWithValue("@codigoReserva", entity.CodigoReserva);
+            command.Parameters.AddWithValue("@usuarioId", Session.Usuario.Id);
+            return DBConnection.ExecuteScalar(command);
         }
 
         public override void Update(Estadia entity)
         {
-            throw new NotImplementedException();
+            SqlCommand command = DBConnection.CreateStoredProcedure("UpdateEstadia");
+            command.Parameters.AddWithValue("@estadiaId", entity.Id);
+            command.Parameters.AddWithValue("@codigoReserva", entity.CodigoReserva);
+            command.Parameters.AddWithValue("@usuarioId", Session.Usuario.Id);
+            DBConnection.ExecuteNonQuery(command);
         }
 
         public override void Delete(Estadia entity)
@@ -84,8 +91,8 @@ namespace FrbaHotel.Repositories
             return new Estadia
             {
                 CodigoReserva = Convert.ToInt32(row["reservaCodigo"]),
-                FechaDesde = Convert.ToDateTime(row["fechaDesde"]),
-                FechaHasta = Convert.ToDateTime(row["fechaHasta"]),
+                FechaDesde = row["fechaDesde"] != null && !string.IsNullOrEmpty(row["fechaDesde"].ToString()) ? Convert.ToDateTime(row["fechaDesde"]) : DateTime.MinValue,
+                FechaHasta = row["fechaHasta"] != null && !string.IsNullOrEmpty(row["fechaHasta"].ToString()) ? Convert.ToDateTime(row["fechaHasta"]) : DateTime.MinValue,
                 Id = Convert.ToInt32(row["id"])
             };
         }
