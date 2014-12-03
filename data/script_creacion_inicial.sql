@@ -447,6 +447,7 @@ CREATE TABLE [Frutillitas].[Regimen](
 	[codigo] [numeric](18, 0) IDENTITY(1,1) NOT NULL PRIMARY KEY, /*Como no hay codigo lo dejo como autoincremental*/
 	[descripcion] [nvarchar](255) NULL,
 	[precio] [numeric](18, 2) NULL,
+	[consumiblesGratis] [bit] NULL,
 	[activo] [bit] NULL
 ) ON [PRIMARY]
 END
@@ -881,9 +882,16 @@ SELECT DISTINCT [Consumible_Codigo] ,[Consumible_Descripcion] ,[Consumible_Preci
 FROM [GD2C2014].[gd_esquema].[Maestra] WHERE [Consumible_Codigo] IS NOT NULL
 GO
 
-INSERT INTO [Frutillitas].[Regimen]([descripcion], [precio], [activo])
-SELECT DISTINCT [Regimen_Descripcion], [Regimen_Precio], 1
+INSERT INTO [Frutillitas].[Regimen]([descripcion], [precio], [consumiblesGratis], [activo])
+SELECT DISTINCT [Regimen_Descripcion], [Regimen_Precio], 1, 1
 FROM [GD2C2014].[gd_esquema].[Maestra]
+WHERE [Regimen_Descripcion] LIKE 'all inclusive%'
+GO
+
+INSERT INTO [Frutillitas].[Regimen]([descripcion], [precio], [consumiblesGratis], [activo])
+SELECT DISTINCT [Regimen_Descripcion], [Regimen_Precio], 0, 1
+FROM [GD2C2014].[gd_esquema].[Maestra]
+WHERE [Regimen_Descripcion] NOT LIKE 'all inclusive%'
 GO
 
 INSERT INTO [Frutillitas].[Hotel]([nombre], [ciudadId], [direccion], [estrellas], [mail], [fechaCreacion])
