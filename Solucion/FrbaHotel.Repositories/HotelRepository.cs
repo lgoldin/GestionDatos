@@ -98,6 +98,22 @@ namespace FrbaHotel.Repositories
             }
         }
 
+        public IEnumerable<Hotel> GetByIdUsuario(int idUsuario)
+        {
+            var hoteles = new List<Hotel>();
+
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetHotelesByIdUsuario");
+            command.Parameters.AddWithValue("@idUsuario", idUsuario);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
+            foreach (DataRow hotel in collection)
+            {
+                hoteles.Add(this.CreateHotel(hotel));
+            }
+
+            return hoteles;    
+        }
+
         public override void Delete(Hotel entity)
         {
             throw new NotImplementedException();

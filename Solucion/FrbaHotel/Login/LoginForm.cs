@@ -38,8 +38,7 @@ namespace FrbaHotel.Login
             {
                 usuario.Rol.Funcionalidades = this.FuncionalidadService.GetByRolId(usuario.Rol.Id);
                 Session.Usuario = usuario;
-                var form = new Index();
-                this.DisplayForm(form);
+                this.DisplayForm(new SeleccionarHotel());
             }
             else
             {

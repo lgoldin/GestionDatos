@@ -8,5 +8,7 @@ namespace FrbaHotel.Entities
     public static class Session
     {
         public static Usuario Usuario { get; set; }
+
+        public static Hotel Hotel { get; set; }
     }
 }
