@@ -22,7 +22,7 @@ namespace FrbaHotel.Facturacion
         {
             Factura factura = new Factura();
             string error = string.Empty;
-            TarjetaDeCredito tarjeta;
+            TarjetaDeCredito tarjeta = null;
             if (Convert.ToInt32(cmbMedioDePago.SelectedValue) == 0)
             {
                 error += "Seleccione un medio de pago";
@@ -39,27 +39,53 @@ namespace FrbaHotel.Facturacion
             }
             if (string.IsNullOrEmpty(error))
             {
-                factura.EstadiaId = Convert.ToInt32(txtNroEstadia.Text);
-                factura.Fecha = DateTime.Now;
-                factura.Items = new List<FacturaItem>();
-                EstadiaService estadiaService = new EstadiaService();
-                Estadia estadia = estadiaService.GetById(Convert.ToInt32(txtNroEstadia.Text));
-                ReservaService reservaService = new ReservaService();
-                Reserva reserva = reservaService.GetReservaByCodigo(estadia.CodigoReserva);
-                RegimenService regimenService = new RegimenService();
-                Regimen regimen = regimenService.GetByCodigo(reserva.RegimenCodigo);
-
-                CreateNightsItems(factura, estadia, reserva);
-                CreateConsumibleItems(factura, estadia, regimen.ConsumiblesGratis);
-                foreach (FacturaItem fi in factura.Items)
+                try
                 {
-                    factura.Total += fi.Precio;
+                    factura.EstadiaId = Convert.ToInt32(txtNroEstadia.Text);
+                    factura.Fecha = DateTime.Now;
+                    factura.Items = new List<FacturaItem>();
+                    EstadiaService estadiaService = new EstadiaService();
+                    Estadia estadia = estadiaService.GetById(Convert.ToInt32(txtNroEstadia.Text));
+                    ReservaService reservaService = new ReservaService();
+                    Reserva reserva = reservaService.GetReservaByCodigo(estadia.CodigoReserva);
+                    RegimenService regimenService = new RegimenService();
+                    Regimen regimen = regimenService.GetByCodigo(reserva.RegimenCodigo);
+
+                    CreateNightsItems(factura, estadia, reserva, regimen.Precio);
+                    CreateConsumibleItems(factura, estadia, regimen.ConsumiblesGratis);
+                    foreach (FacturaItem fi in factura.Items)
+                    {
+                        factura.Total += fi.Precio;
+                    }
+
+                    FacturaService service = new FacturaService();
+                    factura.Numero = service.Insert(factura, tarjeta);
+                    MostrarFactura(factura);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Ocurrió un error al crear la factura");
                 }
             }
             else
             {
                 MessageBox.Show(error);
             }
+        }
+
+        private void MostrarFactura(Factura factura)
+        {
+            Form form = new FacturaFinal(factura);
+            DisplayForm(form);
+        }
+
+        private void DisplayForm(Form form)
+        {
+            form.Location = this.Location;
+            form.StartPosition = FormStartPosition.Manual;
+            form.FormClosing += delegate { this.Show(); };
+            form.Show();
+            this.Hide();
         }
 
         private TarjetaDeCredito CreateTarjetaDeCredito()
@@ -116,13 +142,15 @@ namespace FrbaHotel.Facturacion
 
         }
 
-        private static void CreateNightsItems(Factura factura, Estadia estadia, Reserva reserva)
+        private static void CreateNightsItems(Factura factura, Estadia estadia, Reserva reserva, decimal regimenPrecio)
         {
+            TipoHabitacionService tipoHabitacionService = new TipoHabitacionService();
+            TipoHabitacion tipoHab = tipoHabitacionService.GetByCodigo(reserva.TipoHabitacionCodigo);
             HotelService hotelService = new HotelService();
             Hotel hotel = hotelService.GetById(reserva.HotelId);
             HotelCargoPorEstrellaService hotelCargoPorEstrellaService = new HotelCargoPorEstrellaService();
             decimal precioNoche = ((decimal)hotelCargoPorEstrellaService.GetCargo()) * hotel.Estrellas;
-            //precioNoche += reserva..Porcentual * ((Regimen)cmbRegimen.SelectedItem).Precio;
+            precioNoche += tipoHab.Porcentual * regimenPrecio;
             
             List<DateTime> reservaUseDates = new List<DateTime>();
             List<DateTime> reservaNotUseDates = new List<DateTime>();

@@ -44,6 +44,7 @@
             this.consumiblesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.facturarEstadíaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ingresarReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.registrarEstToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.lblHotel = new System.Windows.Forms.Label();
             this.reservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,10 +63,11 @@
             this.clienteToolStripMenuItem,
             this.reservaToolStripMenuItem,
             this.consumiblesToolStripMenuItem,
-            this.facturarEstadíaToolStripMenuItem});
+            this.facturarEstadíaToolStripMenuItem,
+            this.registrarEstToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(481, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(682, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -182,11 +184,18 @@
             this.ingresarReservaToolStripMenuItem.Text = "Ingresar Estadia";
             this.ingresarReservaToolStripMenuItem.Click += new System.EventHandler(this.ingresarReservaToolStripMenuItem_Click);
             // 
+            // registrarEstToolStripMenuItem
+            // 
+            this.registrarEstToolStripMenuItem.Name = "registrarEstToolStripMenuItem";
+            this.registrarEstToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
+            this.registrarEstToolStripMenuItem.Text = "Registrar Estadia";
+            this.registrarEstToolStripMenuItem.Click += new System.EventHandler(this.registrarEstToolStripMenuItem_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(63, 126);
+            this.label1.Location = new System.Drawing.Point(156, 101);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(324, 20);
             this.label1.TabIndex = 3;
@@ -196,7 +205,7 @@
             // 
             this.lblHotel.AutoSize = true;
             this.lblHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHotel.Location = new System.Drawing.Point(75, 157);
+            this.lblHotel.Location = new System.Drawing.Point(168, 132);
             this.lblHotel.Name = "lblHotel";
             this.lblHotel.Size = new System.Drawing.Size(0, 16);
             this.lblHotel.TabIndex = 4;
@@ -228,7 +237,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 290);
+            this.ClientSize = new System.Drawing.Size(682, 290);
             this.Controls.Add(this.lblHotel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
@@ -266,6 +275,7 @@
         private System.Windows.Forms.ToolStripMenuItem reservaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generarModificarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cancelarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem registrarEstToolStripMenuItem;
     }
 }
 

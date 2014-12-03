@@ -27,5 +27,20 @@ namespace FrbaHotel.Services
             var repository = new EstadiaRepository();
             return repository.Get(id);
         }
+
+        public int Save(Estadia estadia)
+        {
+            var repository = new EstadiaRepository();
+
+            if (estadia.IsNew)
+            {
+                return repository.Insert(estadia);
+            }
+            else
+            {
+                repository.Update(estadia);
+                return estadia.Id;
+            }
+        }
     }
 }

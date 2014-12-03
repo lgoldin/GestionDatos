@@ -50,6 +50,7 @@
     <Compile Include="ClienteRepository.cs" />
     <Compile Include="CiudadRepository.cs" />
     <Compile Include="ConsumibleRepository.cs" />
+    <Compile Include="FacturaRepository.cs" />
     <Compile Include="FacturaTipoPagoRepository.cs" />
     <Compile Include="EstadiaRepository.cs" />
     <Compile Include="HotelCargoPorEstrellaRepository.cs" />

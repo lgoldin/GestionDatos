@@ -23,7 +23,7 @@ BEGIN
 	res.estadoId <> 4 AND
 	res.estadoId <> 5 AND
 	((res.fechaDesde between @fechaDesde and @fechaHasta) or 
-	(res.fechaDesde between @fechaDesde and @fechaHasta))
+	(res.fechaHasta between @fechaDesde and @fechaHasta))
 
 END
 GO
