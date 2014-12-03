@@ -18,7 +18,5 @@ namespace FrbaHotel.Entities
         public long Numero { get; set; }
 
         public DateTime FechaVencimiento { get; set; }
- 
-
     }
 }

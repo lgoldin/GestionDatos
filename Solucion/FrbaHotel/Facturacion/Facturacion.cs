@@ -21,38 +21,55 @@ namespace FrbaHotel.Facturacion
         private void btnFacturar_Click(object sender, EventArgs e)
         {
             Factura factura = new Factura();
-            factura.EstadiaId = Convert.ToInt32(txtNroEstadia.Text);
-            factura.Fecha = DateTime.Now;
-            factura.Items = new List<FacturaItem>();
-            EstadiaService estadiaService = new EstadiaService();
-            Estadia estadia = estadiaService.GetById(Convert.ToInt32(txtNroEstadia.Text));
-            ReservaService reservaService = new ReservaService();
-            Reserva reserva = reservaService.GetReservaByCodigo(estadia.CodigoReserva);
-            CreateNightsItems(factura, estadia, reserva);
-            CreateConsumibleItems(factura, estadia);
-            foreach (FacturaItem fi in factura.Items)
+            string error = string.Empty;
+            TarjetaDeCredito tarjeta;
+            if (Convert.ToInt32(cmbMedioDePago.SelectedValue) == 0)
             {
-                factura.Total += fi.Precio;
+                error += "Seleccione un medio de pago";
             }
 
             factura.TipoPagoId = Convert.ToInt32(cmbMedioDePago.SelectedValue);
             if (factura.TipoPagoId == 2)
             {
-                string error = string.Empty;
-                error = ValidateTarjeta();
+                error += ValidateTarjeta();
                 if (string.IsNullOrEmpty(error))
                 {
-                    TarjetaDeCredito tarjeta = new TarjetaDeCredito();
-                    tarjeta.Codigo = txtCodigo.Text;
-                    tarjeta.CodigoSeguridad = Convert.ToInt32(txtCodigoSeguridad.Text);
-                    tarjeta.FechaVencimiento = dateVencimiento.Value;
-                    tarjeta.Numero = Convert.ToInt64(txtNumero.Text);
-                }
-                else
-                {
-                    MessageBox.Show(error);
+                    tarjeta = CreateTarjetaDeCredito();
                 }
             }
+            if (string.IsNullOrEmpty(error))
+            {
+                factura.EstadiaId = Convert.ToInt32(txtNroEstadia.Text);
+                factura.Fecha = DateTime.Now;
+                factura.Items = new List<FacturaItem>();
+                EstadiaService estadiaService = new EstadiaService();
+                Estadia estadia = estadiaService.GetById(Convert.ToInt32(txtNroEstadia.Text));
+                ReservaService reservaService = new ReservaService();
+                Reserva reserva = reservaService.GetReservaByCodigo(estadia.CodigoReserva);
+                RegimenService regimenService = new RegimenService();
+                Regimen regimen = regimenService.GetByCodigo(reserva.RegimenCodigo);
+
+                CreateNightsItems(factura, estadia, reserva);
+                CreateConsumibleItems(factura, estadia, regimen.ConsumiblesGratis);
+                foreach (FacturaItem fi in factura.Items)
+                {
+                    factura.Total += fi.Precio;
+                }
+            }
+            else
+            {
+                MessageBox.Show(error);
+            }
+        }
+
+        private TarjetaDeCredito CreateTarjetaDeCredito()
+        {
+            TarjetaDeCredito tarjeta = new TarjetaDeCredito();
+            tarjeta.Codigo = txtCodigo.Text;
+            tarjeta.CodigoSeguridad = Convert.ToInt32(txtCodigoSeguridad.Text);
+            tarjeta.FechaVencimiento = dateVencimiento.Value;
+            tarjeta.Numero = Convert.ToInt64(txtNumero.Text);
+            return tarjeta;
         }
 
         private string ValidateTarjeta()
@@ -75,21 +92,38 @@ namespace FrbaHotel.Facturacion
             return errorMessage;
         }
 
-        private static void CreateConsumibleItems(Factura factura, Estadia estadia)
+        private static void CreateConsumibleItems(Factura factura, Estadia estadia, bool esGratis)
         {
             ConsumibleService consumibleService = new ConsumibleService();
             List<Consumible> consumibles = consumibleService.GetByIdEstadia(estadia.Id).ToList();
+            decimal precioConsumibles = 0;
             foreach (Consumible c in consumibles)
             {
                 FacturaItem consumibleItem = new FacturaItem();
                 consumibleItem.Descripcion = "Consumible: " + c.Descripcion;
                 consumibleItem.Precio = c.Precio;
                 factura.Items.Add(consumibleItem);
+                precioConsumibles += consumibleItem.Precio;
             }
+
+            if (esGratis)
+            {
+                FacturaItem consumibleGratis = new FacturaItem();
+                consumibleGratis.Precio = precioConsumibles * (-1);
+                consumibleGratis.Descripcion = "Descuento por régimen de estadía";
+                factura.Items.Add(consumibleGratis);
+            }
+
         }
 
         private static void CreateNightsItems(Factura factura, Estadia estadia, Reserva reserva)
         {
+            HotelService hotelService = new HotelService();
+            Hotel hotel = hotelService.GetById(reserva.HotelId);
+            HotelCargoPorEstrellaService hotelCargoPorEstrellaService = new HotelCargoPorEstrellaService();
+            decimal precioNoche = ((decimal)hotelCargoPorEstrellaService.GetCargo()) * hotel.Estrellas;
+            //precioNoche += reserva..Porcentual * ((Regimen)cmbRegimen.SelectedItem).Precio;
+            
             List<DateTime> reservaUseDates = new List<DateTime>();
             List<DateTime> reservaNotUseDates = new List<DateTime>();
 
@@ -104,6 +138,7 @@ namespace FrbaHotel.Facturacion
             }
 
             FacturaItem useDateItem = new FacturaItem();
+            useDateItem.Precio = precioNoche * (nochesUso - 1);
             useDateItem.Descripcion = "Estadia:          " + (nochesUso - 1).ToString() + " noches";
             factura.Items.Add(useDateItem);
 
@@ -117,9 +152,11 @@ namespace FrbaHotel.Facturacion
             if (nochesSinUso > 0)
             {
                 FacturaItem notUseDateItem = new FacturaItem();
-                notUseDateItem.Descripcion = "Noches de reserva sin uso:          " + reservaNotUseDates.Count.ToString() + " noches";
+                notUseDateItem.Precio = precioNoche * (nochesSinUso);
+                notUseDateItem.Descripcion = "Noches de reserva sin uso:          " + nochesSinUso + " noches";
                 factura.Items.Add(notUseDateItem);
             }
+            
         }
 
         private void Facturacion_Load(object sender, EventArgs e)
