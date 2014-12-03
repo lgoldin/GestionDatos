@@ -899,6 +899,11 @@ SELECT DISTINCT NULL /*Lo dejo en null pero podría ir la dir*/, (SELECT [id] FRO
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
 
+INSERT INTO [Frutillitas].[UsuarioHotel]([usuarioId], [hotelId])
+SELECT (SELECT [id] FROM [Frutillitas].[Usuario] WHERE [username] = 'admin'), [id]
+FROM [Frutillitas].[Hotel]
+GO
+
 INSERT INTO [Frutillitas].[HotelIncrementoEstrella]([incremento])
 SELECT TOP 1 [Hotel_Recarga_Estrella] FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
