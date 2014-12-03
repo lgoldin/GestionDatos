@@ -9,7 +9,7 @@ using System.Transactions;
 
 namespace FrbaHotel.Repositories
 {
-    public class FacturRepository : BaseRepository<Factura>
+    public class FacturaRepository : BaseRepository<Factura>
     {
 
         public override IEnumerable<Factura> GetAll()

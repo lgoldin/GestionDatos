@@ -10,9 +10,10 @@ namespace FrbaHotel.Services
 {
     public class FacturaService : IFacturaService
     {
-        public void Insert(Factura factura, TarjetaDeCredito tarjeta)
+        public long Insert(Factura factura, TarjetaDeCredito tarjeta)
         {
-            
+            FacturaRepository facturaRepository = new FacturaRepository();
+            return facturaRepository.Insert(factura, tarjeta);
         }
     }
 }

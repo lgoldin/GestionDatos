@@ -8,6 +8,6 @@ namespace FrbaHotel.Services.Interfaces
 {
     public interface IFacturaService
     {
-        
+        long Insert(Factura factura, TarjetaDeCredito tarjeta);
     }
 }

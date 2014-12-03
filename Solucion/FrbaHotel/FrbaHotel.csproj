@@ -151,6 +151,12 @@
     <Compile Include="ABM de Usuario\UsuarioForm.Designer.cs">
       <DependentUpon>UsuarioForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\FacturaFinal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturacion\FacturaFinal.Designer.cs">
+      <DependentUpon>FacturaFinal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\Facturacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -247,6 +253,10 @@
       <DependentUpon>ModificacionRol.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Facturacion\FacturaFinal.resx">
+      <DependentUpon>FacturaFinal.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Facturacion\Facturacion.resx">
       <DependentUpon>Facturacion.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -278,6 +288,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Registrar Estadia\RegistrarEstadia.resx">
       <DependentUpon>RegistrarEstadia.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
