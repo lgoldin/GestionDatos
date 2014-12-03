@@ -49,7 +49,7 @@ namespace FrbaHotel.Facturacion
                 RegimenService regimenService = new RegimenService();
                 Regimen regimen = regimenService.GetByCodigo(reserva.RegimenCodigo);
 
-                CreateNightsItems(factura, estadia, reserva);
+                CreateNightsItems(factura, estadia, reserva, regimen.Precio);
                 CreateConsumibleItems(factura, estadia, regimen.ConsumiblesGratis);
                 foreach (FacturaItem fi in factura.Items)
                 {
@@ -116,13 +116,15 @@ namespace FrbaHotel.Facturacion
 
         }
 
-        private static void CreateNightsItems(Factura factura, Estadia estadia, Reserva reserva)
+        private static void CreateNightsItems(Factura factura, Estadia estadia, Reserva reserva, decimal regimenPrecio)
         {
+            TipoHabitacionService tipoHabitacionService = new TipoHabitacionService();
+            TipoHabitacion tipoHab = tipoHabitacionService.GetByCodigo(reserva.TipoHabitacionCodigo);
             HotelService hotelService = new HotelService();
             Hotel hotel = hotelService.GetById(reserva.HotelId);
             HotelCargoPorEstrellaService hotelCargoPorEstrellaService = new HotelCargoPorEstrellaService();
             decimal precioNoche = ((decimal)hotelCargoPorEstrellaService.GetCargo()) * hotel.Estrellas;
-            //precioNoche += reserva..Porcentual * ((Regimen)cmbRegimen.SelectedItem).Precio;
+            precioNoche += tipoHab.Porcentual * regimenPrecio;
             
             List<DateTime> reservaUseDates = new List<DateTime>();
             List<DateTime> reservaNotUseDates = new List<DateTime>();

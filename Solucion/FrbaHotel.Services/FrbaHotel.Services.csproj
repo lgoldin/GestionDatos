@@ -49,8 +49,10 @@
     <Compile Include="ClienteService.cs" />
     <Compile Include="CiudadService.cs" />
     <Compile Include="ConsumibleService.cs" />
+    <Compile Include="FacturaService.cs" />
     <Compile Include="FacturaTipoPagoService.cs" />
     <Compile Include="EstadiaService.cs" />
+    <Compile Include="Interfaces\IFacturaService.cs" />
     <Compile Include="Interfaces\IFacturaTipoPagoService.cs" />
     <Compile Include="Interfaces\IConsumibleService.cs" />
     <Compile Include="Interfaces\IEstadiaService.cs" />
