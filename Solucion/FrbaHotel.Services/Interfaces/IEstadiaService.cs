@@ -12,6 +12,6 @@ namespace FrbaHotel.Services.Interfaces
 
         void RegistrarConsumibles(IList<Consumible> consumibles, int idEstadia);
 
-        int Save(Estadia estadia);
+        int Save(Estadia estadia, List<Cliente> clientes);
     }
 }

@@ -22,6 +22,7 @@ namespace FrbaHotel.Registrar_Estadia
 
             this.EstadiaService = new EstadiaService();
             this.ReservaService = new ReservaService();
+            this.clientes = new List<Cliente>();
         }
 
         public IEstadiaService EstadiaService { get; set; }
@@ -31,6 +32,8 @@ namespace FrbaHotel.Registrar_Estadia
         private Reserva Reserva { get; set; }
 
         private Estadia Estadia { get; set; }
+
+        private List<Cliente> clientes { get; set; }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -57,10 +60,13 @@ namespace FrbaHotel.Registrar_Estadia
                         {
                             this.btnCheckIn.Visible = true;
                             this.btnCheckOut.Visible = false;
+                            this.btnAgregarHuesped.Visible = true;
+                            this.lstHuespedes.Visible = true;
                             ClienteService clienteService = new ClienteService();
                             Cliente cliente = clienteService.GetById(this.Reserva.ClienteId);
                             lstHuespedes.Items.Add(cliente);
                             lstHuespedes.DisplayMember = "Nombre";
+                            this.clientes.Add(cliente);
                         }
                         else
                         {
@@ -139,7 +145,7 @@ namespace FrbaHotel.Registrar_Estadia
         {
             try
             {
-                this.EstadiaService.Save(new Estadia { CodigoReserva = this.Reserva.Codigo });
+                this.EstadiaService.Save(new Estadia { CodigoReserva = this.Reserva.Codigo }, this.clientes);
                 this.Estadia = this.EstadiaService.GetByCodigoReserva(this.Reserva.Codigo);
                 MessageBox.Show("El check-in fue exitoso", "Error", MessageBoxButtons.OK);
                 this.btnCheckIn.Visible = false;
@@ -155,7 +161,7 @@ namespace FrbaHotel.Registrar_Estadia
         {
             try
             {
-                this.EstadiaService.Save(this.Estadia);
+                this.EstadiaService.Save(this.Estadia, clientes);
                 MessageBox.Show("El check-out fue exitoso", "Error", MessageBoxButtons.OK);
                 GoToFacturacion(this.Estadia.Id);
             }
@@ -196,6 +202,7 @@ namespace FrbaHotel.Registrar_Estadia
                 ClienteService clienteService = new ClienteService();
                 Cliente cliente = clienteService.GetById(clienteId);
                 lstHuespedes.Items.Add(cliente);
+                this.clientes.Add(cliente);
             }
 
             ((ListBox)lstHuespedes).DisplayMember = "Nombre";

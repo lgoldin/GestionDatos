@@ -28,13 +28,13 @@ namespace FrbaHotel.Services
             return repository.Get(id);
         }
 
-        public int Save(Estadia estadia)
+        public int Save(Estadia estadia, List<Cliente> clientes)
         {
             var repository = new EstadiaRepository();
 
             if (estadia.IsNew)
             {
-                return repository.Insert(estadia);
+                return repository.Insert(estadia, clientes);
             }
             else
             {

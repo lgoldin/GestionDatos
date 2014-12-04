@@ -147,6 +147,7 @@
             this.btnAgregarHuesped.TabIndex = 12;
             this.btnAgregarHuesped.Text = "Agregar huesped";
             this.btnAgregarHuesped.UseVisualStyleBackColor = true;
+            this.btnAgregarHuesped.Visible = false;
             this.btnAgregarHuesped.Click += new System.EventHandler(this.btnAgregarHuesped_Click);
             // 
             // lstHuespedes
@@ -157,6 +158,7 @@
             this.lstHuespedes.Name = "lstHuespedes";
             this.lstHuespedes.Size = new System.Drawing.Size(239, 132);
             this.lstHuespedes.TabIndex = 13;
+            this.lstHuespedes.Visible = false;
             // 
             // btnReserva
             // 

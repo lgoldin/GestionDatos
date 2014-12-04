@@ -19,6 +19,25 @@ namespace FrbaHotel.Repositories
             return DBConnection.ExecuteScalar(command);
         }
 
+        public int Insert(Estadia estadia, List<Cliente> clientes)
+        {
+            using (var transaction = new TransactionScope())
+            {
+                int estadiaId = this.Insert(estadia);
+
+                foreach (Cliente c in clientes)
+                {
+                    SqlCommand command = DBConnection.CreateStoredProcedure("InsertEstadiaCliente");
+                    command.Parameters.AddWithValue("@clienteId", c.Id);
+                    command.Parameters.AddWithValue("@estadiaId", estadiaId);
+                    DBConnection.ExecuteNonQuery(command);
+                }
+
+                transaction.Complete();
+                return estadiaId;
+            }
+        }
+
         public override void Update(Estadia entity)
         {
             SqlCommand command = DBConnection.CreateStoredProcedure("UpdateEstadia");
