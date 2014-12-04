@@ -150,7 +150,7 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void GoToFacturacion(int estadiaId)
         {
-            Form form = new Facturacion.Facturacion(estadiaId);
+            Form form = new Facturacion.Facturacion(estadiaId, this.Reserva.ClienteId);
             DisplayForm(form);
         }
 
