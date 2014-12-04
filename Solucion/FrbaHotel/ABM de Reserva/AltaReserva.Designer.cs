@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblHotel = new System.Windows.Forms.Label();
             this.cmbHotel = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -42,14 +42,14 @@
             this.btnReservar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // lblHotel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(42, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Hotel";
+            this.lblHotel.AutoSize = true;
+            this.lblHotel.Location = new System.Drawing.Point(42, 26);
+            this.lblHotel.Name = "lblHotel";
+            this.lblHotel.Size = new System.Drawing.Size(32, 13);
+            this.lblHotel.TabIndex = 0;
+            this.lblHotel.Text = "Hotel";
             // 
             // cmbHotel
             // 
@@ -168,7 +168,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbHotel);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblHotel);
             this.Name = "AltaReserva";
             this.Text = "AltaReserva";
             this.Load += new System.EventHandler(this.AltaReserva_Load);
@@ -179,7 +179,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblHotel;
         private System.Windows.Forms.ComboBox cmbHotel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

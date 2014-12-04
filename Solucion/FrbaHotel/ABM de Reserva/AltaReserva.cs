@@ -37,6 +37,12 @@ namespace FrbaHotel.ABM_de_Reserva
             this.Reserva = reserva;
             if (Reserva != null)
                 btnReservar.Text = "Modificar";
+            if (Session.Hotel != null)
+            {
+                lblHotel.Visible = false;
+                cmbHotel.Visible = false;
+            }
+
         }
 
         private void AltaReserva_Load(object sender, EventArgs e)
@@ -65,7 +71,7 @@ namespace FrbaHotel.ABM_de_Reserva
 
         private bool esValidoSinRegimen()
         {
-            if ((int)cmbHotel.SelectedValue == 0)
+            if (Session.Hotel == null && (int)cmbHotel.SelectedValue == 0)
             {
                 MessageBox.Show("Debe especificar un hotel");
                 return false;
@@ -88,11 +94,16 @@ namespace FrbaHotel.ABM_de_Reserva
             return esValidoSinRegimen();
         }
 
+        private int getHotelId()
+        {
+            return Session.Hotel == null ? (int)cmbHotel.SelectedValue : Session.Hotel.Id;
+        }
+
         private void btnDisponibilidad_Click(object sender, EventArgs e)
         {
             if (esValidoSinRegimen())
             {
-                int hotelId = (int)cmbHotel.SelectedValue;
+                int hotelId = getHotelId();
                 DateTime fechaDesde = dateFechaDesde.Value;
                 DateTime fechaHasta = dateFechaHasta.Value;
                 int tipoHabitacionCodigo = (int)cmbTipoHabitacion.SelectedValue;
@@ -112,7 +123,7 @@ namespace FrbaHotel.ABM_de_Reserva
         {
             if (esValido())
             {
-                int hotelId = (int)cmbHotel.SelectedValue;
+                int hotelId = getHotelId();
                 DateTime fechaDesde = dateFechaDesde.Value;
                 DateTime fechaHasta = dateFechaHasta.Value;
                 int tipoHabitacionCodigo = (int)cmbTipoHabitacion.SelectedValue;
