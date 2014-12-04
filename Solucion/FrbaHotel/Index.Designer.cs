@@ -42,9 +42,13 @@
             this.clienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modificaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consumiblesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ingresarReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.registrarEstToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.lblHotel = new System.Windows.Forms.Label();
+            this.reservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generarModificarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cancelarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +60,7 @@
             this.rolToolStripMenuItem,
             this.habitacionToolStripMenuItem,
             this.clienteToolStripMenuItem,
+            this.reservaToolStripMenuItem,
             this.consumiblesToolStripMenuItem,
             this.registrarEstToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -162,6 +167,13 @@
             this.consumiblesToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.consumiblesToolStripMenuItem.Text = "Registrar Consumibles";
             this.consumiblesToolStripMenuItem.Click += new System.EventHandler(this.consumiblesToolStripMenuItem_Click);
+            //
+            // ingresarReservaToolStripMenuItem
+            //
+            this.ingresarReservaToolStripMenuItem.Name = "ingresarReservaToolStripMenuItem";
+            this.ingresarReservaToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.ingresarReservaToolStripMenuItem.Text = "Ingresar Estadia";
+            this.ingresarReservaToolStripMenuItem.Click += new System.EventHandler(this.ingresarReservaToolStripMenuItem_Click);
             // 
             // registrarEstToolStripMenuItem
             // 
@@ -190,6 +202,29 @@
             this.lblHotel.Name = "lblHotel";
             this.lblHotel.Size = new System.Drawing.Size(0, 20);
             this.lblHotel.TabIndex = 4;
+            //
+            // reservaToolStripMenuItem
+            //
+            this.reservaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.generarModificarToolStripMenuItem,
+            this.cancelarToolStripMenuItem});
+            this.reservaToolStripMenuItem.Name = "reservaToolStripMenuItem";
+            this.reservaToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.reservaToolStripMenuItem.Text = "Reserva";
+            //
+            // generarModificarToolStripMenuItem
+            //
+            this.generarModificarToolStripMenuItem.Name = "generarModificarToolStripMenuItem";
+            this.generarModificarToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.generarModificarToolStripMenuItem.Text = "Generar o Modificar";
+            this.generarModificarToolStripMenuItem.Click += new System.EventHandler(this.generarModificarToolStripMenuItem_Click);
+            //
+            // cancelarToolStripMenuItem
+            //
+            this.cancelarToolStripMenuItem.Name = "cancelarToolStripMenuItem";
+            this.cancelarToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.cancelarToolStripMenuItem.Text = "Cancelar";
+            this.cancelarToolStripMenuItem.Click += new System.EventHandler(this.cancelarToolStripMenuItem_Click);
             // 
             // Index
             // 
@@ -228,7 +263,11 @@
         private System.Windows.Forms.ToolStripMenuItem clienteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modificaciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consumiblesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ingresarReservaToolStripMenuItem;
         private System.Windows.Forms.Label lblHotel;
+        private System.Windows.Forms.ToolStripMenuItem reservaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generarModificarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cancelarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registrarEstToolStripMenuItem;
     }
 }
