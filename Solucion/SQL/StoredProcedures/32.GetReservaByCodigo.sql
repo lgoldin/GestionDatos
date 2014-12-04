@@ -18,6 +18,7 @@ BEGIN
 	FROM [Frutillitas].[Reserva] res
 	WHERE 
 		res.[codigo] = @codigo AND 
-		(@hotelId IS NULL OR res.hotelId = @hotelId)
+		(@hotelId IS NULL OR res.hotelId = @hotelId) AND
+		res.estadoId IN (1,2)
 END
 GO

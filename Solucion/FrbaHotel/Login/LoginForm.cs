@@ -22,9 +22,12 @@ namespace FrbaHotel.Login
             this.LoginService = new LoginService();
             this.FuncionalidadService = new FuncionalidadService();
             this.RolService = new RolService();
+            this.ReservaService = new ReservaService();
         }
 
         public ILoginService LoginService { get; set; }
+
+        public IReservaService ReservaService { get; set; }
 
         public IFuncionalidadService FuncionalidadService { get; set; }
 
@@ -71,6 +74,14 @@ namespace FrbaHotel.Login
             Session.Usuario = usuario;
             
             this.DisplayForm(new Index());
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            IEnumerable<Reserva> reservas = this.ReservaService.GetReservasVencidas();
+            var codigos = new List<int>();
+            reservas.ToList().ForEach(x => codigos.Add(x.Codigo));
+            this.ReservaService.Cancelar(codigos, "No show", null, true);
         }
     }
 }

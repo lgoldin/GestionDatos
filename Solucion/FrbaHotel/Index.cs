@@ -107,8 +107,9 @@ namespace FrbaHotel
             this.habitacionToolStripMenuItem.Visible = false;
             this.clienteToolStripMenuItem.Visible = false;
             this.consumiblesToolStripMenuItem.Visible = false;
-            //this.reservaToolStripMenuItem.Visible = false;
+            this.reservaToolStripMenuItem.Visible = false;
             this.registrarEstToolStripMenuItem.Visible = false;
+            this.listadoEstadisticoToolStripMenuItem.Visible = false;
 
             List<Funcionalidad> funcionalidades = Session.Usuario.Rol.Funcionalidades;
             if (funcionalidades.Any(x => x.Nombre == "Usuario"))
@@ -139,12 +140,17 @@ namespace FrbaHotel
 
             if (funcionalidades.Any(x => x.Nombre == "Reserva"))
             {
-                //this.reservaToolStripMenuItem.Visible = true;
+                this.reservaToolStripMenuItem.Visible = true;
             }
 
             if (funcionalidades.Any(x => x.Nombre == "Estadia"))
             {
                 this.registrarEstToolStripMenuItem.Visible = true;
+            }
+
+            if (funcionalidades.Any(x => x.Nombre == "Listado"))
+            {
+                this.listadoEstadisticoToolStripMenuItem.Visible = true;
             }
         }
 
@@ -185,6 +191,11 @@ namespace FrbaHotel
         private void registrarEstToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DisplayForm(new RegistrarEstadia());
+        }
+
+        private void listadoEstadisticoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisplayForm(new Listado_Estadistico.ListadoEstadistico());
         }
     }
 }
