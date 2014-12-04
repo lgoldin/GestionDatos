@@ -1,66 +1,18 @@
 USE [GD2C2014]
 GO
 
-/******************* DROP STORED PROCEDURES **************/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetRoles]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[GetRoles]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetTiposDocumento]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[GetTiposDocumento]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetHoteles]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[GetHoteles]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertRol]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[InsertRol]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertRolFuncionalidad]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[InsertRolFuncionalidad]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetFuncionalidades]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[GetFuncionalidades]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[UpdateRol]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[UpdateRol]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetFuncionalidadesByRol]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[GetFuncionalidadesByRol]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[DeleteRol]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[DeleteRol]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetPaises]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[GetPaises]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetCiudades]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[GetCiudades]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertUsuario]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[InsertUsuario]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertUsuarioHotel]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[InsertUsuarioHotel]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetUsuarios]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[GetUsuarios]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetHotelesByIdUsuario]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[GetHotelesByIdUsuario]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetRegimenes]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[GetRegimenes]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertHotel]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[InsertHotel]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertRolFuncionalidad]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[InsertRolFuncionalidad]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[UpdateUsuario]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[UpdateUsuario]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertUsuarioHotel]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [Frutillitas].[InsertUsuarioHotel]
+/************ DROP SPs **************************/
+DECLARE @CantidadSPs int
+SELECT @CantidadSPs = COUNT(*) FROM sys.objects WHERE type in (N'P', N'PC') AND SCHEMA_NAME(schema_id) = N'Frutillitas'
+WHILE @CantidadSPs > 0
+BEGIN
+	DECLARE @SPName nvarchar(max)
+	SELECT TOP 1 @SPName = name FROM sys.objects WHERE type in (N'P', N'PC') AND SCHEMA_NAME(schema_id) = N'Frutillitas'
+	DECLARE @Sql nvarchar(max)
+	SET @Sql = 'DROP PROCEDURE [Frutillitas].' + @SPName
+	exec sp_executesql @Sql
+	SET @CantidadSPs = @CantidadSPs - 1
+END
 GO
 
 /************ CREATE TABLE AND SCHEMA ***********/
@@ -94,11 +46,14 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaHistorial_Usuario]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaHistorial]'))
 ALTER TABLE [Frutillitas].[ReservaHistorial] DROP CONSTRAINT [FK_ReservaHistorial_Usuario]
 GO
-IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaCancelacion_Reserva]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaCancelacion]'))
-ALTER TABLE [Frutillitas].[ReservaCancelacion] DROP CONSTRAINT [FK_ReservaCancelacion_Reserva]
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaLog_Reserva]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]'))
+ALTER TABLE [Frutillitas].[ReservaLog] DROP CONSTRAINT [FK_ReservaLog_Reserva]
 GO
-IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaCancelacion_Usuario]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaCancelacion]'))
-ALTER TABLE [Frutillitas].[ReservaCancelacion] DROP CONSTRAINT [FK_ReservaCancelacion_Usuario]
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaLog_Usuario]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]'))
+ALTER TABLE [Frutillitas].[ReservaLog] DROP CONSTRAINT [FK_ReservaLog_Usuario]
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaLog_Tipo]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]'))
+ALTER TABLE [Frutillitas].[ReservaLog] DROP CONSTRAINT [FK_ReservaLog_Tipo]
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Reserva_Cliente]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Reserva]'))
 ALTER TABLE [Frutillitas].[Reserva] DROP CONSTRAINT [FK_Reserva_Cliente]
@@ -109,8 +64,8 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Reserva_Regimen]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Reserva]'))
 ALTER TABLE [Frutillitas].[Reserva] DROP CONSTRAINT [FK_Reserva_Regimen]
 GO
-IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Localidad_Pais]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Localidad]'))
-ALTER TABLE [Frutillitas].[Localidad] DROP CONSTRAINT [FK_Localidad_Pais]
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Reserva_Estado]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Reserva]'))
+ALTER TABLE [Frutillitas].[Reserva] DROP CONSTRAINT [FK_Reserva_Estado]
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_HotelRegimen_Hotel]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[HotelRegimen]'))
 ALTER TABLE [Frutillitas].[HotelRegimen] DROP CONSTRAINT [FK_HotelRegimen_Hotel]
@@ -130,8 +85,23 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Habitacion_TipoHabitacion]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Habitacion]'))
 ALTER TABLE [Frutillitas].[Habitacion] DROP CONSTRAINT [FK_Habitacion_TipoHabitacion]
 GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[UQ_Habitacion_Hotel_Numero]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Habitacion]'))
+ALTER TABLE [Frutillitas].[Habitacion] DROP CONSTRAINT [UQ_Habitacion_Hotel_Numero]
+GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Factura_Estadia]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Factura]'))
 ALTER TABLE [Frutillitas].[Factura] DROP CONSTRAINT [FK_Factura_Estadia]
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Factura_TipoPago]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Factura]'))
+ALTER TABLE [Frutillitas].[Factura] DROP CONSTRAINT [FK_Factura_TipoPago]
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Factura_Cliente]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Factura]'))
+ALTER TABLE [Frutillitas].[Factura] DROP CONSTRAINT [FK_Factura_Cliente]
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_FacturaItem_Factura]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[FacturaItem]'))
+ALTER TABLE [Frutillitas].[FacturaItem] DROP CONSTRAINT [FK_FacturaItem_Factura]
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_TarjetaDeCredito_Factura]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[TarjetaDeCredito]'))
+ALTER TABLE [Frutillitas].[TarjetaDeCredito] DROP CONSTRAINT [FK_TarjetaDeCredito_Factura]
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_EstadiaConsumible_Consumible]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[EstadiaConsumible]'))
 ALTER TABLE [Frutillitas].[EstadiaConsumible] DROP CONSTRAINT [FK_EstadiaConsumible_Consumible]
@@ -147,9 +117,6 @@ ALTER TABLE [Frutillitas].[EstadiaCliente] DROP CONSTRAINT [FK_EstadiaCliente_Es
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Estadia_Reserva]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Estadia]'))
 ALTER TABLE [Frutillitas].[Estadia] DROP CONSTRAINT [FK_Estadia_Reserva]
-GO
-IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Cliente_Localidad]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Cliente]'))
-ALTER TABLE [Frutillitas].[Cliente] DROP CONSTRAINT [FK_Cliente_Localidad]
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Cliente_Pais]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Cliente]'))
 ALTER TABLE [Frutillitas].[Cliente] DROP CONSTRAINT [FK_Cliente_Pais]
@@ -187,6 +154,15 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Factura]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[Factura]
 GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[FacturaItem]') AND type in (N'U'))
+DROP TABLE [Frutillitas].[FacturaItem]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[FacturaTipoPago]') AND type in (N'U'))
+DROP TABLE [Frutillitas].[FacturaTipoPago]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[TarjetaDeCredito]') AND type in (N'U'))
+DROP TABLE [Frutillitas].[TarjetaDeCredito]
+GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Funcionalidad]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[Funcionalidad]
 GO
@@ -196,14 +172,14 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Hotel]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[Hotel]
 GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[HotelIncrementoEstrella]') AND type in (N'U'))
+DROP TABLE [Frutillitas].[HotelIncrementoEstrella]
+GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[HotelInhabilitacion]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[HotelInhabilitacion]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[HotelRegimen]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[HotelRegimen]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Localidad]') AND type in (N'U'))
-DROP TABLE [Frutillitas].[Localidad]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Pais]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[Pais]
@@ -214,8 +190,11 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Reserva]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[Reserva]
 GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaCancelacion]') AND type in (N'U'))
-DROP TABLE [Frutillitas].[ReservaCancelacion]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaLogTipo]') AND type in (N'U'))
+DROP TABLE [Frutillitas].[ReservaLogTipo]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]') AND type in (N'U'))
+DROP TABLE [Frutillitas].[ReservaLog]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaEstado]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[ReservaEstado]
@@ -325,8 +304,7 @@ BEGIN
 CREATE TABLE [Frutillitas].[TipoHabitacion](
 	[codigo] [numeric](18, 0) NOT NULL PRIMARY KEY,
 	[descripcion] [nvarchar](255) NULL,
-	[procentual] [numeric](18, 2) NULL,
-	[cantHuespedes] [int] NULL
+	[porcentual] [numeric](18, 2) NULL
 ) ON [PRIMARY]
 END
 GO
@@ -421,12 +399,25 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaCancelacion]') AND type in (N'U'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaLogTipo]') AND type in (N'U'))
 BEGIN
-CREATE TABLE [Frutillitas].[ReservaCancelacion](
+CREATE TABLE [Frutillitas].[ReservaLogTipo](
+	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[descripcion] [nvarchar](255) NULL
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [Frutillitas].[ReservaLog](
 	[reservaCodigo] [numeric](18, 0) NULL,
 	[fecha] [datetime] NULL,
 	[usuarioId] [int] NULL,
+	[tipoId] [int] NOT NULL,
 	[motivo] [nvarchar](255) NULL
 ) ON [PRIMARY]
 END
@@ -438,7 +429,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Reserva]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [Frutillitas].[Reserva](
-	[codigo] [numeric](18, 0) NOT NULL PRIMARY KEY,
+	[codigo] [numeric](18, 0) IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[fechaDesde] [datetime] NULL,
 	[fechaHasta] [datetime] NULL,
 	[regimenCodigo] [numeric](18, 0) NULL,
@@ -459,6 +450,7 @@ CREATE TABLE [Frutillitas].[Regimen](
 	[codigo] [numeric](18, 0) IDENTITY(1,1) NOT NULL PRIMARY KEY, /*Como no hay codigo lo dejo como autoincremental*/
 	[descripcion] [nvarchar](255) NULL,
 	[precio] [numeric](18, 2) NULL,
+	[consumiblesGratis] [bit] NULL,
 	[activo] [bit] NULL
 ) ON [PRIMARY]
 END
@@ -473,19 +465,6 @@ CREATE TABLE [Frutillitas].[Pais](
 	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[nombre] [nvarchar](255) NULL,
 	[nacionalidad] [nvarchar](255) NULL
-) ON [PRIMARY]
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Localidad]') AND type in (N'U'))
-BEGIN
-CREATE TABLE [Frutillitas].[Localidad](
-	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[nombre] [nvarchar](255) NULL,
-	[paisId] [int] NULL
 ) ON [PRIMARY]
 END
 GO
@@ -528,10 +507,21 @@ CREATE TABLE [Frutillitas].[Hotel](
 	[ciudadId] [int] NULL,
 	[direccion] [nvarchar](255) NULL,
 	[estrellas] [numeric](18, 0) NULL,
-	[recargaEstrella] [numeric](18, 0) NULL,
 	[mail] [nvarchar](255) NULL,
 	[fechaCreacion] [datetime] NULL,
 	[telefono] [nvarchar](255) NULL
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[HotelIncrementoEstrella]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [Frutillitas].[HotelIncrementoEstrella](
+	[id] [int] IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	[incremento] [numeric](18, 0) NULL
 ) ON [PRIMARY]
 END
 GO
@@ -572,26 +562,56 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[Factura]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [Frutillitas].[Factura](
-	[numero] [numeric](18, 0) NULL,
+	[numero] [numeric](18, 0) IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[fecha] [datetime] NULL,
 	[total] [numeric](18, 2) NULL,
-	[estadiaId] [int] NULL
+	[estadiaId] [int] NULL,
+	[clienteId] [int] NULL,
+	[tipoPagoId] [int] NULL
 ) ON [PRIMARY]
 END
 GO
-/*SET ANSI_NULLS ON
+SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[EstadiaDetalle]') AND type in (N'U'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[FacturaItem]') AND type in (N'U'))
 BEGIN
-CREATE TABLE [Frutillitas].[EstadiaDetalle](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[fecha] [datetime] NULL,
-	[usuarioId] [int] NULL
+CREATE TABLE [Frutillitas].[FacturaItem](
+	[facturaNumero] [numeric](18, 0) NULL,
+	[descripcion] [nvarchar](255) NULL,
+	[precio] [numeric](18, 2) NULL
 ) ON [PRIMARY]
 END
-GO*/
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[FacturaTipoPago]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [Frutillitas].[FacturaTipoPago](
+	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[descripcion] [nvarchar](255) NULL
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[TarjetaDeCredito]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [Frutillitas].[TarjetaDeCredito](
+	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[facturaNumero] [numeric](18, 0) NULL,
+	[numero] [numeric](16, 0) NULL,
+	[codigo] [nvarchar](10) NULL,
+	[fechaVencimiento] [datetime] NULL,
+	[codigoSeguridad] [numeric](4, 0) NULL
+) ON [PRIMARY]
+END
+GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -625,10 +645,10 @@ BEGIN
 CREATE TABLE [Frutillitas].[Estadia](
 	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[reservaCodigo] [numeric](18, 0) NULL,
-	/*[checkinId] [int] NULL,
-	[checkoutId] [int] NULL*/
 	[fechaDesde] [datetime] NULL,
-	[fechaHasta] [datetime] NULL
+	[fechaHasta] [datetime] NULL,
+	[usuarioCheckInId] [int] NULL,
+	[usuarioCheckOutId] [int] NULL
 ) ON [PRIMARY]
 END
 GO
@@ -660,7 +680,6 @@ CREATE TABLE [Frutillitas].[Cliente](
 	[fechaNacimiento] [datetime] NULL,
 	[mail] [nvarchar](255) NULL,
 	[direccion] [nvarchar](255) NULL,
-	[localidadId] [int] NULL,
 	[nacionalidadId] [int] NULL,
 	[habilitado] [bit] NULL,
 	[telefono] [nvarchar](255) NULL
@@ -706,18 +725,19 @@ GO
 ALTER TABLE [Frutillitas].[ReservaHistorial] ADD CONSTRAINT FK_ReservaHistorial_Usuario FOREIGN KEY (usuarioId) REFERENCES [Frutillitas].[Usuario](id)
 GO
 /*accionId?*/
-ALTER TABLE [Frutillitas].[ReservaCancelacion] ADD CONSTRAINT FK_ReservaCancelacion_Reserva FOREIGN KEY (reservaCodigo) REFERENCES [Frutillitas].[Reserva](codigo)
+ALTER TABLE [Frutillitas].[ReservaLog] ADD CONSTRAINT FK_ReservaLog_Reserva FOREIGN KEY (reservaCodigo) REFERENCES [Frutillitas].[Reserva](codigo)
 GO
-ALTER TABLE [Frutillitas].[ReservaCancelacion] ADD CONSTRAINT FK_ReservaCancelacion_Usuario FOREIGN KEY (usuarioId) REFERENCES [Frutillitas].[Usuario](id)
+ALTER TABLE [Frutillitas].[ReservaLog] ADD CONSTRAINT FK_ReservaLog_Usuario FOREIGN KEY (usuarioId) REFERENCES [Frutillitas].[Usuario](id)
+GO
+ALTER TABLE [Frutillitas].[ReservaLog] ADD CONSTRAINT FK_ReservaLog_Tipo FOREIGN KEY (tipoId) REFERENCES [Frutillitas].[ReservaLogTipo](id)
 GO
 ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Regimen FOREIGN KEY (regimenCodigo) REFERENCES [Frutillitas].[Regimen](codigo)
 GO
 ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Hotel FOREIGN KEY (hotelId) REFERENCES [Frutillitas].[Hotel](id)
 GO
-/*estadoId?*/
-ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Cliente FOREIGN KEY (clienteId) REFERENCES [Frutillitas].[Cliente](id)
+ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Estado FOREIGN KEY (estadoId) REFERENCES [Frutillitas].[ReservaEstado](id)
 GO
-ALTER TABLE [Frutillitas].[Localidad] ADD CONSTRAINT FK_Localidad_Pais FOREIGN KEY (paisId) REFERENCES [Frutillitas].[Pais](id)
+ALTER TABLE [Frutillitas].[Reserva] ADD CONSTRAINT FK_Reserva_Cliente FOREIGN KEY (clienteId) REFERENCES [Frutillitas].[Cliente](id)
 GO
 ALTER TABLE [Frutillitas].[HotelRegimen] ADD CONSTRAINT FK_HotelRegimen_Hotel FOREIGN KEY (hotelId) REFERENCES [Frutillitas].[Hotel](id)
 GO
@@ -731,7 +751,17 @@ ALTER TABLE [Frutillitas].[Habitacion] ADD CONSTRAINT FK_Habitacion_Hotel FOREIG
 GO
 ALTER TABLE [Frutillitas].[Habitacion] ADD CONSTRAINT FK_Habitacion_TipoHabitacion FOREIGN KEY (tipoCodigo) REFERENCES [Frutillitas].[TipoHabitacion](codigo)
 GO
+ALTER TABLE [Frutillitas].[Habitacion] ADD CONSTRAINT UQ_Habitacion_Hotel_Numero UNIQUE (hotelId, numero)
+GO
 ALTER TABLE [Frutillitas].[Factura] ADD CONSTRAINT FK_Factura_Estadia FOREIGN KEY (estadiaId) REFERENCES [Frutillitas].[Estadia](id)
+GO
+ALTER TABLE [Frutillitas].[Factura] ADD CONSTRAINT FK_Factura_TipoPago FOREIGN KEY (tipoPagoId) REFERENCES [Frutillitas].[FacturaTipoPago](id)
+GO
+ALTER TABLE [Frutillitas].[Factura] ADD CONSTRAINT FK_Factura_Cliente FOREIGN KEY (clienteId) REFERENCES [Frutillitas].[Cliente](id)
+GO
+ALTER TABLE [Frutillitas].[FacturaItem] ADD CONSTRAINT FK_FacturaItem_Factura FOREIGN KEY (facturaNumero) REFERENCES [Frutillitas].[Factura](numero)
+GO
+ALTER TABLE [Frutillitas].[TarjetaDeCredito] ADD CONSTRAINT FK_TarjetaDeCredito_Factura FOREIGN KEY (facturaNumero) REFERENCES [Frutillitas].[Factura](numero)
 GO
 ALTER TABLE [Frutillitas].[EstadiaConsumible] ADD CONSTRAINT FK_EstadiaConsumible_Estadia FOREIGN KEY (estadiaId) REFERENCES [Frutillitas].[Estadia](id)
 GO
@@ -745,606 +775,13 @@ ALTER TABLE [Frutillitas].[Estadia] ADD CONSTRAINT FK_Estadia_Reserva FOREIGN KE
 GO
 ALTER TABLE [Frutillitas].[Cliente] ADD CONSTRAINT FK_Cliente_TipoDocumento FOREIGN KEY (tipoDocumentoId) REFERENCES [Frutillitas].[TipoDocumento](id)
 GO
-ALTER TABLE [Frutillitas].[Cliente] ADD CONSTRAINT FK_Cliente_Localidad FOREIGN KEY (localidadId) REFERENCES [Frutillitas].[Localidad](id)
-GO
 ALTER TABLE [Frutillitas].[Cliente] ADD CONSTRAINT FK_Cliente_Pais FOREIGN KEY (nacionalidadId) REFERENCES [Frutillitas].[Pais](id)
 GO
 ALTER TABLE [Frutillitas].[Ciudad] ADD CONSTRAINT FK_Ciudad_Pais FOREIGN KEY (paisId) REFERENCES [Frutillitas].[Pais](id)
 GO
-
-/******************* CREATE STORED PROCEDURES *******/
-SET ANSI_NULLS ON
+ALTER TABLE [Frutillitas].[Estadia] ADD CONSTRAINT FK_Estadia_UsuarioCheckIn FOREIGN KEY (usuarioCheckInId) REFERENCES [Frutillitas].[Usuario](id)
 GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetRoles]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetRoles]
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	SELECT
-		id AS Id,
-		nombre AS Nombre,
-		activo AS Activo
-	FROM [Frutillitas].Rol
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetTiposDocumento]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetTiposDocumento]
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	SELECT
-		id AS Id,
-		nombre AS Nombre
-	FROM [Frutillitas].TipoDocumento
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetHoteles]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetHoteles]
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	SELECT
-		h.id AS Id,
-		h.nombre AS Nombre,
-		c.id AS CiudadId,
-		c.nombre AS CiudadNombre,
-		p.id AS PaisId,
-		p.nombre AS PaisNombre,
-		p.nacionalidad AS PaisNacionalidad,
-		h.direccion AS Direccion,
-		h.estrellas AS Estrellas,
-		h.recargaEstrella AS RecargaEstrella,
-		h.mail AS Mail,
-		h.fechaCreacion AS FechaCreacion
-	FROM [Frutillitas].Hotel h
-	LEFT JOIN [Frutillitas].Ciudad c ON c.id = h.ciudadId
-	LEFT JOIN [Frutillitas].Pais p ON p.id = c.paisId
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertRol]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[InsertRol]
-
-@nombre varchar(255),
-@activo bit
-
-AS
-BEGIN
-
-	SET NOCOUNT ON;
-	declare @id int	
-
-	INSERT INTO [Frutillitas].[Rol]
-           ([nombre]
-           ,[activo])
-	OUTPUT INSERTED.Id
-    VALUES
-           (@nombre
-           ,@activo)
-
-		   
-		   set @id = SCOPE_IDENTITY()
-		   select @id
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertRolFuncionalidad]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[InsertRolFuncionalidad]
-
-@rolId int,
-@funcionalidadId int
-
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	INSERT INTO [Frutillitas].[RolFuncionalidad]
-           ([rolId]
-           ,[funcionalidadId])
-     VALUES
-           (@rolId
-           ,@funcionalidadId)
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetFuncionalidades]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetFuncionalidades]
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	SELECT [id] 
-      ,[nombre]
-  FROM [Frutillitas].[Funcionalidad]
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[UpdateRol]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[UpdateRol]
-
-@nombre varchar(255),
-@activo bit,
-@id int
-
-AS
-	BEGIN
-	SET NOCOUNT ON;
-
-	UPDATE [Frutillitas].[Rol]
-	   SET [nombre] = @nombre
-		  ,[activo] = @activo
-	 WHERE [id] = @id
-	END
-
-	DELETE FROM [Frutillitas].[RolFuncionalidad]
-      WHERE [RolId] = @id
-
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetFuncionalidadesByRol]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetFuncionalidadesByRol]
-
-@rolId int
-
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	SELECT
-      [funcionalidadId]
-  FROM [GD2C2014].[Frutillitas].[RolFuncionalidad]
-  WHERE [rolId] = @rolId
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[DeleteRol]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[DeleteRol]
-
-@activo bit,
-@id int
-
-AS
-	BEGIN
-	SET NOCOUNT ON;
-
-	UPDATE [Frutillitas].[Rol]
-		  SET[activo] = @activo
-	 WHERE [id] = @id
-	END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetPaises]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetPaises]
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	SELECT [id]
-      ,[nombre]
-      ,[nacionalidad]
-  FROM [GD2C2014].[Frutillitas].[Pais]
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetCiudades]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetCiudades]
-
-@paisId int
-
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-SELECT [id]
-      ,[nombre]
-  FROM [GD2C2014].[Frutillitas].[Ciudad]
-  WHERE [paisId] = @paisId
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertUsuario]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'
-CREATE PROCEDURE [Frutillitas].[InsertUsuario]
-@username nvarchar(255),
-@password varbinary(max),
-@nombre nvarchar(255),
-@apellido nvarchar(255),
-@tipoDocumentoId int,
-@numeroDocumento numeric(18,0),
-@mail nvarchar(255),
-@telefono nvarchar(255),
-@direccion nvarchar(255),
-@fechaNacimiento smalldatetime,
-@rolId int
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	INSERT INTO [Frutillitas].[Usuario]
-	(
-		username,
-		password,
-		habilitado,
-		nombre,
-		apellido,
-		tipoDocumentoId,
-		numeroDocumento,
-		mail,
-		telefono,
-		direccion,
-		fechaNacimiento
-	)
-	VALUES
-	(
-		@username,
-		@password,
-		1,
-		@nombre,
-		@apellido,
-		@tipoDocumentoId,
-		@numeroDocumento,
-		@mail,
-		@telefono,
-		@direccion,
-		@fechaNacimiento
-	)
-	
-	DECLARE @IdUsuario int
-	SET @IdUsuario = SCOPE_IDENTITY()
-	
-	INSERT INTO [Frutillitas].[UsuarioRol] VALUES (@IdUsuario, @rolId)
-	
-	SELECT @IdUsuario
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertUsuarioHotel]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'
-CREATE PROCEDURE [Frutillitas].[InsertUsuarioHotel]
-@usuarioId int,
-@hotelId int
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	INSERT INTO [Frutillitas].[UsuarioHotel]
-	(
-		usuarioId,
-		hotelId
-	)
-	VALUES
-	(
-		@usuarioId,
-		@hotelId
-	)
-	
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE PROCEDURE [Frutillitas].[GetUsuarios]
-@username nvarchar(255) = null,
-@nombre nvarchar(255) = null,
-@apellido nvarchar(255) = null,
-@tipoDocumentoId int = null,
-@numeroDocumento numeric(18,0) = null,
-@mail nvarchar(255) = null,
-@telefono nvarchar(255) = null,
-@direccion nvarchar(255) = null,
-@fechaNacimiento smalldatetime = null,
-@rolId int = null
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	SELECT 
-		u.*,
-		td.id AS TipoDocumentoId,
-		td.nombre AS TipoDocumentoNombre,
-		r.id AS rolId,
-		r.nombre AS rol
-	FROM [Frutillitas].Usuario u
-	INNER JOIN [Frutillitas].TipoDocumento td ON td.id = u.tipoDocumentoId
-	INNER JOIN [Frutillitas].UsuarioRol ur ON ur.usuarioId = u.id
-	INNER JOIN [Frutillitas].Rol r ON r.id = ur.rolId
-	WHERE 
-		(@username IS NULL OR u.username LIKE '%' + @username + '%') AND
-		(@nombre IS NULL OR u.nombre LIKE '%' + @nombre + '%') AND
-		(@apellido IS NULL OR u.apellido LIKE '%' + @apellido + '%') AND
-		(@tipoDocumentoId IS NULL OR u.tipoDocumentoId = @tipoDocumentoId) AND
-		(@numeroDocumento IS NULL OR u.numeroDocumento = @numeroDocumento) AND
-		(@mail IS NULL OR u.mail LIKE '%' + @mail + '%') AND
-		(@telefono IS NULL OR u.telefono LIKE '%' + @telefono + '%') AND
-		(@direccion IS NULL OR u.direccion LIKE '%' + @direccion + '%') AND
-		(@fechaNacimiento IS NULL OR u.fechaNacimiento = @fechaNacimiento) AND
-		(@rolId IS NULL OR r.id = @rolId)
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetHotelesByIdUsuario]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetHotelesByIdUsuario]
-@usuarioId int
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	SELECT
-		h.id AS Id,
-		h.nombre AS Nombre,
-		c.id AS CiudadId,
-		c.nombre AS CiudadNombre,
-		p.id AS PaisId,
-		p.nombre AS PaisNombre,
-		p.nacionalidad AS PaisNacionalidad,
-		h.direccion AS Direccion,
-		h.estrellas AS Estrellas,
-		h.recargaEstrella AS RecargaEstrella,
-		h.mail AS Mail,
-		h.fechaCreacion AS FechaCreacion
-	FROM [Frutillitas].UsuarioHotel uh
-	INNER JOIN [Frutillitas].Hotel h ON h.id = uh.hotelId
-	LEFT JOIN [Frutillitas].Ciudad c ON c.id = h.ciudadId
-	LEFT JOIN [Frutillitas].Pais p ON p.id = c.paisId
-	WHERE uh.usuarioId = @usuarioId
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetRegimenes]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetRegimenes]
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	SELECT
-		codigo,
-		descripcion,
-		activo,
-		precio
-	FROM [Frutillitas].[Regimen]
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertHotel]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[InsertHotel]
-
-
-@ciudadId int,
-@direccion nvarchar(255),
-@estrellas numeric(18, 0),
-@fechaCreacion datetime,
-@nombre nvarchar(255),
-@recargaEstrella numeric(18, 0),
-@mail nvarchar(255)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-declare @id int
-
-INSERT INTO [Frutillitas].[Hotel]
-           ([nombre]
-           ,[ciudadId]
-           ,[direccion]
-           ,[estrellas]
-           ,[recargaEstrella]
-           ,[mail]
-           ,[fechaCreacion])
-     VALUES
-           (@nombre
-		   ,@ciudadId
-           ,@direccion
-           ,@estrellas
-           ,@recargaEstrella
-           ,@mail
-           ,@fechaCreacion)
-
-		   set @id = SCOPE_IDENTITY()
-		   select @id
-		   
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertRolFuncionalidad]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[InsertRolFuncionalidad]
-
-@rolId int,
-@funcionalidadId int
-
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	INSERT INTO [Frutillitas].[RolFuncionalidad]
-           ([rolId]
-           ,[funcionalidadId])
-     VALUES
-           (@rolId
-           ,@funcionalidadId)
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[UpdateUsuario]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'
-CREATE PROCEDURE [Frutillitas].[UpdateUsuario]
-@id int,
-@username nvarchar(255),
-@password varbinary(max),
-@nombre nvarchar(255),
-@apellido nvarchar(255),
-@tipoDocumentoId int,
-@numeroDocumento numeric(18,0),
-@mail nvarchar(255),
-@telefono nvarchar(255),
-@direccion nvarchar(255),
-@fechaNacimiento smalldatetime,
-@rolId int
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	UPDATE [Frutillitas].[Usuario]
-	SET
-		username = @username,
-		password = @password,
-		nombre = @nombre,
-		apellido = @apellido,
-		tipoDocumentoId = @tipoDocumentoId,
-		numeroDocumento = @numeroDocumento,
-		mail = @mail,
-		telefono = @telefono,
-		direccion = @direccion,
-		fechaNacimiento = @fechaNacimiento
-	WHERE id = @id
-	
-	UPDATE [Frutillitas].[UsuarioRol] SET rolId = @rolId WHERE usuarioId = @id
-	
-	DELETE FROM [Frutillitas].[UsuarioHotel]  WHERE usuarioId = @id
-END
-' 
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[InsertUsuarioHotel]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'
-CREATE PROCEDURE [Frutillitas].[InsertUsuarioHotel]
-@usuarioId int,
-@hotelId int
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-	INSERT INTO [Frutillitas].[UsuarioHotel]
-	(
-		usuarioId,
-		hotelId
-	)
-	VALUES
-	(
-		@usuarioId,
-		@hotelId
-	)
-	
-END
-' 
-END
+ALTER TABLE [Frutillitas].[Estadia] ADD CONSTRAINT FK_Estadia_UsuarioCheckOut FOREIGN KEY (usuarioCheckOutId) REFERENCES [Frutillitas].[Usuario](id)
 GO
 
 /******************* MIGRATION **********************/
@@ -1352,6 +789,69 @@ INSERT INTO [Frutillitas].[TipoDocumento] ([nombre]) VALUES ('Pasaporte')
 GO
 
 INSERT INTO [Frutillitas].[Pais]([nombre], [nacionalidad]) VALUES ('Argentina', 'Argentino')
+GO
+
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Usuario')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Hotel')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Habitacion')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Regimen')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Cliente')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Reserva')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Estadia')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('EstadiaConsumible')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Factura')
+GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Listado')
+GO
+
+INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Administrador', 1)
+GO
+INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Recepcionista', 1)
+GO
+INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Guest', 1)
+GO
+
+INSERT INTO [Frutillitas].[RolFuncionalidad]([rolId], [funcionalidadId])
+SELECT r.[id], f.[id]
+FROM [Frutillitas].[Rol] r, [Frutillitas].[Funcionalidad] f
+WHERE r.[nombre] = 'Administrador'
+GO
+
+INSERT INTO [Frutillitas].[RolFuncionalidad]([rolId], [funcionalidadId])
+SELECT r.[id], f.[id]
+FROM [Frutillitas].[Rol] r, [Frutillitas].[Funcionalidad] f
+WHERE r.[nombre] = 'Recepcionista' AND f.[nombre] IN ('Cliente', 'Reserva', 'Estadia', 'EstadiaConsumible', 'Factura')
+GO
+
+INSERT INTO [Frutillitas].[RolFuncionalidad]([rolId], [funcionalidadId])
+SELECT r.[id], f.[id]
+FROM [Frutillitas].[Rol] r, [Frutillitas].[Funcionalidad] f
+WHERE r.[nombre] = 'Guest' AND f.[nombre] = 'Reserva'
+GO
+
+INSERT INTO [Frutillitas].[Usuario]([username], [password], [habilitado]) VALUES ('admin', 0xE6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7, 1)
+GO
+
+INSERT INTO [Frutillitas].[UsuarioRol]([usuarioId], [rolId])
+SELECT u.[id], r.[id]
+FROM [Frutillitas].[Usuario] u, [Frutillitas].[Rol] r
+WHERE u.[username] = 'admin' AND r.[nombre] = 'Administrador'
+GO
+
+INSERT INTO [Frutillitas].[Usuario]([username], [password], [habilitado]) VALUES ('guest', 0x84983c60f7daadc1cb8698621f802c0d9f9a3c3c295c810748fb048115c186ec, 1)
+GO
+INSERT INTO [Frutillitas].[UsuarioRol]([usuarioId], [rolId])
+SELECT u.[id], r.[id]
+FROM [Frutillitas].[Usuario] u, [Frutillitas].[Rol] r
+WHERE u.[username] = 'guest' AND r.[nombre] = 'Guest'
 GO
 
 INSERT INTO [Frutillitas].[Ciudad]([nombre], [paisId])
@@ -1367,7 +867,6 @@ INSERT INTO [Frutillitas].[Cliente](
 	[fechaNacimiento],
 	[mail],
 	[direccion],
-	[localidadId],
 	[nacionalidadId],
 	[habilitado],
 	[telefono])
@@ -1379,7 +878,6 @@ SELECT DISTINCT
     [Cliente_Fecha_Nac],
     [Cliente_Mail],
     [Cliente_Dom_Calle] + ' ' + CAST([Cliente_Nro_Calle] as nvarchar(255)) + ' ' + CAST([Cliente_Piso] as nvarchar(255)) + ' ' + [Cliente_Depto],
-    NULL,
     1/*[Cliente_Nacionalidad]*/,
     1,
     NULL
@@ -1391,14 +889,33 @@ SELECT DISTINCT [Consumible_Codigo] ,[Consumible_Descripcion] ,[Consumible_Preci
 FROM [GD2C2014].[gd_esquema].[Maestra] WHERE [Consumible_Codigo] IS NOT NULL
 GO
 
-INSERT INTO [Frutillitas].[Regimen]([descripcion], [precio], [activo])
-SELECT DISTINCT [Regimen_Descripcion], [Regimen_Precio], 1
+INSERT INTO [Frutillitas].[Regimen]([descripcion], [precio], [consumiblesGratis], [activo])
+SELECT DISTINCT [Regimen_Descripcion], [Regimen_Precio], 1, 1
+FROM [GD2C2014].[gd_esquema].[Maestra]
+WHERE [Regimen_Descripcion] LIKE 'all inclusive%'
+GO
+
+INSERT INTO [Frutillitas].[Regimen]([descripcion], [precio], [consumiblesGratis], [activo])
+SELECT DISTINCT [Regimen_Descripcion], [Regimen_Precio], 0, 1
+FROM [GD2C2014].[gd_esquema].[Maestra]
+WHERE [Regimen_Descripcion] NOT LIKE 'all inclusive%'
+GO
+
+INSERT INTO [Frutillitas].[Hotel]([ciudadId], [direccion], [estrellas], [mail], [fechaCreacion])
+SELECT DISTINCT (SELECT [id] FROM [Frutillitas].[Ciudad] WHERE [nombre] LIKE [Hotel_Ciudad]), [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255)), [Hotel_CantEstrella], NULL, GETDATE()
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
 
-INSERT INTO [Frutillitas].[Hotel]([nombre], [ciudadId], [direccion], [estrellas], [recargaEstrella], [mail], [fechaCreacion])
-SELECT DISTINCT NULL /*Lo dejo en null pero podría ir la dir*/, (SELECT [id] FROM [Frutillitas].[Ciudad] WHERE [nombre] LIKE [Hotel_Ciudad]), [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255)), [Hotel_CantEstrella], [Hotel_Recarga_Estrella], NULL, GETDATE()
-FROM [GD2C2014].[gd_esquema].[Maestra]
+UPDATE [Frutillitas].[Hotel] SET [nombre] = ('Hotel ' + [direccion])
+GO
+
+INSERT INTO [Frutillitas].[UsuarioHotel]([usuarioId], [hotelId])
+SELECT (SELECT [id] FROM [Frutillitas].[Usuario] WHERE [username] = 'admin'), [id]
+FROM [Frutillitas].[Hotel]
+GO
+
+INSERT INTO [Frutillitas].[HotelIncrementoEstrella]([incremento])
+SELECT TOP 1 [Hotel_Recarga_Estrella] FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
 
 /*Por ahora dejo un todos contra todos, después hay que preguntar si solo ponemos los minimos*/
@@ -1407,8 +924,8 @@ SELECT h.[id], r.[codigo]
 FROM [Frutillitas].[Hotel] h, [Frutillitas].[Regimen] r
 GO
 
-INSERT INTO [Frutillitas].[TipoHabitacion]([codigo], [descripcion], [procentual], [cantHuespedes])
-SELECT DISTINCT [Habitacion_Tipo_Codigo], [Habitacion_Tipo_Descripcion], [Habitacion_Tipo_Porcentual], 1/*Cómo lo sacamos??*/
+INSERT INTO [Frutillitas].[TipoHabitacion]([codigo], [descripcion], [porcentual])
+SELECT DISTINCT [Habitacion_Tipo_Codigo], [Habitacion_Tipo_Descripcion], [Habitacion_Tipo_Porcentual]
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
 
@@ -1417,15 +934,45 @@ SELECT DISTINCT (SELECT [id] FROM [Frutillitas].[Hotel] WHERE [direccion] = [Hot
 FROM [GD2C2014].[gd_esquema].[Maestra]
 GO
 
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Correcta')
+GO
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Modificada')
+GO
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Cancelada-Recepcion')
+GO
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Cancelada-Cliente')
+GO
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Cancelada-No-Show')
+GO
+INSERT INTO [Frutillitas].[ReservaEstado]([descripcion]) VALUES ('Efectivizada')
+GO
+
+INSERT INTO [Frutillitas].[ReservaLogTipo]([descripcion]) VALUES ('Creacion')
+GO
+INSERT INTO [Frutillitas].[ReservaLogTipo]([descripcion]) VALUES ('Modificacion')
+GO
+INSERT INTO [Frutillitas].[ReservaLogTipo]([descripcion]) VALUES ('Cancelacion')
+GO
+
+SET IDENTITY_INSERT [Frutillitas].[Reserva] ON
+GO
 INSERT INTO [Frutillitas].[Reserva]([codigo], [fechaDesde], [fechaHasta], [regimenCodigo], [hotelId], [estadoId], [clienteId], [fechaCreacion])
 SELECT DISTINCT [Reserva_Codigo], [Reserva_Fecha_Inicio], DATEADD(day, [Reserva_Cant_Noches], [Reserva_Fecha_Inicio]),	
 	(SELECT [codigo] FROM [Frutillitas].[Regimen] WHERE [descripcion] = [Regimen_Descripcion]),
-	(SELECT [id] FROM [Frutillitas].[Hotel] WHERE [direccion] = [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255))),
-	c.[id],
-    NULL /*Hay que ver que ponemos acá*/,
-	GETDATE()
+	(SELECT [id] FROM [Frutillitas].[Hotel] WHERE [direccion] = [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255))),	
+    (SELECT [id] FROM [Frutillitas].[ReservaEstado] WHERE [descripcion] = 'Correcta'),
+    c.[id],
+	DATEADD(day, -1, [Reserva_Fecha_Inicio])
 FROM [GD2C2014].[gd_esquema].[Maestra]
 INNER JOIN [Frutillitas].[Cliente] c ON [numeroDocumento] = [Cliente_Pasaporte_Nro] AND [nombre] = [Cliente_Nombre] AND [apellido] = [Cliente_Apellido]
+GO
+SET IDENTITY_INSERT [Frutillitas].[Reserva] OFF
+GO
+
+INSERT INTO [Frutillitas].[ReservaTipoHabitacion]([reservaCodigo], [tipoHabitacionCodigo])
+SELECT DISTINCT r.[codigo], [Habitacion_Tipo_Codigo]
+FROM [Frutillitas].[Reserva] r
+INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON r.[codigo] = [Reserva_Codigo]
 GO
 
 INSERT INTO [Frutillitas].[Estadia]([reservaCodigo], [fechaDesde], [fechaHasta])
@@ -1434,16 +981,48 @@ FROM [GD2C2014].[gd_esquema].[Maestra]
 WHERE [Estadia_Fecha_Inicio] IS NOT NULL AND [Estadia_Cant_Noches] IS NOT NULL
 GO
 
+UPDATE [Frutillitas].[Reserva] SET [estadoId] = (SELECT [id] FROM [Frutillitas].[ReservaEstado] WHERE [descripcion] = 'Efectivizada')
+WHERE [codigo] IN (SELECT DISTINCT [reservaCodigo] FROM [Frutillitas].[Estadia])
+
+UPDATE [Frutillitas].[Reserva] SET [estadoId] = (SELECT [id] FROM [Frutillitas].[ReservaEstado] WHERE [descripcion] = 'Cancelada-No-Show')
+WHERE [fechaDesde] < GETDATE()
+
 INSERT INTO [Frutillitas].[EstadiaConsumible]([estadiaId], [consumibleCodigo])
-SELECT DISTINCT [id], [Consumible_Codigo] FROM [Frutillitas].[Estadia]
+SELECT [id], [Consumible_Codigo] FROM [Frutillitas].[Estadia]
 INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [reservaCodigo] = [Reserva_Codigo]
 WHERE [Consumible_Codigo] IS NOT NULL
 GO
 
-INSERT INTO [Frutillitas].[Factura]([numero], [fecha], [total], [estadiaId])
-SELECT DISTINCT [Factura_Nro], [Factura_Fecha], [Factura_Total], [id] FROM [Frutillitas].[Estadia]
-INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [reservaCodigo] = [Reserva_Codigo]
-WHERE [Factura_Nro] IS NOT NULL
+INSERT INTO [Frutillitas].[FacturaTipoPago]([descripcion]) VALUES ('Efectivo')
+GO
+INSERT INTO [Frutillitas].[FacturaTipoPago]([descripcion]) VALUES ('Tarjeta')
+GO
+
+SET IDENTITY_INSERT [Frutillitas].[Factura] ON
+GO
+INSERT INTO [Frutillitas].[Factura]([numero], [fecha], [total], [estadiaId], [tipoPagoId], [clienteId])
+SELECT DISTINCT [Factura_Nro], [Factura_Fecha], [Factura_Total] + ([Item_Factura_Monto] * [Estadia_Cant_Noches]), e.[id], (SELECT [id] FROM [Frutillitas].[FacturaTipoPago] WHERE [descripcion] = 'Efectivo'), r.[clienteId]
+FROM [Frutillitas].[Estadia] e
+INNER JOIN [Frutillitas].[Reserva] r ON r.[codigo] = e.[reservaCodigo]
+INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON e.[reservaCodigo] = [Reserva_Codigo]
+WHERE [Factura_Nro] IS NOT NULL AND [Consumible_Precio] IS NULL AND [Item_Factura_Monto] IS NOT NULL
+GO
+SET IDENTITY_INSERT [Frutillitas].[Factura] OFF
+GO
+
+INSERT INTO [Frutillitas].[FacturaItem]([facturaNumero], [descripcion], [precio])
+SELECT f.[numero], 'Consumible: ' + c.[descripcion], c.[precio]
+FROM [Frutillitas].[Factura] f
+INNER JOIN [Frutillitas].[Estadia] e ON f.[estadiaId] = e.[id]
+INNER JOIN [Frutillitas].[EstadiaConsumible] ec ON ec.[estadiaId] = e.[id]
+INNER JOIN [Frutillitas].[Consumible] c ON c.[codigo] = ec.[consumibleCodigo]
+GO
+
+INSERT INTO [Frutillitas].[FacturaItem]([facturaNumero], [descripcion], [precio])
+SELECT f.[numero], 'Estadia: ' + STR([Estadia_Cant_Noches]) + ' noches', [Item_Factura_Monto] * [Estadia_Cant_Noches]
+FROM [Frutillitas].[Factura] f
+INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [Factura_Nro] = f.[numero]
+WHERE [Consumible_Precio] IS NULL AND [Item_Factura_Monto] IS NOT NULL
 GO
 
 INSERT INTO [Frutillitas].[EstadiaCliente]([estadiaId], [clienteId])
