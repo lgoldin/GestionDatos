@@ -32,17 +32,24 @@ namespace FrbaHotel.Login
 
         private void ButtonIngresar_Click(object sender, EventArgs e)
         {
-            Usuario usuario = this.LoginService.Login(this.TextBoxUsername.Text, this.TextBoxPassword.Text);
+            try
+            {
+                Usuario usuario = this.LoginService.Login(this.TextBoxUsername.Text, this.TextBoxPassword.Text);
 
-            if (usuario != null)
-            {
-                usuario.Rol.Funcionalidades = this.FuncionalidadService.GetByRolId(usuario.Rol.Id);
-                Session.Usuario = usuario;
-                this.DisplayForm(new SeleccionarHotel());
+                if (usuario != null)
+                {
+                    usuario.Rol.Funcionalidades = this.FuncionalidadService.GetByRolId(usuario.Rol.Id);
+                    Session.Usuario = usuario;
+                    this.DisplayForm(new SeleccionarHotel());
+                }
+                else
+                {
+                    MessageBox.Show("Ingrese los datos correctamente", "Error", MessageBoxButtons.OK);
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show("Ingrese los datos correctamente", "Error", MessageBoxButtons.OK);
+                MessageBox.Show("Probablemente falten correr los SPs", "Error", MessageBoxButtons.OK);
             }
         }
 

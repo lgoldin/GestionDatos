@@ -42,8 +42,6 @@ namespace FrbaHotel.Login
             }
             else
             {
-                MessageBox.Show("El hotel ha sido seleccionado correctamente", "OK", MessageBoxButtons.OK);
-
                 Session.Hotel = this.Hoteles.First(x => x.Id == (int)cmbHotel.SelectedValue);
 
                 DisplayForm(new Index());
