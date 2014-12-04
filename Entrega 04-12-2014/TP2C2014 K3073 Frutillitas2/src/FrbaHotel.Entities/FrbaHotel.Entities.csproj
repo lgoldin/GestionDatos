@@ -49,6 +49,22 @@
   <ItemGroup>
     <Compile Include="Cliente.cs" />
     <Compile Include="Ciudad.cs" />
+    <Compile Include="Consumible.cs" />
+    <Compile Include="DTOs\ConsumibleDTO.cs" />
+    <Compile Include="Estadia.cs" />
+    <Compile Include="Factura.cs" />
+    <Compile Include="FacturaItem.cs" />
+    <Compile Include="FacturaTipoPago.cs" />
+    <Compile Include="Session.cs" />
+    <Compile Include="DTOs\ClienteDTO.cs" />
+    <Compile Include="DTOs\HabitacionDTO.cs" />
+    <Compile Include="HotelInhabilitacion.cs" />
+    <Compile Include="Reserva.cs" />
+    <Compile Include="TarjetaDeCredito.cs" />
+    <Compile Include="TipoHabitacion.cs" />
+    <Compile Include="Habitacion.cs" />
+    <Compile Include="DTOs\HotelDTO.cs" />
+    <Compile Include="DTOs\Usuario.cs" />
     <Compile Include="Regimen.cs" />
     <Compile Include="Exceptions\FormException.cs" />
     <Compile Include="Pais.cs" />

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Services.Interfaces;
 using FrbaHotel.Services;
-using FrbaHotel.Entities;
+using FrbaHotel.Entities.DTOs;
 
 namespace FrbaHotel.ABM_de_Usuario
 {
@@ -40,7 +40,8 @@ namespace FrbaHotel.ABM_de_Usuario
             string direccion = string.IsNullOrEmpty(txtDireccion.Text) ? null : txtDireccion.Text;
             DateTime? fechaNacimiento = string.IsNullOrEmpty(txtFechaNacimiento.Text) ? (DateTime?)null : Convert.ToDateTime(txtFechaNacimiento.Text);
             
-            IEnumerable<Usuario> usuarios = this.UsuarioService.GetAll(username, nombre, apellido, tipoDocumentoId, numeroDocumento, mail, telefono, direccion, fechaNacimiento, rolId);
+            IEnumerable<UsuarioDTO> usuarios = this.UsuarioService.GetAll(username, nombre, apellido, tipoDocumentoId, numeroDocumento, mail, telefono, direccion, fechaNacimiento, rolId);
+            dgvUsuario.AutoGenerateColumns = false;
             dgvUsuario.DataSource = usuarios;
         }
 
@@ -76,6 +77,46 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             this.FillRoles();
             this.FillTipoDocumentos();
+        }
+
+        private void dgvUsuario_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                DataGridViewRow row = dgvUsuario.Rows[e.RowIndex];
+                DataGridViewCell cell = row.Cells["Id"];
+                var form = new UsuarioForm((int)cell.Value);
+                this.DisplayForm(form);
+            }
+        }
+
+        private void DisplayForm(Form form)
+        {
+            form.Location = this.Location;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.FormClosing += delegate { this.Show(); };
+            form.Show();
+            this.Hide();
+        }
+
+        private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            var form = new UsuarioForm();
+            this.DisplayForm(form);
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtUsername.Text = string.Empty;
+            txtNombre.Text = string.Empty;
+            txtApellido.Text = string.Empty;
+            txtNumeroDocumento.Text = string.Empty;
+            txtMail.Text = string.Empty;
+            txtTelefono.Text = string.Empty;
+            txtDireccion.Text = string.Empty;
+            txtFechaNacimiento.Text = string.Empty;
+            cmbRol.SelectedValue = "0";
+            cmbTipoDocumento.SelectedValue = "0";
         }
     }
 }

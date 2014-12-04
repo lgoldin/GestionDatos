@@ -8,6 +8,11 @@ namespace FrbaHotel.Services.Interfaces
 {
     public interface IHotelService
     {
-        IEnumerable<Hotel> GetAll();
+        IEnumerable<Hotel> GetAll(string nombre, int? esttrellas, int? paisId, int? ciudadId);
+        Hotel GetById(int id);
+        int InsertHotelInhabilitado(HotelInhabilitacion hotelInhabilitado);
+        int Insert(Hotel hotel, int usuarioId);
+
+        IEnumerable<Hotel> GetByIdUsuario(int idUsuario);
     }
 }

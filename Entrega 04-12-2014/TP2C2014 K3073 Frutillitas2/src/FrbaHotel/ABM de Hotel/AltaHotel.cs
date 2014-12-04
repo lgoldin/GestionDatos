@@ -23,7 +23,7 @@ namespace FrbaHotel.ABM_de_Hotel
             cmbPaises.ValueMember = "Id";
 
             RegimenService regimenService = new RegimenService();
-            List<Regimen> regimenes = regimenService.GetAll().ToList();
+            List<Regimen> regimenes = regimenService.GetAll().Where(x=>x.Activo).ToList();
             ((ListBox)chListRegimenes).DataSource = regimenService.GetAll();
             ((ListBox)chListRegimenes).ValueMember = "Codigo";
             ((ListBox)chListRegimenes).DisplayMember = "Descripcion";
@@ -44,9 +44,10 @@ namespace FrbaHotel.ABM_de_Hotel
                     hotel.Ciudad = (Ciudad)cmbCiudades.SelectedItem;
                     hotel.Direccion = txtDireccion.Text;
                     hotel.Estrellas = GetEstrellas();
-                    hotel.FechaCreacion = dateTimePicker1.Value;
+                    hotel.FechaCreacion = Session.Fecha;
                     hotel.Mail = txtMail.Text;
                     hotel.Nombre = txtNombre.Text;
+                    hotel.Telefono = txtTelefono.Text;
 
                     hotel.Regimenes = new List<Regimen>();
                     for (int i = 0; i < chListRegimenes.Items.Count; i++)
@@ -59,7 +60,8 @@ namespace FrbaHotel.ABM_de_Hotel
                     }
 
                     HotelService service = new HotelService();
-                    service.Insert(hotel);
+                    service.Insert(hotel, Session.Usuario.Id);
+                    MessageBox.Show("El hotel se ha creado correctamente");
                 }
                 catch (Exception)
                 {
@@ -76,11 +78,11 @@ namespace FrbaHotel.ABM_de_Hotel
         private string ValidateForm()
         {
             string errorMessage = string.Empty;
-            if (cmbCiudades.SelectedValue == null)
+            if (Convert.ToInt32(cmbCiudades.SelectedValue) == 0)
             {
                 errorMessage = "Seleccione una ciudad";
             }
-            if (cmbPaises.SelectedValue == null)
+            if (Convert.ToInt32(cmbPaises.SelectedValue) == 0)
             {
                 errorMessage += System.Environment.NewLine + "Seleccione un país";
             }
@@ -92,14 +94,15 @@ namespace FrbaHotel.ABM_de_Hotel
             {
                 errorMessage += System.Environment.NewLine + "Escriba el mail";
             }
-            if (string.IsNullOrEmpty(txtNombre.Text))
-            {
-                errorMessage += System.Environment.NewLine + "Escriba el nombre";
-            }
             if (string.IsNullOrEmpty(txtTelefono.Text))
             {
                 errorMessage += System.Environment.NewLine + "Escriba el telefono";
             }
+            if (string.IsNullOrEmpty(txtNombre.Text))
+            {
+                errorMessage += System.Environment.NewLine + "Escriba el nombre";
+            }
+            
             return errorMessage;
         }
 
@@ -139,6 +142,31 @@ namespace FrbaHotel.ABM_de_Hotel
         }
 
         private void AltaHotel_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbCiudades_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblCiudad_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPais_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblFechaCreacion_Click(object sender, EventArgs e)
         {
 
         }

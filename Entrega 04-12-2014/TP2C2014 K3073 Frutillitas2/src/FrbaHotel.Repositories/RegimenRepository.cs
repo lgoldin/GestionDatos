@@ -15,6 +15,7 @@ namespace FrbaHotel.Repositories
             var regimenes = new List<Regimen>();
 
             SqlCommand command = DBConnection.CreateStoredProcedure("GetRegimenes");
+
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
             foreach (DataRow regimen in collection)
             {
@@ -52,9 +53,32 @@ namespace FrbaHotel.Repositories
             };
         }
 
+        private Regimen CreateRegimenOnlyId(DataRow row)
+        {
+            return new Regimen
+            {
+                Codigo = Convert.ToInt32(row["regimenCodigo"])
+            };
+        }
+
         public override void Delete(Regimen entity)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Regimen> GetByHotelId(int hotelId)
+        {
+            var regimenes = new List<Regimen>();
+
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetRegimenesByHotel");
+            command.Parameters.AddWithValue("@hotelId", hotelId);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+            foreach (DataRow regimen in collection)
+            {
+                regimenes.Add(this.CreateRegimenOnlyId(regimen));
+            }
+
+            return regimenes;
         }
     }
 }

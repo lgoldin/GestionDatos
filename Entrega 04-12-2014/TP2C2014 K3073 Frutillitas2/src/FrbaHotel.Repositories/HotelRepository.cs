@@ -5,6 +5,7 @@ using System.Text;
 using FrbaHotel.Entities;
 using System.Data.SqlClient;
 using System.Data;
+using System.Transactions;
 
 namespace FrbaHotel.Repositories
 {
@@ -12,10 +13,17 @@ namespace FrbaHotel.Repositories
     {
         public override IEnumerable<Hotel> GetAll()
         {
+            return this.GetAll(null, null, null, null);
+        }
+
+        public IEnumerable<Hotel> GetAll(string nombre, int? estrellas, int? paisId, int? ciudadId )
+        {
             var hoteles = new List<Hotel>();
 
             SqlCommand command = DBConnection.CreateStoredProcedure("GetHoteles");
+            AddGetHotelParameters(nombre,estrellas, paisId, ciudadId, command);
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
             foreach (DataRow hotel in collection)
             {
                 hoteles.Add(this.CreateHotel(hotel));
@@ -24,6 +32,15 @@ namespace FrbaHotel.Repositories
             return hoteles;
         }
 
+        private void AddGetHotelParameters(string nombre, int? estrellas, int? paisId, int? ciudadId, SqlCommand command)
+        {
+            command.Parameters.AddWithValue("@ciudadId", ciudadId);
+            command.Parameters.AddWithValue("@estrellas", estrellas);
+            command.Parameters.AddWithValue("@nombre", nombre);
+            command.Parameters.AddWithValue("@paisId", paisId);
+        }
+
+        
         public override Hotel Get(int id)
         {
             return this.GetAll().FirstOrDefault(x => x.Id == id);
@@ -31,18 +48,70 @@ namespace FrbaHotel.Repositories
 
         public override int Insert(Hotel entity)
         {
-            SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotel");
-            AddHotelParameters(entity, command);
-            int hotelId = DBConnection.ExecuteScalar(command);
+            throw new NotImplementedException();
+        }
 
-            InsertHotelRegimen(entity, hotelId);
+        public int Insert(Hotel entity, int usuarioId)
+        {
+            using (var transaction = new TransactionScope())
+            {
+                SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotel");
+                AddHotelParameters(entity, command);
+                int hotelId = DBConnection.ExecuteScalar(command);
 
-            return hotelId;
+                InsertHotelRegimen(entity, hotelId);
+                InsertHotelUsuario(hotelId, usuarioId);
+
+                transaction.Complete();
+
+                return hotelId;
+            }
+        }
+
+        private void InsertHotelUsuario(int hotelId, int usuarioId)
+        {
+            SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotelUsuario");
+            command.Parameters.AddWithValue("@hotelId", hotelId);
+            command.Parameters.AddWithValue("@usuarioId", usuarioId);
+            DBConnection.ExecuteNonQuery(command);
+        }
+
+        public int InsertHotelInhabilitado(HotelInhabilitacion hotelInhabilitado)
+        {
+                SqlCommand command = DBConnection.CreateStoredProcedure("InsertHotelInhabilitado");
+                AddHotelInhabilitadoParameters(hotelInhabilitado, command);
+                return DBConnection.ExecuteNonQuery(command);
         }
 
         public override void Update(Hotel entity)
         {
-            throw new NotImplementedException();
+            using (var transaction = new TransactionScope())
+            {
+                SqlCommand command = DBConnection.CreateStoredProcedure("UpdateHotel");
+                AddHotelParameters(entity, command);
+                command.Parameters.AddWithValue("@id", entity.Id);
+                DBConnection.ExecuteNonQuery(command);
+
+                InsertHotelRegimen(entity, entity.Id);
+
+                transaction.Complete();
+            }
+        }
+
+        public IEnumerable<Hotel> GetByIdUsuario(int idUsuario)
+        {
+            var hoteles = new List<Hotel>();
+
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetHotelesByIdUsuario");
+            command.Parameters.AddWithValue("@idUsuario", idUsuario);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
+            foreach (DataRow hotel in collection)
+            {
+                hoteles.Add(this.CreateHotel(hotel));
+            }
+
+            return hoteles;    
         }
 
         public override void Delete(Hotel entity)
@@ -55,10 +124,20 @@ namespace FrbaHotel.Repositories
             command.Parameters.AddWithValue("@ciudadId", hotel.Ciudad.Id);
             command.Parameters.AddWithValue("@direccion", hotel.Direccion);
             command.Parameters.AddWithValue("@estrellas", hotel.Estrellas);
+            if(hotel.FechaCreacion.Year > 1900)
             command.Parameters.AddWithValue("@fechaCreacion", hotel.FechaCreacion);
             command.Parameters.AddWithValue("@nombre", hotel.Nombre);
-            command.Parameters.AddWithValue("@recargaEstrella", hotel.RecargaEstrella);
             command.Parameters.AddWithValue("@mail", hotel.Mail);
+            command.Parameters.AddWithValue("@telefono", hotel.Telefono);
+        }
+
+        private void AddHotelInhabilitadoParameters(HotelInhabilitacion hotelInhabilitado, SqlCommand command)
+        {
+            command.Parameters.AddWithValue("@hotelId", hotelInhabilitado.HotelId);
+            command.Parameters.AddWithValue("@descripcion", hotelInhabilitado.Descripcion);
+            command.Parameters.AddWithValue("@fechaCreacion", hotelInhabilitado.FechaCreacion);
+            command.Parameters.AddWithValue("@fechaFin", hotelInhabilitado.FechaFin);
+            command.Parameters.AddWithValue("@fechaInicio", hotelInhabilitado.FechaInicio);
         }
 
         private Hotel CreateHotel(DataRow row)
@@ -81,8 +160,8 @@ namespace FrbaHotel.Repositories
                 },
                 Estrellas = Convert.ToInt32(row["Estrellas"]),
                 FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]),
-                RecargaEstrella = Convert.ToInt32(row["RecargaEstrella"]),
-                Mail = row["Mail"].ToString()
+                Mail = row["Mail"].ToString(),
+                Telefono = row["Telefono"].ToString()
             };
         }
 

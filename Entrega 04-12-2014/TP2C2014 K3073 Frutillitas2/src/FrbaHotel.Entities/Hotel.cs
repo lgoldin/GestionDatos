@@ -17,12 +17,12 @@ namespace FrbaHotel.Entities
 
         public int Estrellas { get; set; }
 
-        public int RecargaEstrella { get; set; }
-
         public string Mail { get; set; }
 
         public DateTime FechaCreacion { get; set; }
 
         public List<Regimen> Regimenes { get; set; }
+
+        public string Telefono{ get; set; }
     }
 }

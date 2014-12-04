@@ -25,7 +25,6 @@ BEGIN
 		p.nacionalidad AS PaisNacionalidad,
 		h.direccion AS Direccion,
 		h.estrellas AS Estrellas,
-		h.recargaEstrella AS RecargaEstrella,
 		h.mail AS Mail,
 		h.fechaCreacion AS FechaCreacion
 	FROM [Frutillitas].UsuarioHotel uh

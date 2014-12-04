@@ -1,4 +1,3 @@
-use GD2C2014
 USE [GD2C2014]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetUsuarios]') AND type in (N'P', N'PC'))
@@ -31,7 +30,7 @@ BEGIN
 		r.id AS rolId,
 		r.nombre AS rol
 	FROM [Frutillitas].Usuario u
-	INNER JOIN [Frutillitas].TipoDocumento td ON td.id = u.tipoDocumentoId
+	LEFT JOIN [Frutillitas].TipoDocumento td ON td.id = u.tipoDocumentoId
 	INNER JOIN [Frutillitas].UsuarioRol ur ON ur.usuarioId = u.id
 	INNER JOIN [Frutillitas].Rol r ON r.id = ur.rolId
 	WHERE 

@@ -23,8 +23,10 @@ namespace FrbaHotel.Entities
 
         public string  Telefono { get; set; }
 
-        public string Nacionalidad { get; set; }
+        public int Nacionalidad { get; set; }
 
-        public Direccion Direccion { get; set; }
+        public string Direccion { get; set; }
+
+        public bool Habilitado { get; set; }
     }
 }

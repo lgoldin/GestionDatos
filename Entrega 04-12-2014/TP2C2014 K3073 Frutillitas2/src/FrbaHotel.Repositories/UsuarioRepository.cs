@@ -94,20 +94,27 @@ namespace FrbaHotel.Repositories
             return usuarios;
         }
 
-        public Usuario GetByUsernameAndPassword(string username, string password)
+        public Usuario GetByUsernameAndPassword(string username, byte[] password)
         {
-            SqlCommand command = DBConnection.CreateStoredProcedure("NombreDelSP");
-            command.Parameters.AddWithValue("@userName", username);
-            command.Parameters.AddWithValue("@password", password);
-
-            SqlDataReader reader = DBConnection.EjecutarComandoSelect(command);
-
             Usuario usuario = null;
 
-            if (reader.Read())
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetUsuarioByUsernameAndPassword");
+            command.Parameters.AddWithValue("@userName", username);
+            command.Parameters.AddWithValue("@password", password);
+            
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+            foreach (DataRow row in collection)
             {
-                return this.CreateUsuario(reader);
+                command = DBConnection.CreateStoredProcedure("DeleteUsuarioLog");
+                command.Parameters.AddWithValue("@userName", username);
+                DBConnection.ExecuteNonQuery(command);
+ 
+                return this.CreateUsuario(row);
             }
+
+            command = DBConnection.CreateStoredProcedure("InsertUsuarioLog");
+            command.Parameters.AddWithValue("@userName", username);
+            DBConnection.ExecuteNonQuery(command);
             
             return usuario;
         }
@@ -134,16 +141,17 @@ namespace FrbaHotel.Repositories
         {
             Usuario usuario = new Usuario();
             usuario.Apellido = reader["apellido"].ToString();
-            usuario.FechaNacimiento = Convert.ToDateTime(reader["fechaNacimiento"]);
+            usuario.FechaNacimiento = !string.IsNullOrEmpty(reader["fechaNacimiento"].ToString()) ? Convert.ToDateTime(reader["fechaNacimiento"]) : (DateTime?)null;
             usuario.Mail = reader["mail"].ToString();
             usuario.Nombre = reader["nombre"].ToString();
             usuario.NumeroDocumento = reader["numeroDocumento"].ToString();
             usuario.Telefono = reader["telefono"].ToString();
-            usuario.TipoDocumento = new TipoDocumento { Id = Convert.ToInt32(reader["TipoDocumentoId"]), Nombre = reader["TipoDocumentoNombre"].ToString() };
+            usuario.TipoDocumento = !string.IsNullOrEmpty(reader["TipoDocumentoId"].ToString()) ? new TipoDocumento { Id = Convert.ToInt32(reader["TipoDocumentoId"]), Nombre = reader["TipoDocumentoNombre"].ToString() } : null;
             usuario.Direccion = new Direccion { Calle = reader["direccion"].ToString() };
             usuario.Id = Convert.ToInt32(reader["id"]);
             usuario.Rol = new Rol { Id = Convert.ToInt32(reader["rolId"]), Nombre = reader["rol"].ToString() };
             usuario.Username = reader["userName"].ToString();
+            usuario.Habilitado = Convert.ToBoolean(reader["habilitado"]);
             usuario.Hoteles = new List<Hotel>();
 
             return usuario;
@@ -162,7 +170,7 @@ namespace FrbaHotel.Repositories
             command.Parameters.AddWithValue("@direccion", usuario.Direccion.Calle);
             command.Parameters.AddWithValue("@fechaNacimiento", usuario.FechaNacimiento);
             command.Parameters.AddWithValue("@rolId", usuario.Rol.Id);
-            
+            command.Parameters.AddWithValue("@habilitado", usuario.Habilitado);
         }
 
         private static void UpdateUsuarioParameters(Usuario usuario, SqlCommand command)
@@ -211,7 +219,6 @@ namespace FrbaHotel.Repositories
                 },
                 Estrellas = Convert.ToInt32(row["Estrellas"]),
                 FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]),
-                RecargaEstrella = Convert.ToInt32(row["RecargaEstrella"]),
                 Mail = row["Mail"].ToString()
             };
         }

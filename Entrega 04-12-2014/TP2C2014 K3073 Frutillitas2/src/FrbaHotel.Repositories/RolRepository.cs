@@ -32,13 +32,18 @@ namespace FrbaHotel.Repositories
 
         public override int Insert(Rol entity)
         {
-            SqlCommand command = DBConnection.CreateStoredProcedure("InsertRol");
-            AddRolParameters(entity, command);
-            int rolId = (int)DBConnection.ExecuteScalar(command);
+            using (var transaction = new TransactionScope())
+            {
+                SqlCommand command = DBConnection.CreateStoredProcedure("InsertRol");
+                AddRolParameters(entity, command);
+                int rolId = (int)DBConnection.ExecuteScalar(command);
 
-            InsertRolFuncionalidad(entity, rolId);
+                InsertRolFuncionalidad(entity, rolId);
 
-            return rolId;
+                transaction.Complete();
+
+                return rolId;
+            }
         }
 
         public override void Update(Rol entity)

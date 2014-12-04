@@ -9,5 +9,7 @@ namespace FrbaHotel.Services.Interfaces
     public interface IPaisService
     {
         IEnumerable<Pais> GetAll();
+
+        List<Ciudad> GetCiudades(Pais pais);
     }
 }

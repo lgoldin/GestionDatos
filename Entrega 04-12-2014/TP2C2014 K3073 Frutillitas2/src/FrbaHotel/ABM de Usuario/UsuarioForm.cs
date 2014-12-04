@@ -48,7 +48,6 @@ namespace FrbaHotel.ABM_de_Usuario
             Usuario usuario = null;
             if (this.IdUsuario > 0)
             {
-                btnBorrar.Enabled = true;
                 usuario = this.UsuarioService.Get(this.IdUsuario);
             }
 
@@ -77,7 +76,12 @@ namespace FrbaHotel.ABM_de_Usuario
                 txtMail.Text = usuario.Mail;
                 txtTelefono.Text = usuario.Telefono;
                 txtDireccion.Text = usuario.Direccion.Calle;
-                dtpFechaNacimiento.Value = usuario.FechaNacimiento;
+                if (usuario.FechaNacimiento.HasValue)
+                {
+                    dtpFechaNacimiento.Value = usuario.FechaNacimiento.Value;
+                }
+
+                ckbHabilitado.Checked = usuario.Habilitado;
             }
         }
 
@@ -86,12 +90,12 @@ namespace FrbaHotel.ABM_de_Usuario
             cmbTipoDocumento.DataSource = this.TipoDocumentoService.GetAll();
             cmbTipoDocumento.ValueMember = "Id";
             cmbTipoDocumento.DisplayMember = "Nombre";
-            cmbTipoDocumento.SelectedValue = usuario != null ? usuario.TipoDocumento.Id : 0;
+            cmbTipoDocumento.SelectedValue = usuario != null && usuario.TipoDocumento != null ? usuario.TipoDocumento.Id : 0;
         }
 
         private void FillHoteles(Usuario usuario)
         {
-            lstHotel.DataSource = this.HotelService.GetAll();
+            lstHotel.DataSource = this.HotelService.GetAll(null, null, null, null);
             lstHotel.ValueMember = "Id";
             lstHotel.DisplayMember = "Nombre";
             if (usuario != null && usuario.Hoteles != null && usuario.Hoteles.Count > 0)
@@ -116,13 +120,6 @@ namespace FrbaHotel.ABM_de_Usuario
                 int idUsuario = this.UsuarioService.Save(this.GetUsuario());
                 
                 MessageBox.Show("El usuario fue guardado correctamente", "Success", MessageBoxButtons.OK);
-                
-                var form = new UsuarioForm(idUsuario);
-                form.Location = this.Location;
-                form.StartPosition = FormStartPosition.Manual;
-                form.FormClosing += delegate { this.Show(); };
-                form.Show();
-                this.Close();
             }
             catch (FormException formException)
             {
@@ -230,7 +227,8 @@ namespace FrbaHotel.ABM_de_Usuario
                 Rol = new Rol { Id = (int)cmbRol.SelectedValue },
                 Telefono = txtTelefono.Text,
                 TipoDocumento = new TipoDocumento { Id = (int)cmbTipoDocumento.SelectedValue },
-                Username = txtUsername.Text
+                Username = txtUsername.Text,
+                Habilitado = ckbHabilitado.Checked
             };
 
             foreach(Hotel hotel in lstHotel.CheckedItems)

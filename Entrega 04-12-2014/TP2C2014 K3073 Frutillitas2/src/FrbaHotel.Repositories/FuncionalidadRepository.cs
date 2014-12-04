@@ -71,6 +71,7 @@ namespace FrbaHotel.Repositories
         {
             Funcionalidad funcionalidad = new Funcionalidad();
             funcionalidad.Id = Convert.ToInt32(row["funcionalidadId"]);
+            funcionalidad.Nombre = row["nombre"].ToString();
             return funcionalidad;
         }
     }

@@ -18,8 +18,10 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	SELECT
-      [funcionalidadId]
-  FROM [GD2C2014].[Frutillitas].[RolFuncionalidad]
+      rf.[funcionalidadId] AS [funcionalidadId],
+      f.[nombre] AS [nombre]
+  FROM [GD2C2014].[Frutillitas].[RolFuncionalidad] rf
+  INNER JOIN [Frutillitas].[Funcionalidad] f ON rf.funcionalidadId = f.id
   WHERE [rolId] = @rolId
 END
 ' 

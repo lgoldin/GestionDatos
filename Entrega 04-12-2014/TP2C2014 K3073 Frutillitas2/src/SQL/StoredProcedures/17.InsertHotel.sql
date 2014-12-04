@@ -17,8 +17,8 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[InsertHote
 @estrellas numeric(18, 0),
 @fechaCreacion datetime,
 @nombre nvarchar(255),
-@recargaEstrella numeric(18, 0),
-@mail nvarchar(255)
+@mail nvarchar(255),
+@telefono nvarchar(255)
 
 AS
 BEGIN
@@ -31,17 +31,17 @@ INSERT INTO [Frutillitas].[Hotel]
            ,[ciudadId]
            ,[direccion]
            ,[estrellas]
-           ,[recargaEstrella]
            ,[mail]
-           ,[fechaCreacion])
+           ,[fechaCreacion]
+		   ,[telefono])
      VALUES
            (@nombre
 		   ,@ciudadId
            ,@direccion
            ,@estrellas
-           ,@recargaEstrella
            ,@mail
-           ,@fechaCreacion)
+           ,@fechaCreacion
+		   ,@telefono)
 
 		   set @id = SCOPE_IDENTITY()
 		   select @id
