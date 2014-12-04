@@ -109,7 +109,6 @@ namespace FrbaHotel
             this.consumiblesToolStripMenuItem.Visible = false;
             this.reservaToolStripMenuItem.Visible = false;
             this.registrarEstToolStripMenuItem.Visible = false;
-            this.facturarEstadíaToolStripMenuItem.Visible = false;
 
             List<Funcionalidad> funcionalidades = Session.Usuario.Rol.Funcionalidades;
             if (funcionalidades.Any(x => x.Nombre == "Usuario"))
@@ -148,10 +147,6 @@ namespace FrbaHotel
                 this.registrarEstToolStripMenuItem.Visible = true;
             }
 
-            if (funcionalidades.Any(x => x.Nombre == "Factura"))
-            {
-                this.facturarEstadíaToolStripMenuItem.Visible = true;
-            }
         }
 
         private void altaToolStripMenuItem_Click_1(object sender, EventArgs e)

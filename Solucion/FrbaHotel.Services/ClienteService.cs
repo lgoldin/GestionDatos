@@ -77,5 +77,14 @@ namespace FrbaHotel.Services
             ClienteRepository clienteRepository = new ClienteRepository();
             clienteRepository.Update(cliente);   
         }
+
+        public List<Cliente> GetByEstadiaId(int estadiaId)
+        {
+            var clientes = new List<Cliente>();
+            clientes.Add(new Cliente { Id = 0, Nombre = "- No Especificado -" });
+            ClienteRepository clienteRepository = new ClienteRepository();
+            clienteRepository.GetByEstadiaId(estadiaId).ForEach(clientes.Add);
+            return clientes;
+        }
     }
 }

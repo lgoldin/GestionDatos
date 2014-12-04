@@ -13,22 +13,25 @@ namespace FrbaHotel.Facturacion
     public partial class FacturaFinal : Form
     {
         private Factura factura { get; set; }
+        private string cliente { get; set; }
 
         public FacturaFinal()
         {
             InitializeComponent();
         }
 
-        public FacturaFinal(Factura f)
+        public FacturaFinal(Factura f, string NombreCliente)
         {
             InitializeComponent();
             this.factura = f;
+            this.cliente = NombreCliente;
         }
 
         private void FacturaFinal_Load(object sender, EventArgs e)
         {
             lblFactura.Text =
                 "Número de Factura: " + factura.Numero + System.Environment.NewLine + System.Environment.NewLine +
+                "Factura a nombre de: " + this.cliente + System.Environment.NewLine + System.Environment.NewLine +
                 "Items:" + System.Environment.NewLine + System.Environment.NewLine;
 
             foreach (FacturaItem fi in factura.Items)

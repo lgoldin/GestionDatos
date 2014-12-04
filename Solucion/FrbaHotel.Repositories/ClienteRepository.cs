@@ -126,5 +126,21 @@ namespace FrbaHotel.Repositories
             command.Parameters.AddWithValue("@numeroDocumento", numeroDocumento);
             command.Parameters.AddWithValue("@tipoDocumentoId", tipoDocumento);
         }
+
+        public List<Cliente> GetByEstadiaId(int estadiaId)
+        {
+            var clientes = new List<Cliente>();
+
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetClienteByEstadiaId");
+            command.Parameters.AddWithValue("@estadiaId", estadiaId);
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
+            foreach (DataRow cliente in collection)
+            {
+                clientes.Add(this.CreateCliente(cliente));
+            }
+
+            return clientes;
+        }
     }
 }

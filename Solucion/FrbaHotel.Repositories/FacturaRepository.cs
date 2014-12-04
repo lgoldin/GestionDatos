@@ -87,6 +87,7 @@ namespace FrbaHotel.Repositories
             command.Parameters.AddWithValue("@fecha", factura.Fecha);
             command.Parameters.AddWithValue("@tipoPagoId", factura.TipoPagoId);
             command.Parameters.AddWithValue("@total", factura.Total);
+            command.Parameters.AddWithValue("@clienteId", factura.ClienteId);
         }
 
         public override void Update(Factura entity)
