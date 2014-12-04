@@ -10,6 +10,7 @@ using FrbaHotel.Entities.Exceptions;
 using FrbaHotel.Entities;
 using FrbaHotel.Services.Interfaces;
 using FrbaHotel.Services;
+using FrbaHotel.ABM_de_Cliente;
 
 namespace FrbaHotel.Registrar_Estadia
 {
@@ -161,6 +162,26 @@ namespace FrbaHotel.Registrar_Estadia
             form.FormClosing += delegate { this.Show(); };
             form.Show();
             this.Hide();
+        }
+
+        private void btnAgregarHuesped_Click(object sender, EventArgs e)
+        {
+            ListadoCliente form = new ListadoCliente(false);
+            form.ShowDialog();
+            int clienteId = form.ClienteId;
+
+            if (clienteId == 0)
+            {
+                MessageBox.Show("Tiene que seleccionar un cliente");
+            }
+            else
+            {
+                ClienteService clienteService = new ClienteService();
+                Cliente cliente = clienteService.GetById(clienteId);
+                lstHuespedes.Items.Add(cliente);
+            }
+
+            ((ListBox)lstHuespedes).DisplayMember = "Nombre";
         }
     }
 }
