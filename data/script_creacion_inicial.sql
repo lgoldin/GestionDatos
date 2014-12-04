@@ -43,9 +43,6 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaTipoHabitacion_TipoHabitacion]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaTipoHabitacion]'))
 ALTER TABLE [Frutillitas].[ReservaTipoHabitacion] DROP CONSTRAINT [FK_ReservaTipoHabitacion_TipoHabitacion]
 GO
-IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaHistorial_Usuario]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaHistorial]'))
-ALTER TABLE [Frutillitas].[ReservaHistorial] DROP CONSTRAINT [FK_ReservaHistorial_Usuario]
-GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_ReservaLog_Reserva]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[ReservaLog]'))
 ALTER TABLE [Frutillitas].[ReservaLog] DROP CONSTRAINT [FK_ReservaLog_Reserva]
 GO
@@ -199,12 +196,6 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaEstado]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[ReservaEstado]
 GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaHistorial]') AND type in (N'U'))
-DROP TABLE [Frutillitas].[ReservaHistorial]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaHistorialAccion]') AND type in (N'U'))
-DROP TABLE [Frutillitas].[ReservaHistorialAccion]
-GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaTipoHabitacion]') AND type in (N'U'))
 DROP TABLE [Frutillitas].[ReservaTipoHabitacion]
 GO
@@ -354,32 +345,6 @@ BEGIN
 CREATE TABLE [Frutillitas].[ReservaTipoHabitacion](
 	[reservaCodigo] [numeric](18, 0) NULL,
 	[tipoHabitacionCodigo] [numeric](18, 0) NULL
-) ON [PRIMARY]
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaHistorialAccion]') AND type in (N'U'))
-BEGIN
-CREATE TABLE [Frutillitas].[ReservaHistorialAccion](
-	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[nombre] [nvarchar](255) NULL
-) ON [PRIMARY]
-END
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[ReservaHistorial]') AND type in (N'U'))
-BEGIN
-CREATE TABLE [Frutillitas].[ReservaHistorial](
-	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[usuarioId] [int] NULL,
-	[fecha] [datetime] NULL,
-	[accionId] [int] NULL
 ) ON [PRIMARY]
 END
 GO
@@ -722,9 +687,6 @@ ALTER TABLE [Frutillitas].[ReservaTipoHabitacion] ADD CONSTRAINT FK_ReservaTipoH
 GO
 ALTER TABLE [Frutillitas].[ReservaTipoHabitacion] ADD CONSTRAINT FK_ReservaTipoHabitacion_TipoHabitacion FOREIGN KEY (tipoHabitacionCodigo) REFERENCES [Frutillitas].[TipoHabitacion](codigo)
 GO
-ALTER TABLE [Frutillitas].[ReservaHistorial] ADD CONSTRAINT FK_ReservaHistorial_Usuario FOREIGN KEY (usuarioId) REFERENCES [Frutillitas].[Usuario](id)
-GO
-/*accionId?*/
 ALTER TABLE [Frutillitas].[ReservaLog] ADD CONSTRAINT FK_ReservaLog_Reserva FOREIGN KEY (reservaCodigo) REFERENCES [Frutillitas].[Reserva](codigo)
 GO
 ALTER TABLE [Frutillitas].[ReservaLog] ADD CONSTRAINT FK_ReservaLog_Usuario FOREIGN KEY (usuarioId) REFERENCES [Frutillitas].[Usuario](id)
