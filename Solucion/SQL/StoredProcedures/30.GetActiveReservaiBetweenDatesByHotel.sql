@@ -10,8 +10,8 @@ GO
 
 CREATE PROCEDURE [Frutillitas].[GetActiveReservaBetweenDatesByHotel]
 @hotelId int,
-@fechaDesde datetime,
-@fechaHasta datetime
+@fechaDesde smalldatetime,
+@fechaHasta smalldatetime
 AS
 BEGIN
 	SET NOCOUNT ON;
