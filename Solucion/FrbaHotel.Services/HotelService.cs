@@ -66,8 +66,13 @@ namespace FrbaHotel.Services
 
         public IEnumerable<Hotel> GetByIdUsuario(int idUsuario)
         {
+            var hoteles = new List<Hotel>();
+            hoteles.Add(new Hotel { Id = 0, Nombre = "- No Especificado -" });
+
             var repository = new HotelRepository();
-            return repository.GetByIdUsuario(idUsuario);
+            repository.GetByIdUsuario(idUsuario).ToList().ForEach(hoteles.Add);
+
+            return hoteles;
         }
 
         #region IHotelService Members

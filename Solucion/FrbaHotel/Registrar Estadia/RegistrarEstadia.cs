@@ -206,8 +206,8 @@ namespace FrbaHotel.Registrar_Estadia
             var form = new ABM_de_Reserva.AltaReserva(null);
             form.StartPosition = FormStartPosition.CenterScreen;
             form.Show();
-            form.BringToFront();
             this.Close();
+            form.BringToFront();            
         }
     }
 }
