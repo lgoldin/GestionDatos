@@ -13,9 +13,16 @@ namespace FrbaHotel.Facturacion
 {
     public partial class Facturacion : Form
     {
+        private int EstadiaId { get; set; }
         public Facturacion()
         {
             InitializeComponent();
+        }
+
+        public Facturacion(int estadiaId)
+        {
+            InitializeComponent();
+            this.EstadiaId = estadiaId;
         }
 
         private void btnFacturar_Click(object sender, EventArgs e)
@@ -195,6 +202,15 @@ namespace FrbaHotel.Facturacion
             cmbMedioDePago.DisplayMember = "Descripcion";
             cmbMedioDePago.ValueMember = "Id";
             cmbMedioDePago.SelectedValue = 0;
+            if (this.EstadiaId != 0)
+            {
+                txtNroEstadia.Text = this.EstadiaId.ToString();
+                this.txtNroEstadia.ReadOnly = true;
+            }
+            else
+            {
+                this.txtNroEstadia.ReadOnly = false;
+            }
         }
         private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
         {

@@ -138,15 +138,29 @@ namespace FrbaHotel.Registrar_Estadia
         {
             try
             {
-                //-- ir a facturacion
-
                 this.EstadiaService.Save(this.Estadia);
                 MessageBox.Show("El check-out fue exitoso", "Error", MessageBoxButtons.OK);
+                GoToFacturacion(this.Estadia.Id);
             }
             catch
             {
                 MessageBox.Show("Ocurrio un error", "Error", MessageBoxButtons.OK);
             }
+        }
+
+        private void GoToFacturacion(int estadiaId)
+        {
+            Form form = new Facturacion.Facturacion(estadiaId);
+            DisplayForm(form);
+        }
+
+        private void DisplayForm(Form form)
+        {
+            form.Location = this.Location;
+            form.StartPosition = FormStartPosition.Manual;
+            form.FormClosing += delegate { this.Show(); };
+            form.Show();
+            this.Hide();
         }
     }
 }
