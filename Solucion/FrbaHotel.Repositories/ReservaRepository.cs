@@ -104,7 +104,7 @@ namespace FrbaHotel.Repositories
 
             SqlCommand command = DBConnection.CreateStoredProcedure("GetActiveReservaRegimenesByHotelId");
             command.Parameters.AddWithValue("@hotelId", hotelId);
-            command.Parameters.AddWithValue("@fecha", DateTime.Now);
+            command.Parameters.AddWithValue("@fecha", Session.Fecha);
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
 
             foreach (DataRow regimen in collection)
@@ -154,7 +154,7 @@ namespace FrbaHotel.Repositories
                 int estadoId = usuario.Username == "guest" ? 4 /*Guest*/ : 3 /*Recepcion*/;
                 SqlCommand logCommand = DBConnection.CreateStoredProcedure("InsertReservaLog");
                 logCommand.Parameters.AddWithValue("@reservaCodigo", codigo);
-                logCommand.Parameters.AddWithValue("@fecha", DateTime.Now);
+                logCommand.Parameters.AddWithValue("@fecha", Session.Fecha);
                 logCommand.Parameters.AddWithValue("@usuarioId", usuario.Id);
                 logCommand.Parameters.AddWithValue("@tipoId", 3/*Cancelacion*/);
                 logCommand.Parameters.AddWithValue("@motivo", motivo);
