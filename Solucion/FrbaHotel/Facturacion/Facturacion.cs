@@ -14,15 +14,17 @@ namespace FrbaHotel.Facturacion
     public partial class Facturacion : Form
     {
         private int EstadiaId { get; set; }
+        private int ClienteId { get; set; }
         public Facturacion()
         {
             InitializeComponent();
         }
 
-        public Facturacion(int estadiaId)
+        public Facturacion(int estadiaId, int clienteId)
         {
             InitializeComponent();
             this.EstadiaId = estadiaId;
+            this.ClienteId = clienteId;
         }
 
         private void btnFacturar_Click(object sender, EventArgs e)
@@ -34,13 +36,9 @@ namespace FrbaHotel.Facturacion
             {
                 error += "Seleccione un medio de pago";
             }
-            if (Convert.ToInt32(cmbClientes.SelectedValue) == 0)
-            {
-                error += System.Environment.NewLine + "Seleccione un cliente";
-            }
-
+            
             factura.TipoPagoId = Convert.ToInt32(cmbMedioDePago.SelectedValue);
-            factura.ClienteId = Convert.ToInt32(cmbClientes.SelectedValue);
+            factura.ClienteId = this.ClienteId;
 
             if (factura.TipoPagoId == 2)
             {
@@ -88,8 +86,10 @@ namespace FrbaHotel.Facturacion
 
         private void MostrarFactura(Factura factura)
         {
-            string cliente = ((Cliente)this.cmbClientes.SelectedItem).Nombre + " " + ((Cliente)this.cmbClientes.SelectedItem).Apellido;
-            Form form = new FacturaFinal(factura, cliente);
+            ClienteService clienteService = new ClienteService();
+            Cliente cliente = clienteService.GetById(this.ClienteId);
+            string clienteName = cliente.Nombre + " " + cliente.Apellido;
+            Form form = new FacturaFinal(factura, clienteName);
             DisplayForm(form);
         }
 
@@ -219,16 +219,6 @@ namespace FrbaHotel.Facturacion
             cmbMedioDePago.DisplayMember = "Descripcion";
             cmbMedioDePago.ValueMember = "Id";
             cmbMedioDePago.SelectedValue = 0;
-
-            if (!string.IsNullOrEmpty(txtNroEstadia.Text))
-            {
-                ClienteService clienteService = new ClienteService();
-                List<Cliente> clientes = clienteService.GetByEstadiaId(Convert.ToInt32(this.txtNroEstadia.Text));
-                cmbClientes.DataSource = clientes;
-                cmbClientes.DisplayMember = "Nombre";
-                cmbClientes.ValueMember = "Id";
-                cmbClientes.SelectedValue = 0;
-            }
         }
         private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
         {

@@ -29,13 +29,15 @@ INSERT INTO [Frutillitas].[Factura]
            [fecha]
            ,[total]
            ,[estadiaId]
-           ,[tipoPagoId])
+           ,[tipoPagoId]
+		   ,[clienteId])
      VALUES
            (
            @fecha
            ,@total
            ,@estadiaId
-           ,@tipoPagoId)
+           ,@tipoPagoId
+		   ,@clienteId)
 
 		   set @numero = SCOPE_IDENTITY()
 		   select @numero

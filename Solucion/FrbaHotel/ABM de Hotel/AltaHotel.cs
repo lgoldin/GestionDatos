@@ -44,7 +44,7 @@ namespace FrbaHotel.ABM_de_Hotel
                     hotel.Ciudad = (Ciudad)cmbCiudades.SelectedItem;
                     hotel.Direccion = txtDireccion.Text;
                     hotel.Estrellas = GetEstrellas();
-                    hotel.FechaCreacion = dateTimePicker1.Value;
+                    hotel.FechaCreacion = Session.Fecha;
                     hotel.Mail = txtMail.Text;
                     hotel.Nombre = txtNombre.Text;
                     hotel.Telefono = txtTelefono.Text;

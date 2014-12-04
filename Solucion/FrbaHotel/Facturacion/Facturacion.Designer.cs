@@ -43,8 +43,6 @@
             this.lblFechaVencimiento = new System.Windows.Forms.Label();
             this.txtNumero = new System.Windows.Forms.TextBox();
             this.lblNumero = new System.Windows.Forms.Label();
-            this.lblCliente = new System.Windows.Forms.Label();
-            this.cmbClientes = new System.Windows.Forms.ComboBox();
             this.groupDatosTarjeta.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,7 +77,7 @@
             // btnFacturar
             // 
             this.btnFacturar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFacturar.Location = new System.Drawing.Point(425, 338);
+            this.btnFacturar.Location = new System.Drawing.Point(346, 214);
             this.btnFacturar.Name = "btnFacturar";
             this.btnFacturar.Size = new System.Drawing.Size(103, 41);
             this.btnFacturar.TabIndex = 3;
@@ -91,7 +89,7 @@
             // 
             this.lblMedioDePago.AutoSize = true;
             this.lblMedioDePago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMedioDePago.Location = new System.Drawing.Point(29, 221);
+            this.lblMedioDePago.Location = new System.Drawing.Point(29, 145);
             this.lblMedioDePago.Name = "lblMedioDePago";
             this.lblMedioDePago.Size = new System.Drawing.Size(217, 25);
             this.lblMedioDePago.TabIndex = 5;
@@ -100,7 +98,7 @@
             // cmbMedioDePago
             // 
             this.cmbMedioDePago.FormattingEnabled = true;
-            this.cmbMedioDePago.Location = new System.Drawing.Point(246, 225);
+            this.cmbMedioDePago.Location = new System.Drawing.Point(246, 149);
             this.cmbMedioDePago.Name = "cmbMedioDePago";
             this.cmbMedioDePago.Size = new System.Drawing.Size(203, 24);
             this.cmbMedioDePago.TabIndex = 6;
@@ -134,7 +132,8 @@
             // 
             // txtCodigo
             // 
-            this.txtCodigo.Location = new System.Drawing.Point(100, 80);
+            this.txtCodigo.Location = new System.Drawing.Point(265, 78);
+            this.txtCodigo.MaxLength = 16;
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(157, 27);
             this.txtCodigo.TabIndex = 17;
@@ -145,13 +144,14 @@
             this.lblCodigo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCodigo.Location = new System.Drawing.Point(6, 80);
             this.lblCodigo.Name = "lblCodigo";
-            this.lblCodigo.Size = new System.Drawing.Size(81, 25);
+            this.lblCodigo.Size = new System.Drawing.Size(262, 25);
             this.lblCodigo.TabIndex = 16;
-            this.lblCodigo.Text = "Código:";
+            this.lblCodigo.Text = "Código (Nombre de Tarjeta):";
             // 
             // txtCodigoSeguridad
             // 
             this.txtCodigoSeguridad.Location = new System.Drawing.Point(220, 135);
+            this.txtCodigoSeguridad.MaxLength = 4;
             this.txtCodigoSeguridad.Name = "txtCodigoSeguridad";
             this.txtCodigoSeguridad.Size = new System.Drawing.Size(202, 27);
             this.txtCodigoSeguridad.TabIndex = 15;
@@ -179,6 +179,7 @@
             // txtNumero
             // 
             this.txtNumero.Location = new System.Drawing.Point(100, 27);
+            this.txtNumero.MaxLength = 16;
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(157, 27);
             this.txtNumero.TabIndex = 12;
@@ -193,31 +194,11 @@
             this.lblNumero.TabIndex = 11;
             this.lblNumero.Text = "Número:";
             // 
-            // lblCliente
-            // 
-            this.lblCliente.AutoSize = true;
-            this.lblCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCliente.Location = new System.Drawing.Point(29, 148);
-            this.lblCliente.Name = "lblCliente";
-            this.lblCliente.Size = new System.Drawing.Size(176, 25);
-            this.lblCliente.TabIndex = 8;
-            this.lblCliente.Text = "Seleccione cliente:";
-            // 
-            // cmbClientes
-            // 
-            this.cmbClientes.FormattingEnabled = true;
-            this.cmbClientes.Location = new System.Drawing.Point(246, 152);
-            this.cmbClientes.Name = "cmbClientes";
-            this.cmbClientes.Size = new System.Drawing.Size(203, 24);
-            this.cmbClientes.TabIndex = 9;
-            // 
             // Facturacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(981, 391);
-            this.Controls.Add(this.cmbClientes);
-            this.Controls.Add(this.lblCliente);
             this.Controls.Add(this.groupDatosTarjeta);
             this.Controls.Add(this.cmbMedioDePago);
             this.Controls.Add(this.lblMedioDePago);
@@ -252,7 +233,5 @@
         private System.Windows.Forms.Label lblFechaVencimiento;
         private System.Windows.Forms.TextBox txtNumero;
         private System.Windows.Forms.Label lblNumero;
-        private System.Windows.Forms.Label lblCliente;
-        private System.Windows.Forms.ComboBox cmbClientes;
     }
 }
