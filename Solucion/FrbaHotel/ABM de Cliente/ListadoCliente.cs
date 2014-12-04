@@ -47,7 +47,7 @@ namespace FrbaHotel.ABM_de_Cliente
         private void DisplayForm(Form form)
         {
             form.Location = this.Location;
-            form.StartPosition = FormStartPosition.Manual;
+            form.StartPosition = FormStartPosition.CenterScreen;
             form.FormClosing += delegate { this.Show(); };
             form.Show();
             this.Hide();
@@ -105,7 +105,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     Form form = new ABM_de_Cliente.ModificacionCliente(clienteId);
 
                     form.Location = this.Location;
-                    form.StartPosition = FormStartPosition.Manual;
+                    form.StartPosition = FormStartPosition.CenterScreen;
                     form.FormClosing += delegate { this.Show(); };
                     form.Show();
                     this.Hide();

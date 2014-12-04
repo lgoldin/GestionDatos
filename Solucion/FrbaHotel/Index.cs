@@ -51,7 +51,7 @@ namespace FrbaHotel
         private void DisplayForm(Form form)
         {
             form.Location = this.Location;
-            form.StartPosition = FormStartPosition.Manual;
+            form.StartPosition = FormStartPosition.CenterScreen;
             form.FormClosing += delegate { this.Show(); };
             form.Show();
             this.Hide();
@@ -107,7 +107,7 @@ namespace FrbaHotel
             this.habitacionToolStripMenuItem.Visible = false;
             this.clienteToolStripMenuItem.Visible = false;
             this.consumiblesToolStripMenuItem.Visible = false;
-            this.reservaToolStripMenuItem.Visible = false;
+            //this.reservaToolStripMenuItem.Visible = false;
             this.registrarEstToolStripMenuItem.Visible = false;
 
             List<Funcionalidad> funcionalidades = Session.Usuario.Rol.Funcionalidades;
@@ -139,14 +139,13 @@ namespace FrbaHotel
 
             if (funcionalidades.Any(x => x.Nombre == "Reserva"))
             {
-                this.reservaToolStripMenuItem.Visible = true;
+                //this.reservaToolStripMenuItem.Visible = true;
             }
 
             if (funcionalidades.Any(x => x.Nombre == "Estadia"))
             {
                 this.registrarEstToolStripMenuItem.Visible = true;
             }
-
         }
 
         private void altaToolStripMenuItem_Click_1(object sender, EventArgs e)

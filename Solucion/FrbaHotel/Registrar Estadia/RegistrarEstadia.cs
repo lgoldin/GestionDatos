@@ -35,6 +35,8 @@ namespace FrbaHotel.Registrar_Estadia
         {
             try
             {
+                this.btnReserva.Visible = false;
+
                 this.ValidateForm();
 
                 this.Reserva = this.ReservaService.GetReservaByCodigo(Convert.ToInt32(txtCodigoReserva.Text));
@@ -61,11 +63,11 @@ namespace FrbaHotel.Registrar_Estadia
                             {
                                 this.CancelReservas(this.Reserva);
                                 MessageBox.Show("Ha llegado tarde a relizar el check-in. Tanto la reserva actual como las futuras han sido canceladas", "Error", MessageBoxButtons.OK);
-                                this.Close();
+                                this.btnReserva.Visible = true;
                             }
                             else
                             {
-                                MessageBox.Show("La reserva tiene fecha posterior a la actual. Vuelva cuando sea valida", "Error", MessageBoxButtons.OK);
+                                MessageBox.Show("La reserva tiene fecha posterior a la actual. Vuelva cuando corresponda", "Error", MessageBoxButtons.OK);
                             }
                         }
                     }
@@ -75,6 +77,10 @@ namespace FrbaHotel.Registrar_Estadia
                         {
                             this.btnCheckIn.Visible = false;
                             this.btnCheckOut.Visible = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Esta reserva ya fue utilizada", "OK", MessageBoxButtons.OK);
                         }
                     }
                 }
@@ -95,6 +101,12 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void CancelReservas(Reserva reserva)
         {
+            var codigos = new List<int> { reserva.Codigo };
+
+            IEnumerable<Reserva> reservasPosteriores = this.ReservaService.GetReservasPosteriores(reserva);
+            reservasPosteriores.ToList().ForEach(x => codigos.Add(x.Codigo));
+
+            this.ReservaService.Cancelar(codigos, "No show", Session.Usuario, true);
         }
 
         private void ValidateForm()
@@ -157,10 +169,19 @@ namespace FrbaHotel.Registrar_Estadia
         private void DisplayForm(Form form)
         {
             form.Location = this.Location;
-            form.StartPosition = FormStartPosition.Manual;
+            form.StartPosition = FormStartPosition.CenterScreen;
             form.FormClosing += delegate { this.Show(); };
             form.Show();
             this.Hide();
+        }
+
+        private void btnReserva_Click(object sender, EventArgs e)
+        {
+            var form = new ABM_de_Reserva.AltaReserva(null);
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.Show();
+            form.BringToFront();
+            this.Close();
         }
     }
 }

@@ -37,6 +37,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblFechaHasta = new System.Windows.Forms.Label();
+            this.btnReserva = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnBuscar
@@ -127,11 +128,23 @@
             this.lblFechaHasta.Text = "fechahasta";
             this.lblFechaHasta.Visible = false;
             // 
+            // btnReserva
+            // 
+            this.btnReserva.Location = new System.Drawing.Point(67, 362);
+            this.btnReserva.Name = "btnReserva";
+            this.btnReserva.Size = new System.Drawing.Size(336, 58);
+            this.btnReserva.TabIndex = 12;
+            this.btnReserva.Text = "Relizar nueva reserva";
+            this.btnReserva.UseVisualStyleBackColor = true;
+            this.btnReserva.Visible = false;
+            this.btnReserva.Click += new System.EventHandler(this.btnReserva_Click);
+            // 
             // RegistrarEstadia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 380);
+            this.ClientSize = new System.Drawing.Size(477, 433);
+            this.Controls.Add(this.btnReserva);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblFechaHasta);
             this.Controls.Add(this.label2);
@@ -159,5 +172,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblFechaHasta;
+        private System.Windows.Forms.Button btnReserva;
     }
 }

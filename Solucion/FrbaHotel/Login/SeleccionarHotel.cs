@@ -53,7 +53,7 @@ namespace FrbaHotel.Login
         private void DisplayForm(Form form)
         {
             form.Location = this.Location;
-            form.StartPosition = FormStartPosition.Manual;
+            form.StartPosition = FormStartPosition.CenterScreen;
             form.FormClosing += delegate { this.Show(); };
             form.Show();
             this.Hide();

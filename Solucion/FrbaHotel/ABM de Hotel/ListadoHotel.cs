@@ -113,7 +113,7 @@ namespace FrbaHotel.ABM_de_Hotel
                 }
 
                 form.Location = this.Location;
-                form.StartPosition = FormStartPosition.Manual;
+                form.StartPosition = FormStartPosition.CenterScreen;
                 form.FormClosing += delegate { this.Show(); };
                 form.Show();
                 this.Hide();
@@ -133,7 +133,7 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             var form = new ABM_de_Hotel.AltaHotel();
             form.Location = this.Location;
-            form.StartPosition = FormStartPosition.Manual;
+            form.StartPosition = FormStartPosition.CenterScreen;
             form.FormClosing += delegate { this.Show(); };
             form.Show();
             this.Hide();
