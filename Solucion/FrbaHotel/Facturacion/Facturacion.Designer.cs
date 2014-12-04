@@ -132,7 +132,8 @@
             // 
             // txtCodigo
             // 
-            this.txtCodigo.Location = new System.Drawing.Point(100, 80);
+            this.txtCodigo.Location = new System.Drawing.Point(265, 78);
+            this.txtCodigo.MaxLength = 16;
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(157, 27);
             this.txtCodigo.TabIndex = 17;
@@ -143,13 +144,14 @@
             this.lblCodigo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCodigo.Location = new System.Drawing.Point(6, 80);
             this.lblCodigo.Name = "lblCodigo";
-            this.lblCodigo.Size = new System.Drawing.Size(81, 25);
+            this.lblCodigo.Size = new System.Drawing.Size(262, 25);
             this.lblCodigo.TabIndex = 16;
-            this.lblCodigo.Text = "Código:";
+            this.lblCodigo.Text = "Código (Nombre de Tarjeta):";
             // 
             // txtCodigoSeguridad
             // 
             this.txtCodigoSeguridad.Location = new System.Drawing.Point(220, 135);
+            this.txtCodigoSeguridad.MaxLength = 4;
             this.txtCodigoSeguridad.Name = "txtCodigoSeguridad";
             this.txtCodigoSeguridad.Size = new System.Drawing.Size(202, 27);
             this.txtCodigoSeguridad.TabIndex = 15;
@@ -177,6 +179,7 @@
             // txtNumero
             // 
             this.txtNumero.Location = new System.Drawing.Point(100, 27);
+            this.txtNumero.MaxLength = 16;
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(157, 27);
             this.txtNumero.TabIndex = 12;
