@@ -46,11 +46,11 @@ namespace FrbaHotel.ABM_de_Reserva
             cmbHotel.DisplayMember = "Nombre";
             cmbHotel.SelectedValue = Reserva == null ? 0 : Reserva.HotelId;
 
-            dateFechaDesde.MinDate = DateTime.Now.AddDays(1);
-            dateFechaDesde.Value = Reserva == null ? DateTime.Now.AddDays(1) : Reserva.FechaDesde;
+            dateFechaDesde.MinDate = Session.Fecha.AddDays(1);
+            dateFechaDesde.Value = Reserva == null ? Session.Fecha.AddDays(1) : Reserva.FechaDesde;
 
-            dateFechaHasta.MinDate = DateTime.Now.AddDays(1);
-            dateFechaHasta.Value = Reserva == null ? DateTime.Now.AddDays(2) : Reserva.FechaHasta;
+            dateFechaHasta.MinDate = Session.Fecha.AddDays(1);
+            dateFechaHasta.Value = Reserva == null ? Session.Fecha.AddDays(2) : Reserva.FechaHasta;
 
             cmbTipoHabitacion.DataSource = this.TipoHabitacionService.GetAll();
             cmbTipoHabitacion.ValueMember = "Codigo";
@@ -111,7 +111,7 @@ namespace FrbaHotel.ABM_de_Reserva
                         reserva.FechaDesde = fechaDesde;
                         reserva.FechaHasta = fechaHasta;
                         reserva.RegimenCodigo = (int)cmbRegimen.SelectedValue;
-                        reserva.FechaCreacion = DateTime.Now;
+                        reserva.FechaCreacion = Session.Fecha;
                         reserva.TipoHabitacionCodigo = tipoHabitacionCodigo;
                         // TODO: Ver como obtener
                         reserva.EstadoId = 1;

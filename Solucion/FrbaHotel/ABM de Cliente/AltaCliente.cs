@@ -32,6 +32,9 @@ namespace FrbaHotel.ABM_de_Cliente
             cmbTipoDocumento.DataSource = documentos;
             cmbTipoDocumento.DisplayMember = "Nombre";
             cmbTipoDocumento.ValueMember = "Id";
+
+            dateNacimiento.MaxDate = Session.Fecha;
+            dateNacimiento.Value = Session.Fecha;
         }
 
         private void btnAlta_Click(object sender, EventArgs e)

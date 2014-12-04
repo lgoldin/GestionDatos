@@ -50,6 +50,9 @@ namespace FrbaHotel.ABM_de_Cliente
             cmbNacionalidad.SelectedValue = cliente.Nacionalidad;
             cmbTipoDocumento.SelectedValue = cliente.TipoDeDocumento.Id;
             chbHabilitado.Checked = cliente.Habilitado;
+
+            dateNacimiento.MaxDate = Session.Fecha;
+            dateNacimiento.Value = Session.Fecha;
         }
 
         private void btnModificacion_Click(object sender, EventArgs e)

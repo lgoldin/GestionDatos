@@ -31,8 +31,8 @@ namespace FrbaHotel.ABM_de_Hotel
         private void BajaHotel_Load(object sender, EventArgs e)
         {
             lblNombre.Text = this.hotelName;
-            dateDesde.MinDate = DateTime.Now;
-            dateHasta.MinDate = DateTime.Now;
+            dateDesde.MinDate = Session.Fecha;
+            dateHasta.MinDate = Session.Fecha;
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
@@ -43,7 +43,7 @@ namespace FrbaHotel.ABM_de_Hotel
                 try
                 {
                     HotelInhabilitacion hotelInhabilitado = new HotelInhabilitacion();
-                    hotelInhabilitado.FechaCreacion = DateTime.Now;
+                    hotelInhabilitado.FechaCreacion = Session.Fecha;
                     hotelInhabilitado.FechaInicio = dateDesde.Value;
                     hotelInhabilitado.FechaFin = dateHasta.Value;
                     hotelInhabilitado.Descripcion = txtDescripcion.Text;

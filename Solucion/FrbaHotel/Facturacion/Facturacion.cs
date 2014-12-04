@@ -55,7 +55,7 @@ namespace FrbaHotel.Facturacion
                 try
                 {
                     factura.EstadiaId = Convert.ToInt32(txtNroEstadia.Text);
-                    factura.Fecha = DateTime.Now;
+                    factura.Fecha = Session.Fecha;
                     factura.Items = new List<FacturaItem>();
                     EstadiaService estadiaService = new EstadiaService();
                     Estadia estadia = estadiaService.GetById(Convert.ToInt32(txtNroEstadia.Text));
