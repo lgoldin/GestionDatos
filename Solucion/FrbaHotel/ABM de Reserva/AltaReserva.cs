@@ -63,81 +63,112 @@ namespace FrbaHotel.ABM_de_Reserva
             cmbRegimen.SelectedValue = Reserva == null ? 0 : Reserva.RegimenCodigo;
         }
 
+        private bool esValidoSinRegimen()
+        {
+            if ((int)cmbHotel.SelectedValue == 0)
+            {
+                MessageBox.Show("Debe especificar un hotel");
+                return false;
+            }
+            if ((int)cmbTipoHabitacion.SelectedValue == 0)
+            {
+                MessageBox.Show("Debe especificar un tipo de habitación");
+                return false;
+            }
+            return true;
+        }
+
+        private bool esValido()
+        {
+            if (cmbRegimen.SelectedValue == null)
+            {
+                MessageBox.Show("Debe especificar un regimen");
+                return false;
+            }
+            return esValidoSinRegimen();
+        }
+
         private void btnDisponibilidad_Click(object sender, EventArgs e)
         {
-            int hotelId = (int) cmbHotel.SelectedValue;
-            DateTime fechaDesde = dateFechaDesde.Value;
-            DateTime fechaHasta = dateFechaHasta.Value;
-            int tipoHabitacionCodigo = (int) cmbTipoHabitacion.SelectedValue;
+            if (esValidoSinRegimen())
+            {
+                int hotelId = (int)cmbHotel.SelectedValue;
+                DateTime fechaDesde = dateFechaDesde.Value;
+                DateTime fechaHasta = dateFechaHasta.Value;
+                int tipoHabitacionCodigo = (int)cmbTipoHabitacion.SelectedValue;
 
-            if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo))
-            {
-                MessageBox.Show("No hay disponibilidad para los parametros solicitados");
-            }
-            else
-            {
-                MessageBox.Show("El precio es de " + GenerarPrecio() + " USD");
+                if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo))
+                {
+                    MessageBox.Show("No hay disponibilidad para los parametros solicitados");
+                }
+                else
+                {
+                    MessageBox.Show("El precio es de " + GenerarPrecio() + " USD");
+                }
             }
         }
 
         private void btnReservar_Click(object sender, EventArgs e)
         {
-            int hotelId = (int)cmbHotel.SelectedValue;
-            DateTime fechaDesde = dateFechaDesde.Value;
-            DateTime fechaHasta = dateFechaHasta.Value;
-            int tipoHabitacionCodigo = (int)cmbTipoHabitacion.SelectedValue;            
+            if (esValido())
+            {
+                int hotelId = (int)cmbHotel.SelectedValue;
+                DateTime fechaDesde = dateFechaDesde.Value;
+                DateTime fechaHasta = dateFechaHasta.Value;
+                int tipoHabitacionCodigo = (int)cmbTipoHabitacion.SelectedValue;
 
-            if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo))
-            {
-                MessageBox.Show("No hay disponibilidad para los parametros solicitados");
-            }
-            else
-            {
-                if (Reserva == null)
+                if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo))
                 {
-                    ListadoCliente form = new ListadoCliente(false);
-                    form.ShowDialog();
-                    int clienteId = form.ClienteId;
-
-                    if (clienteId == 0)
+                    MessageBox.Show("No hay disponibilidad para los parametros solicitados");
+                }
+                else
+                {
+                    if (Reserva == null)
                     {
-                        MessageBox.Show("Tiene que seleccionar un cliente");
+                        ListadoCliente form = new ListadoCliente(false);
+                        form.ShowDialog();
+                        int clienteId = form.ClienteId;
+
+                        if (clienteId == 0)
+                        {
+                            MessageBox.Show("Tiene que seleccionar un cliente");
+                        }
+                        else
+                        {
+                            Reserva reserva = new Reserva();
+                            reserva.ClienteId = clienteId;
+                            reserva.HotelId = hotelId;
+                            reserva.FechaDesde = fechaDesde;
+                            reserva.FechaHasta = fechaHasta;
+                            reserva.RegimenCodigo = (int)cmbRegimen.SelectedValue;
+                            reserva.FechaCreacion = Session.Fecha;
+                            reserva.TipoHabitacionCodigo = tipoHabitacionCodigo;
+                            // TODO: Ver como obtener
+                            reserva.EstadoId = 1;
+
+                            int codigo = ReservaService.Insert(reserva);
+                            MessageBox.Show("Su codigo de reserva es '" + codigo + "'.");
+                        }
                     }
                     else
                     {
                         Reserva reserva = new Reserva();
-                        reserva.ClienteId = clienteId;
+                        reserva.Codigo = Reserva.Codigo;
+                        reserva.ClienteId = Reserva.ClienteId;
                         reserva.HotelId = hotelId;
                         reserva.FechaDesde = fechaDesde;
                         reserva.FechaHasta = fechaHasta;
                         reserva.RegimenCodigo = (int)cmbRegimen.SelectedValue;
-                        reserva.FechaCreacion = Session.Fecha;
+                        reserva.FechaCreacion = Reserva.FechaCreacion;
                         reserva.TipoHabitacionCodigo = tipoHabitacionCodigo;
                         // TODO: Ver como obtener
-                        reserva.EstadoId = 1;
+                        reserva.EstadoId = 2;
 
-                        int codigo = ReservaService.Insert(reserva);
-                        MessageBox.Show("Su codigo de reserva es '" + codigo + "'.");
+                        ReservaService.Update(reserva);
+                        MessageBox.Show("Su reserva ha sido modificada.");
                     }
+                    this.Close();
                 }
-                else
-                {
-                    Reserva reserva = new Reserva();
-                    reserva.Codigo = Reserva.Codigo;
-                    reserva.ClienteId = Reserva.ClienteId;
-                    reserva.HotelId = hotelId;
-                    reserva.FechaDesde = fechaDesde;
-                    reserva.FechaHasta = fechaHasta;
-                    reserva.RegimenCodigo = (int)cmbRegimen.SelectedValue;
-                    reserva.FechaCreacion = Reserva.FechaCreacion;
-                    reserva.TipoHabitacionCodigo = tipoHabitacionCodigo;
-                    // TODO: Ver como obtener
-                    reserva.EstadoId = 2;
-
-                    ReservaService.Update(reserva);
-                    MessageBox.Show("Su reserva ha sido modificada.");
-                }
-                this.Close();
             }
         }
 

@@ -809,6 +809,8 @@ INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('EstadiaConsumible')
 GO
 INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Factura')
 GO
+INSERT INTO [Frutillitas].[Funcionalidad]([nombre]) VALUES ('Listado')
+GO
 
 INSERT INTO [Frutillitas].[Rol]([nombre], [activo]) VALUES ('Administrador', 1)
 GO
@@ -960,7 +962,7 @@ SELECT DISTINCT [Reserva_Codigo], [Reserva_Fecha_Inicio], DATEADD(day, [Reserva_
 	(SELECT [id] FROM [Frutillitas].[Hotel] WHERE [direccion] = [Hotel_Calle] + ' ' + CAST([Hotel_Nro_Calle] as nvarchar(255))),	
     (SELECT [id] FROM [Frutillitas].[ReservaEstado] WHERE [descripcion] = 'Correcta'),
     c.[id],
-	GETDATE()
+	DATEADD(day, -1, [Reserva_Fecha_Inicio])
 FROM [GD2C2014].[gd_esquema].[Maestra]
 INNER JOIN [Frutillitas].[Cliente] c ON [numeroDocumento] = [Cliente_Pasaporte_Nro] AND [nombre] = [Cliente_Nombre] AND [apellido] = [Cliente_Apellido]
 GO

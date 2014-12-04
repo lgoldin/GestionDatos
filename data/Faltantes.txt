@@ -4,3 +4,4 @@
 - Frente S/N.
 - Muchos tipo de habitacion en reserva.
 - Cuando modifica una reserva no tener en cuenta la reserva actual para la disponibilidad.
+- Ver que no se pueda cancelar dos veces la misma reserva.
