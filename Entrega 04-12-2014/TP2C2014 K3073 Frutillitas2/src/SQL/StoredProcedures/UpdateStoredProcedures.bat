@@ -1,0 +1,1 @@
+for %%G in (*.sql) do sqlcmd -S localhost\localsql2008 -U gd -P gd2014 -i "%%G"
