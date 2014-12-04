@@ -14,7 +14,7 @@ CREATE PROCEDURE [Frutillitas].[GetReservaByCodigo]
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SELECT res.[codigo], res.[fechaDesde], res.[fechaHasta], res.[regimenCodigo], res.[hotelId]
+	SELECT res.[codigo], res.[fechaDesde], res.[fechaHasta], res.[regimenCodigo], res.[hotelId], res.[clienteId]
 	FROM [Frutillitas].[Reserva] res
 	WHERE 
 		res.[codigo] = @codigo AND 

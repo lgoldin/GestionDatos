@@ -27,7 +27,7 @@ namespace FrbaHotel.Repositories
             if (collection.Count > 0)
             {
                 DataRow reader = collection[0];
-                reserva = new Reserva() { Codigo = Convert.ToInt32(reader["codigo"]), FechaDesde = Convert.ToDateTime(reader["fechaDesde"]), FechaHasta = Convert.ToDateTime(reader["fechaHasta"]), RegimenCodigo = Convert.ToInt32(reader["regimenCodigo"]), HotelId = Convert.ToInt32(reader["hotelId"]) };
+                reserva = new Reserva() { Codigo = Convert.ToInt32(reader["codigo"]), FechaDesde = Convert.ToDateTime(reader["fechaDesde"]), FechaHasta = Convert.ToDateTime(reader["fechaHasta"]), RegimenCodigo = Convert.ToInt32(reader["regimenCodigo"]), HotelId = Convert.ToInt32(reader["hotelId"]), ClienteId = Convert.ToInt32(reader["clienteId"]) };
             }
 
             if (reserva != null)
