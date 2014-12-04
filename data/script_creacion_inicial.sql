@@ -94,6 +94,9 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Factura_TipoPago]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Factura]'))
 ALTER TABLE [Frutillitas].[Factura] DROP CONSTRAINT [FK_Factura_TipoPago]
 GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_Factura_Cliente]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[Factura]'))
+ALTER TABLE [Frutillitas].[Factura] DROP CONSTRAINT [FK_Factura_Cliente]
+GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[Frutillitas].[FK_FacturaItem_Factura]') AND parent_object_id = OBJECT_ID(N'[Frutillitas].[FacturaItem]'))
 ALTER TABLE [Frutillitas].[FacturaItem] DROP CONSTRAINT [FK_FacturaItem_Factura]
 GO
@@ -563,6 +566,7 @@ CREATE TABLE [Frutillitas].[Factura](
 	[fecha] [datetime] NULL,
 	[total] [numeric](18, 2) NULL,
 	[estadiaId] [int] NULL,
+	[clienteId] [int] NULL,
 	[tipoPagoId] [int] NULL
 ) ON [PRIMARY]
 END
@@ -608,19 +612,6 @@ CREATE TABLE [Frutillitas].[TarjetaDeCredito](
 ) ON [PRIMARY]
 END
 GO
-/*SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[EstadiaDetalle]') AND type in (N'U'))
-BEGIN
-CREATE TABLE [Frutillitas].[EstadiaDetalle](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[fecha] [datetime] NULL,
-	[usuarioId] [int] NULL
-) ON [PRIMARY]
-END
-GO*/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -765,6 +756,8 @@ GO
 ALTER TABLE [Frutillitas].[Factura] ADD CONSTRAINT FK_Factura_Estadia FOREIGN KEY (estadiaId) REFERENCES [Frutillitas].[Estadia](id)
 GO
 ALTER TABLE [Frutillitas].[Factura] ADD CONSTRAINT FK_Factura_TipoPago FOREIGN KEY (tipoPagoId) REFERENCES [Frutillitas].[FacturaTipoPago](id)
+GO
+ALTER TABLE [Frutillitas].[Factura] ADD CONSTRAINT FK_Factura_Cliente FOREIGN KEY (clienteId) REFERENCES [Frutillitas].[Cliente](id)
 GO
 ALTER TABLE [Frutillitas].[FacturaItem] ADD CONSTRAINT FK_FacturaItem_Factura FOREIGN KEY (facturaNumero) REFERENCES [Frutillitas].[Factura](numero)
 GO
@@ -1005,10 +998,11 @@ GO
 
 SET IDENTITY_INSERT [Frutillitas].[Factura] ON
 GO
-INSERT INTO [Frutillitas].[Factura]([numero], [fecha], [total], [estadiaId], [tipoPagoId])
-SELECT DISTINCT [Factura_Nro], [Factura_Fecha], [Factura_Total] + ([Item_Factura_Monto] * [Estadia_Cant_Noches]), [id], (SELECT [id] FROM [Frutillitas].[FacturaTipoPago] WHERE [descripcion] = 'Efectivo')
-FROM [Frutillitas].[Estadia]
-INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON [reservaCodigo] = [Reserva_Codigo]
+INSERT INTO [Frutillitas].[Factura]([numero], [fecha], [total], [estadiaId], [tipoPagoId], [clienteId])
+SELECT DISTINCT [Factura_Nro], [Factura_Fecha], [Factura_Total] + ([Item_Factura_Monto] * [Estadia_Cant_Noches]), e.[id], (SELECT [id] FROM [Frutillitas].[FacturaTipoPago] WHERE [descripcion] = 'Efectivo'), r.[clienteId]
+FROM [Frutillitas].[Estadia] e
+INNER JOIN [Frutillitas].[Reserva] r ON r.[codigo] = e.[reservaCodigo]
+INNER JOIN [GD2C2014].[gd_esquema].[Maestra] ON e.[reservaCodigo] = [Reserva_Codigo]
 WHERE [Factura_Nro] IS NOT NULL AND [Consumible_Precio] IS NULL AND [Item_Factura_Monto] IS NOT NULL
 GO
 SET IDENTITY_INSERT [Frutillitas].[Factura] OFF
