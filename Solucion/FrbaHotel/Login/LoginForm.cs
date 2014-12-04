@@ -49,7 +49,7 @@ namespace FrbaHotel.Login
         private void DisplayForm(Form form)
         {
             form.Location = this.Location;
-            form.StartPosition = FormStartPosition.Manual;
+            form.StartPosition = FormStartPosition.CenterScreen;
             form.FormClosing += delegate { this.Show(); };
             form.Show();
             this.Hide();
@@ -63,8 +63,7 @@ namespace FrbaHotel.Login
 
             Session.Usuario = usuario;
             
-            var form = new Index();
-            this.DisplayForm(form);
+            this.DisplayForm(new Index());
         }
     }
 }

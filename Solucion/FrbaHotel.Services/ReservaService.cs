@@ -11,7 +11,6 @@ namespace FrbaHotel.Services
 {
     public class ReservaService : IReservaService
     {
-
         #region IReservaService Members
 
         public int Insert(Reserva reserva)
@@ -26,7 +25,6 @@ namespace FrbaHotel.Services
             List<Regimen> regimenes = repository.GetActiveReservaRegimenesByHotelId(hotelId);
             return regimenes;
         }
-
 
         public int GetCountActiveReservaBetweenDatesByHotelId(int hotelId, DateTime fechaDesde, DateTime fechaHasta)
         {
@@ -53,10 +51,16 @@ namespace FrbaHotel.Services
             repository.Update(reserva);
         }
 
-        public void Cancelar(int codigo, string motivo, Usuario usuario)
+        public void Cancelar(IEnumerable<int> codigos, string motivo, Usuario usuario, bool noShow)
         {
             ReservaRepository repository = new ReservaRepository();
-            repository.Cancelar(codigo, motivo, usuario);
+            repository.Cancelar(codigos, motivo, usuario, noShow);
+        }
+
+        public IEnumerable<Reserva> GetReservasPosteriores(Reserva reserva)
+        {
+            var repository = new ReservaRepository();
+            return repository.GetPosteriores(reserva);
         }
 
         #endregion

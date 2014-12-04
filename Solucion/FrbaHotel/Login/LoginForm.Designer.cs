@@ -101,6 +101,7 @@
             this.Controls.Add(this.TextBoxPassword);
             this.Controls.Add(this.TextBoxUsername);
             this.Name = "LoginForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ingreso";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -9,12 +9,15 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [Frutillitas].[GetReservaByCodigo]
-@codigo [numeric](18, 0)
+@codigo [numeric](18, 0),
+@hotelId int = null
 AS
 BEGIN
 	SET NOCOUNT ON;
 	SELECT res.[codigo], res.[fechaDesde], res.[fechaHasta], res.[regimenCodigo], res.[hotelId]
 	FROM [Frutillitas].[Reserva] res
-	WHERE res.[codigo] = @codigo
+	WHERE 
+		res.[codigo] = @codigo AND 
+		(@hotelId IS NULL OR res.hotelId = @hotelId)
 END
 GO

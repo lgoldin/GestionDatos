@@ -40,7 +40,7 @@ namespace FrbaHotel.ABM_de_Reserva
                 MessageBox.Show("Debe poner un motivo.");
             else
             {
-                ReservaService.Cancelar(reserva.Codigo, motivo, Session.Usuario);
+                ReservaService.Cancelar(new List<int> { reserva.Codigo }, motivo, Session.Usuario, false);
                 MessageBox.Show("La reserva '" + reserva.Codigo + "' ha sido cancelada correctamente.");
             }
         }

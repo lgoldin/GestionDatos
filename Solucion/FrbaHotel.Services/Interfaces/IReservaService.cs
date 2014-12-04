@@ -21,6 +21,8 @@ namespace FrbaHotel.Services.Interfaces
 
         bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo);
 
-        void Cancelar(int codigo, string motivo, Usuario usuario);
+        void Cancelar(IEnumerable<int> codigos, string motivo, Usuario usuario, bool noShow);
+
+        IEnumerable<Reserva> GetReservasPosteriores(Reserva reserva);
     }
 }
