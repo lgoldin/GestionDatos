@@ -47,11 +47,9 @@
             this.lblCiudad = new System.Windows.Forms.Label();
             this.lblPais = new System.Windows.Forms.Label();
             this.lblRegimenes = new System.Windows.Forms.Label();
-            this.lblFechaCreacion = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnCrear = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.estrellas.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +57,7 @@
             // 
             this.chListRegimenes.FormattingEnabled = true;
             this.chListRegimenes.Location = new System.Drawing.Point(183, 341);
-            this.chListRegimenes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chListRegimenes.Margin = new System.Windows.Forms.Padding(4);
             this.chListRegimenes.Name = "chListRegimenes";
             this.chListRegimenes.Size = new System.Drawing.Size(249, 106);
             this.chListRegimenes.TabIndex = 42;
@@ -68,7 +66,7 @@
             // 
             this.cmbPaises.FormattingEnabled = true;
             this.cmbPaises.Location = new System.Drawing.Point(181, 245);
-            this.cmbPaises.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbPaises.Margin = new System.Windows.Forms.Padding(4);
             this.cmbPaises.Name = "cmbPaises";
             this.cmbPaises.Size = new System.Drawing.Size(251, 24);
             this.cmbPaises.TabIndex = 41;
@@ -78,7 +76,7 @@
             // 
             this.cmbCiudades.FormattingEnabled = true;
             this.cmbCiudades.Location = new System.Drawing.Point(181, 295);
-            this.cmbCiudades.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbCiudades.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCiudades.Name = "cmbCiudades";
             this.cmbCiudades.Size = new System.Drawing.Size(251, 24);
             this.cmbCiudades.TabIndex = 40;
@@ -93,9 +91,9 @@
             this.estrellas.Controls.Add(this.rb3);
             this.estrellas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.estrellas.Location = new System.Drawing.Point(51, 153);
-            this.estrellas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.estrellas.Margin = new System.Windows.Forms.Padding(4);
             this.estrellas.Name = "estrellas";
-            this.estrellas.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.estrellas.Padding = new System.Windows.Forms.Padding(4);
             this.estrellas.Size = new System.Drawing.Size(383, 65);
             this.estrellas.TabIndex = 39;
             this.estrellas.TabStop = false;
@@ -105,7 +103,7 @@
             // 
             this.rb1.AutoSize = true;
             this.rb1.Location = new System.Drawing.Point(15, 28);
-            this.rb1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rb1.Margin = new System.Windows.Forms.Padding(4);
             this.rb1.Name = "rb1";
             this.rb1.Size = new System.Drawing.Size(41, 29);
             this.rb1.TabIndex = 18;
@@ -117,7 +115,7 @@
             // 
             this.rb5.AutoSize = true;
             this.rb5.Location = new System.Drawing.Point(291, 28);
-            this.rb5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rb5.Margin = new System.Windows.Forms.Padding(4);
             this.rb5.Name = "rb5";
             this.rb5.Size = new System.Drawing.Size(41, 29);
             this.rb5.TabIndex = 14;
@@ -129,7 +127,7 @@
             // 
             this.rb4.AutoSize = true;
             this.rb4.Location = new System.Drawing.Point(223, 28);
-            this.rb4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rb4.Margin = new System.Windows.Forms.Padding(4);
             this.rb4.Name = "rb4";
             this.rb4.Size = new System.Drawing.Size(41, 29);
             this.rb4.TabIndex = 16;
@@ -141,7 +139,7 @@
             // 
             this.rb2.AutoSize = true;
             this.rb2.Location = new System.Drawing.Point(84, 28);
-            this.rb2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rb2.Margin = new System.Windows.Forms.Padding(4);
             this.rb2.Name = "rb2";
             this.rb2.Size = new System.Drawing.Size(41, 29);
             this.rb2.TabIndex = 17;
@@ -153,7 +151,7 @@
             // 
             this.rb3.AutoSize = true;
             this.rb3.Location = new System.Drawing.Point(155, 28);
-            this.rb3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rb3.Margin = new System.Windows.Forms.Padding(4);
             this.rb3.Name = "rb3";
             this.rb3.Size = new System.Drawing.Size(41, 29);
             this.rb3.TabIndex = 15;
@@ -164,7 +162,7 @@
             // txtMail
             // 
             this.txtMail.Location = new System.Drawing.Point(181, 115);
-            this.txtMail.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtMail.Margin = new System.Windows.Forms.Padding(4);
             this.txtMail.Name = "txtMail";
             this.txtMail.Size = new System.Drawing.Size(251, 22);
             this.txtMail.TabIndex = 38;
@@ -172,7 +170,7 @@
             // txtTelefono
             // 
             this.txtTelefono.Location = new System.Drawing.Point(183, 487);
-            this.txtTelefono.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTelefono.Margin = new System.Windows.Forms.Padding(4);
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(249, 22);
             this.txtTelefono.TabIndex = 37;
@@ -180,7 +178,7 @@
             // txtDireccion
             // 
             this.txtDireccion.Location = new System.Drawing.Point(183, 526);
-            this.txtDireccion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDireccion.Margin = new System.Windows.Forms.Padding(4);
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.Size = new System.Drawing.Size(249, 22);
             this.txtDireccion.TabIndex = 36;
@@ -188,7 +186,7 @@
             // txtNombre
             // 
             this.txtNombre.Location = new System.Drawing.Point(181, 65);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(4);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(251, 22);
             this.txtNombre.TabIndex = 35;
@@ -261,18 +259,6 @@
             this.lblRegimenes.TabIndex = 28;
             this.lblRegimenes.Text = "Regimenes:";
             // 
-            // lblFechaCreacion
-            // 
-            this.lblFechaCreacion.AutoSize = true;
-            this.lblFechaCreacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFechaCreacion.Location = new System.Drawing.Point(45, 587);
-            this.lblFechaCreacion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblFechaCreacion.Name = "lblFechaCreacion";
-            this.lblFechaCreacion.Size = new System.Drawing.Size(184, 25);
-            this.lblFechaCreacion.TabIndex = 27;
-            this.lblFechaCreacion.Text = "Fecha de Creacion:";
-            this.lblFechaCreacion.Click += new System.EventHandler(this.lblFechaCreacion_Click);
-            // 
             // lblNombre
             // 
             this.lblNombre.AutoSize = true;
@@ -298,8 +284,8 @@
             // btnCrear
             // 
             this.btnCrear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCrear.Location = new System.Drawing.Point(51, 653);
-            this.btnCrear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCrear.Location = new System.Drawing.Point(50, 608);
+            this.btnCrear.Margin = new System.Windows.Forms.Padding(4);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(156, 37);
             this.btnCrear.TabIndex = 45;
@@ -307,21 +293,11 @@
             this.btnCrear.UseVisualStyleBackColor = true;
             this.btnCrear.Click += new System.EventHandler(this.button1_Click);
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(251, 587);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(265, 22);
-            this.dateTimePicker1.TabIndex = 46;
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
-            // 
             // AltaHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 748);
-            this.Controls.Add(this.dateTimePicker1);
+            this.ClientSize = new System.Drawing.Size(853, 667);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.chListRegimenes);
             this.Controls.Add(this.cmbPaises);
@@ -337,10 +313,9 @@
             this.Controls.Add(this.lblCiudad);
             this.Controls.Add(this.lblPais);
             this.Controls.Add(this.lblRegimenes);
-            this.Controls.Add(this.lblFechaCreacion);
             this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AltaHotel";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.AltaHotel_Load);
@@ -372,10 +347,8 @@
         private System.Windows.Forms.Label lblCiudad;
         private System.Windows.Forms.Label lblPais;
         private System.Windows.Forms.Label lblRegimenes;
-        private System.Windows.Forms.Label lblFechaCreacion;
         private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnCrear;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }
