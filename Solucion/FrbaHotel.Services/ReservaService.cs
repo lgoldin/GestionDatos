@@ -53,6 +53,12 @@ namespace FrbaHotel.Services
             repository.Update(reserva);
         }
 
+        public void Cancelar(int codigo, string motivo, Usuario usuario)
+        {
+            ReservaRepository repository = new ReservaRepository();
+            repository.Cancelar(codigo, motivo, usuario);
+        }
+
         #endregion
     }
 }

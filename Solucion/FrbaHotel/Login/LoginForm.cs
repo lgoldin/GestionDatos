@@ -57,13 +57,7 @@ namespace FrbaHotel.Login
 
         private void btnGuest_Click(object sender, EventArgs e)
         {
-            var usuario = new Usuario
-                              {
-                                  Rol = this.RolService.GetAll().FirstOrDefault(x => x.Nombre == "Guest"),
-                                  Nombre = "Guest",
-                                  Username = "Guest",
-                                  Apellido = "Guest"
-                              };
+            var usuario = this.LoginService.Login("guest", "guest");
 
             usuario.Rol.Funcionalidades = this.FuncionalidadService.GetByRolId(usuario.Rol.Id);
 
