@@ -41,7 +41,10 @@ namespace FrbaHotel.ABM_de_Cliente
         private void btnCrear_Click(object sender, EventArgs e)
         {
             ABM_de_Cliente.AltaCliente form = new ABM_de_Cliente.AltaCliente();
-            DisplayForm(form);
+            form.Location = this.Location;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.FormClosing += delegate { this.Show(); };
+            form.ShowDialog();
         }
 
         private void DisplayForm(Form form)
