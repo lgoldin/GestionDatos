@@ -37,14 +37,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblFechaHasta = new System.Windows.Forms.Label();
+            this.btnAgregarHuesped = new System.Windows.Forms.Button();
+            this.lstHuespedes = new System.Windows.Forms.ListBox();
             this.btnReserva = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(328, 22);
+            this.btnBuscar.Location = new System.Drawing.Point(437, 27);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscar.Size = new System.Drawing.Size(100, 28);
             this.btnBuscar.TabIndex = 5;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
@@ -53,24 +56,27 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(64, 27);
+            this.label1.Location = new System.Drawing.Point(85, 33);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 13);
+            this.label1.Size = new System.Drawing.Size(173, 17);
             this.label1.TabIndex = 4;
             this.label1.Text = "Ingrese codigo de reserva";
             // 
             // txtCodigoReserva
             // 
-            this.txtCodigoReserva.Location = new System.Drawing.Point(200, 24);
+            this.txtCodigoReserva.Location = new System.Drawing.Point(267, 30);
+            this.txtCodigoReserva.Margin = new System.Windows.Forms.Padding(4);
             this.txtCodigoReserva.Name = "txtCodigoReserva";
-            this.txtCodigoReserva.Size = new System.Drawing.Size(100, 20);
+            this.txtCodigoReserva.Size = new System.Drawing.Size(132, 22);
             this.txtCodigoReserva.TabIndex = 3;
             // 
             // btnCheckIn
             // 
-            this.btnCheckIn.Location = new System.Drawing.Point(67, 234);
+            this.btnCheckIn.Location = new System.Drawing.Point(92, 391);
+            this.btnCheckIn.Margin = new System.Windows.Forms.Padding(4);
             this.btnCheckIn.Name = "btnCheckIn";
-            this.btnCheckIn.Size = new System.Drawing.Size(336, 58);
+            this.btnCheckIn.Size = new System.Drawing.Size(448, 71);
             this.btnCheckIn.TabIndex = 6;
             this.btnCheckIn.Text = "CheckIn";
             this.btnCheckIn.UseVisualStyleBackColor = true;
@@ -79,9 +85,10 @@
             // 
             // btnCheckOut
             // 
-            this.btnCheckOut.Location = new System.Drawing.Point(67, 298);
+            this.btnCheckOut.Location = new System.Drawing.Point(92, 470);
+            this.btnCheckOut.Margin = new System.Windows.Forms.Padding(4);
             this.btnCheckOut.Name = "btnCheckOut";
-            this.btnCheckOut.Size = new System.Drawing.Size(336, 58);
+            this.btnCheckOut.Size = new System.Drawing.Size(448, 71);
             this.btnCheckOut.TabIndex = 7;
             this.btnCheckOut.Text = "CheckOut";
             this.btnCheckOut.UseVisualStyleBackColor = true;
@@ -91,9 +98,10 @@
             // lblFechaDesde
             // 
             this.lblFechaDesde.AutoSize = true;
-            this.lblFechaDesde.Location = new System.Drawing.Point(144, 82);
+            this.lblFechaDesde.Location = new System.Drawing.Point(192, 101);
+            this.lblFechaDesde.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFechaDesde.Name = "lblFechaDesde";
-            this.lblFechaDesde.Size = new System.Drawing.Size(63, 13);
+            this.lblFechaDesde.Size = new System.Drawing.Size(82, 17);
             this.lblFechaDesde.TabIndex = 8;
             this.lblFechaDesde.Text = "fechadesde";
             this.lblFechaDesde.Visible = false;
@@ -101,9 +109,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(67, 82);
+            this.label2.Location = new System.Drawing.Point(89, 101);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
+            this.label2.Size = new System.Drawing.Size(92, 17);
             this.label2.TabIndex = 9;
             this.label2.Text = "Fecha Desde";
             this.label2.Visible = false;
@@ -111,9 +120,10 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(262, 82);
+            this.label3.Location = new System.Drawing.Point(349, 101);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 13);
+            this.label3.Size = new System.Drawing.Size(88, 17);
             this.label3.TabIndex = 11;
             this.label3.Text = "Fecha Hasta";
             this.label3.Visible = false;
@@ -121,18 +131,38 @@
             // lblFechaHasta
             // 
             this.lblFechaHasta.AutoSize = true;
-            this.lblFechaHasta.Location = new System.Drawing.Point(339, 82);
+            this.lblFechaHasta.Location = new System.Drawing.Point(452, 101);
+            this.lblFechaHasta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFechaHasta.Name = "lblFechaHasta";
-            this.lblFechaHasta.Size = new System.Drawing.Size(60, 13);
+            this.lblFechaHasta.Size = new System.Drawing.Size(78, 17);
             this.lblFechaHasta.TabIndex = 10;
             this.lblFechaHasta.Text = "fechahasta";
             this.lblFechaHasta.Visible = false;
             // 
+            // btnAgregarHuesped
+            // 
+            this.btnAgregarHuesped.Location = new System.Drawing.Point(92, 157);
+            this.btnAgregarHuesped.Name = "btnAgregarHuesped";
+            this.btnAgregarHuesped.Size = new System.Drawing.Size(145, 29);
+            this.btnAgregarHuesped.TabIndex = 12;
+            this.btnAgregarHuesped.Text = "Agregar huesped";
+            this.btnAgregarHuesped.UseVisualStyleBackColor = true;
+            this.btnAgregarHuesped.Click += new System.EventHandler(this.btnAgregarHuesped_Click);
+            // 
+            // lstHuespedes
+            // 
+            this.lstHuespedes.FormattingEnabled = true;
+            this.lstHuespedes.ItemHeight = 16;
+            this.lstHuespedes.Location = new System.Drawing.Point(92, 219);
+            this.lstHuespedes.Name = "lstHuespedes";
+            this.lstHuespedes.Size = new System.Drawing.Size(239, 132);
+            this.lstHuespedes.TabIndex = 13;
+            // 
             // btnReserva
             // 
-            this.btnReserva.Location = new System.Drawing.Point(67, 362);
+            this.btnReserva.Location = new System.Drawing.Point(92, 557);
             this.btnReserva.Name = "btnReserva";
-            this.btnReserva.Size = new System.Drawing.Size(336, 58);
+            this.btnReserva.Size = new System.Drawing.Size(448, 58);
             this.btnReserva.TabIndex = 12;
             this.btnReserva.Text = "Relizar nueva reserva";
             this.btnReserva.UseVisualStyleBackColor = true;
@@ -141,9 +171,11 @@
             // 
             // RegistrarEstadia
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(477, 433);
+            this.ClientSize = new System.Drawing.Size(671, 657);
+            this.Controls.Add(this.lstHuespedes);
+            this.Controls.Add(this.btnAgregarHuesped);
             this.Controls.Add(this.btnReserva);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblFechaHasta);
@@ -154,6 +186,7 @@
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtCodigoReserva);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "RegistrarEstadia";
             this.Text = "Registrar estadia";
             this.ResumeLayout(false);
@@ -172,6 +205,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblFechaHasta;
+
+        private System.Windows.Forms.Button btnAgregarHuesped;
+        private System.Windows.Forms.ListBox lstHuespedes;
+
         private System.Windows.Forms.Button btnReserva;
     }
 }

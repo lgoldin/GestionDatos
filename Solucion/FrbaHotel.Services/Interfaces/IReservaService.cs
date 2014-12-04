@@ -24,5 +24,7 @@ namespace FrbaHotel.Services.Interfaces
         void Cancelar(IEnumerable<int> codigos, string motivo, Usuario usuario, bool noShow);
 
         IEnumerable<Reserva> GetReservasPosteriores(Reserva reserva);
+
+        IEnumerable<Reserva> GetReservasVencidas();
     }
 }

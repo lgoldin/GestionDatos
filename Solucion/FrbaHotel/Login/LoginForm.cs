@@ -22,9 +22,12 @@ namespace FrbaHotel.Login
             this.LoginService = new LoginService();
             this.FuncionalidadService = new FuncionalidadService();
             this.RolService = new RolService();
+            this.ReservaService = new ReservaService();
         }
 
         public ILoginService LoginService { get; set; }
+
+        public IReservaService ReservaService { get; set; }
 
         public IFuncionalidadService FuncionalidadService { get; set; }
 
@@ -32,17 +35,24 @@ namespace FrbaHotel.Login
 
         private void ButtonIngresar_Click(object sender, EventArgs e)
         {
-            Usuario usuario = this.LoginService.Login(this.TextBoxUsername.Text, this.TextBoxPassword.Text);
+            try
+            {
+                Usuario usuario = this.LoginService.Login(this.TextBoxUsername.Text, this.TextBoxPassword.Text);
 
-            if (usuario != null)
-            {
-                usuario.Rol.Funcionalidades = this.FuncionalidadService.GetByRolId(usuario.Rol.Id);
-                Session.Usuario = usuario;
-                this.DisplayForm(new SeleccionarHotel());
+                if (usuario != null)
+                {
+                    usuario.Rol.Funcionalidades = this.FuncionalidadService.GetByRolId(usuario.Rol.Id);
+                    Session.Usuario = usuario;
+                    this.DisplayForm(new SeleccionarHotel());
+                }
+                else
+                {
+                    MessageBox.Show("Ingrese los datos correctamente", "Error", MessageBoxButtons.OK);
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show("Ingrese los datos correctamente", "Error", MessageBoxButtons.OK);
+                MessageBox.Show("Probablemente falten correr los SPs", "Error", MessageBoxButtons.OK);
             }
         }
 
@@ -64,6 +74,14 @@ namespace FrbaHotel.Login
             Session.Usuario = usuario;
             
             this.DisplayForm(new Index());
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            IEnumerable<Reserva> reservas = this.ReservaService.GetReservasVencidas();
+            var codigos = new List<int>();
+            reservas.ToList().ForEach(x => codigos.Add(x.Codigo));
+            this.ReservaService.Cancelar(codigos, "No show", null, true);
         }
     }
 }

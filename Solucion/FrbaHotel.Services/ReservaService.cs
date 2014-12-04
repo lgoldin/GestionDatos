@@ -63,6 +63,12 @@ namespace FrbaHotel.Services
             return repository.GetPosteriores(reserva);
         }
 
+        public IEnumerable<Reserva> GetReservasVencidas()
+        {
+            var repository = new ReservaRepository();
+            return repository.GetVencidas();
+        }
+
         #endregion
     }
 }

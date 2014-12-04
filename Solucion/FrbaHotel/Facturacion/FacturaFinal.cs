@@ -50,6 +50,8 @@ namespace FrbaHotel.Facturacion
             lblFactura.Top = (this.ClientSize.Height - lblFactura.Height) / 4;
             
             this.Controls.Add(lblFactura);
+
+            MessageBox.Show("Factura generada");
         }
     }
 }

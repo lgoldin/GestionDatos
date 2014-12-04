@@ -38,7 +38,7 @@
             this.cmbHotel.FormattingEnabled = true;
             this.cmbHotel.Location = new System.Drawing.Point(124, 33);
             this.cmbHotel.Name = "cmbHotel";
-            this.cmbHotel.Size = new System.Drawing.Size(100, 21);
+            this.cmbHotel.Size = new System.Drawing.Size(195, 21);
             this.cmbHotel.TabIndex = 49;
             // 
             // label13
@@ -52,9 +52,9 @@
             // 
             // btnSeleccionar
             // 
-            this.btnSeleccionar.Location = new System.Drawing.Point(48, 78);
+            this.btnSeleccionar.Location = new System.Drawing.Point(48, 76);
             this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.Size = new System.Drawing.Size(176, 24);
+            this.btnSeleccionar.Size = new System.Drawing.Size(271, 35);
             this.btnSeleccionar.TabIndex = 50;
             this.btnSeleccionar.Text = "Seleccionar hotel";
             this.btnSeleccionar.UseVisualStyleBackColor = true;
@@ -64,7 +64,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(269, 136);
+            this.ClientSize = new System.Drawing.Size(377, 141);
             this.Controls.Add(this.btnSeleccionar);
             this.Controls.Add(this.cmbHotel);
             this.Controls.Add(this.label13);

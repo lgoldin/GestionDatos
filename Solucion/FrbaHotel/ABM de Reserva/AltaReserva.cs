@@ -46,7 +46,7 @@ namespace FrbaHotel.ABM_de_Reserva
             cmbHotel.DisplayMember = "Nombre";
             cmbHotel.SelectedValue = Reserva == null ? 0 : Reserva.HotelId;
 
-            dateFechaDesde.MinDate = Session.Fecha.AddDays(1);
+            dateFechaDesde.MinDate = Reserva == null ? Session.Fecha.AddDays(1) : Session.Fecha;
             dateFechaDesde.Value = Reserva == null ? Session.Fecha.AddDays(1) : Reserva.FechaDesde;
 
             dateFechaHasta.MinDate = Session.Fecha.AddDays(1);

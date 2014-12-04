@@ -27,7 +27,7 @@ namespace FrbaHotel.Repositories
             if (collection.Count > 0)
             {
                 DataRow reader = collection[0];
-                reserva = new Reserva() { Codigo = Convert.ToInt32(reader["codigo"]), FechaDesde = Convert.ToDateTime(reader["fechaDesde"]), FechaHasta = Convert.ToDateTime(reader["fechaHasta"]), RegimenCodigo = Convert.ToInt32(reader["regimenCodigo"]), HotelId = Convert.ToInt32(reader["hotelId"]) };
+                reserva = new Reserva() { Codigo = Convert.ToInt32(reader["codigo"]), FechaDesde = Convert.ToDateTime(reader["fechaDesde"]), FechaHasta = Convert.ToDateTime(reader["fechaHasta"]), RegimenCodigo = Convert.ToInt32(reader["regimenCodigo"]), HotelId = Convert.ToInt32(reader["hotelId"]), ClienteId = Convert.ToInt32(reader["clienteId"]) };
             }
 
             if (reserva != null)
@@ -158,13 +158,17 @@ namespace FrbaHotel.Repositories
                 foreach (int codigo in codigos)
                 {
                     int estadoId = noShow ? 5 : (usuario.Username == "guest" ? 4 /*Guest*/ : 3 /*Recepcion*/);
-                    SqlCommand logCommand = DBConnection.CreateStoredProcedure("InsertReservaLog");
-                    logCommand.Parameters.AddWithValue("@reservaCodigo", codigo);
-                    logCommand.Parameters.AddWithValue("@fecha", Session.Fecha);
-                    logCommand.Parameters.AddWithValue("@usuarioId", usuario.Id);
-                    logCommand.Parameters.AddWithValue("@tipoId", 3/*Cancelacion*/);
-                    logCommand.Parameters.AddWithValue("@motivo", motivo);
-                    DBConnection.ExecuteNonQuery(logCommand);
+                        
+                    if (usuario != null)
+                    {
+                        SqlCommand logCommand = DBConnection.CreateStoredProcedure("InsertReservaLog");
+                        logCommand.Parameters.AddWithValue("@reservaCodigo", codigo);
+                        logCommand.Parameters.AddWithValue("@fecha", Session.Fecha);
+                        logCommand.Parameters.AddWithValue("@usuarioId", usuario.Id);
+                        logCommand.Parameters.AddWithValue("@tipoId", 3/*Cancelacion*/);
+                        logCommand.Parameters.AddWithValue("@motivo", motivo);
+                        DBConnection.ExecuteNonQuery(logCommand);
+                    }
 
                     SqlCommand command = DBConnection.CreateStoredProcedure("UpdateEstadoReserva");
                     command.Parameters.AddWithValue("@codigo", codigo);
@@ -199,6 +203,23 @@ namespace FrbaHotel.Repositories
             regimen.Descripcion = row["descripcion"].ToString();
             regimen.Codigo = Convert.ToInt32(row["codigo"]);
             return regimen;
+        }
+
+        public IEnumerable<Reserva> GetVencidas()
+        {
+            List<Reserva> reservas = new List<Reserva>();
+
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetReservasVencidas");
+            command.Parameters.AddWithValue("@fecha", Session.Fecha);
+
+            DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
+
+            foreach (DataRow row in collection)
+            {
+                reservas.Add(new Reserva() { Codigo = Convert.ToInt32(row["codigo"]) });
+            }
+
+            return reservas;
         }
     }
 }

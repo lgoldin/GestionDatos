@@ -10,6 +10,7 @@ using FrbaHotel.Entities.Exceptions;
 using FrbaHotel.Entities;
 using FrbaHotel.Services.Interfaces;
 using FrbaHotel.Services;
+using FrbaHotel.ABM_de_Cliente;
 
 namespace FrbaHotel.Registrar_Estadia
 {
@@ -56,6 +57,10 @@ namespace FrbaHotel.Registrar_Estadia
                         {
                             this.btnCheckIn.Visible = true;
                             this.btnCheckOut.Visible = false;
+                            ClienteService clienteService = new ClienteService();
+                            Cliente cliente = clienteService.GetById(this.Reserva.ClienteId);
+                            lstHuespedes.Items.Add(cliente);
+                            lstHuespedes.DisplayMember = "Nombre";
                         }
                         else
                         {
@@ -175,13 +180,34 @@ namespace FrbaHotel.Registrar_Estadia
             this.Hide();
         }
 
+
+        private void btnAgregarHuesped_Click(object sender, EventArgs e)
+        {
+            ListadoCliente form = new ListadoCliente(false);
+            form.ShowDialog();
+            int clienteId = form.ClienteId;
+
+            if (clienteId == 0)
+            {
+                MessageBox.Show("Tiene que seleccionar un cliente");
+            }
+            else
+            {
+                ClienteService clienteService = new ClienteService();
+                Cliente cliente = clienteService.GetById(clienteId);
+                lstHuespedes.Items.Add(cliente);
+            }
+
+            ((ListBox)lstHuespedes).DisplayMember = "Nombre";
+        }
+
         private void btnReserva_Click(object sender, EventArgs e)
         {
             var form = new ABM_de_Reserva.AltaReserva(null);
             form.StartPosition = FormStartPosition.CenterScreen;
             form.Show();
-            form.BringToFront();
             this.Close();
+            form.BringToFront();            
         }
     }
 }
