@@ -19,6 +19,7 @@ BEGIN
 	SELECT COUNT(DISTINCT hab.id)
 	FROM [Frutillitas].[Habitacion] hab	
 	WHERE hab.hotelId = @hotelId
+		AND NOT EXISTS (SELECT 1 FROM [Frutillitas].[HotelInhabilitacion] WHERE [hotelId] = hab.hotelId AND (@fechaDesde BETWEEN [fechaInicio] AND [fechaFin] OR @fechaHasta BETWEEN [fechaInicio] AND [fechaFin]))
 		AND hab.tipoCodigo = @tipoHabitacionCodigo
 		AND hab.id NOT IN (
 			SELECT DISTINCT hab2.id
