@@ -17,6 +17,8 @@ namespace FrbaHotel.Entities
         
         public int TipoPagoId { get; set; }
         
-        public List<FacturaItem> Items {get; set;} 
+        public List<FacturaItem> Items {get; set;}
+
+        public int ClienteId { get; set; }
     }
 }

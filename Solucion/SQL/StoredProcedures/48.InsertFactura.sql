@@ -15,7 +15,8 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[InsertFact
 @fecha datetime,
 @total numeric(18,2),
 @estadiaId int,
-@tipoPagoId int
+@tipoPagoId int,
+@clienteId int
 
 AS
 BEGIN

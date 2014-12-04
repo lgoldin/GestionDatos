@@ -34,8 +34,14 @@ namespace FrbaHotel.Facturacion
             {
                 error += "Seleccione un medio de pago";
             }
+            if (Convert.ToInt32(cmbClientes.SelectedValue) == 0)
+            {
+                error += System.Environment.NewLine + "Seleccione un cliente";
+            }
 
             factura.TipoPagoId = Convert.ToInt32(cmbMedioDePago.SelectedValue);
+            factura.ClienteId = Convert.ToInt32(cmbClientes.SelectedValue);
+
             if (factura.TipoPagoId == 2)
             {
                 error += ValidateTarjeta();
@@ -82,7 +88,8 @@ namespace FrbaHotel.Facturacion
 
         private void MostrarFactura(Factura factura)
         {
-            Form form = new FacturaFinal(factura);
+            string cliente = ((Cliente)this.cmbClientes.SelectedItem).Nombre + " " + ((Cliente)this.cmbClientes.SelectedItem).Apellido;
+            Form form = new FacturaFinal(factura, cliente);
             DisplayForm(form);
         }
 
@@ -196,12 +203,6 @@ namespace FrbaHotel.Facturacion
 
         private void Facturacion_Load(object sender, EventArgs e)
         {
-            FacturaTipoPagoService tipoPagoService = new FacturaTipoPagoService();
-            List<FacturaTipoPago> tiposDePago = tipoPagoService.GetAll().ToList();
-            cmbMedioDePago.DataSource = tiposDePago;
-            cmbMedioDePago.DisplayMember = "Descripcion";
-            cmbMedioDePago.ValueMember = "Id";
-            cmbMedioDePago.SelectedValue = 0;
             if (this.EstadiaId != 0)
             {
                 txtNroEstadia.Text = this.EstadiaId.ToString();
@@ -210,6 +211,23 @@ namespace FrbaHotel.Facturacion
             else
             {
                 this.txtNroEstadia.ReadOnly = false;
+            }
+
+            FacturaTipoPagoService tipoPagoService = new FacturaTipoPagoService();
+            List<FacturaTipoPago> tiposDePago = tipoPagoService.GetAll().ToList();
+            cmbMedioDePago.DataSource = tiposDePago;
+            cmbMedioDePago.DisplayMember = "Descripcion";
+            cmbMedioDePago.ValueMember = "Id";
+            cmbMedioDePago.SelectedValue = 0;
+
+            if (!string.IsNullOrEmpty(txtNroEstadia.Text))
+            {
+                ClienteService clienteService = new ClienteService();
+                List<Cliente> clientes = clienteService.GetByEstadiaId(Convert.ToInt32(this.txtNroEstadia.Text));
+                cmbClientes.DataSource = clientes;
+                cmbClientes.DisplayMember = "Nombre";
+                cmbClientes.ValueMember = "Id";
+                cmbClientes.SelectedValue = 0;
             }
         }
         private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
