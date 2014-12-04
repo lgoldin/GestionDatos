@@ -57,6 +57,10 @@ namespace FrbaHotel.Registrar_Estadia
                         {
                             this.btnCheckIn.Visible = true;
                             this.btnCheckOut.Visible = false;
+                            ClienteService clienteService = new ClienteService();
+                            Cliente cliente = clienteService.GetById(this.Reserva.ClienteId);
+                            lstHuespedes.Items.Add(cliente);
+                            lstHuespedes.DisplayMember = "Nombre";
                         }
                         else
                         {
