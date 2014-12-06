@@ -21,7 +21,7 @@ namespace FrbaHotel.Entities
 
         public int ClienteId { get; set; }
 
-        public int TipoHabitacionCodigo { get; set; }
+        public IList<int> TipoHabitacionCodigos { get; set; }
 
         public DateTime FechaCreacion { get; set; }
     }

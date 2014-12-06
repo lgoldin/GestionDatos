@@ -58,10 +58,18 @@ namespace FrbaHotel.ABM_de_Reserva
             dateFechaHasta.MinDate = Session.Fecha.AddDays(1);
             dateFechaHasta.Value = Reserva == null ? Session.Fecha.AddDays(2) : Reserva.FechaHasta;
 
+            IEnumerable<TipoHabitacion> habs = this.TipoHabitacionService.GetAll();
             cmbTipoHabitacion.DataSource = this.TipoHabitacionService.GetAll();
             cmbTipoHabitacion.ValueMember = "Codigo";
             cmbTipoHabitacion.DisplayMember = "Descripcion";
-            cmbTipoHabitacion.SelectedValue = Reserva == null ? 0 : Reserva.TipoHabitacionCodigo;
+
+            if (Reserva != null)
+            {
+                foreach (int codigo in Reserva.TipoHabitacionCodigos)
+                {
+                    lstTipoHabitacion.Items.Add(habs.First(y => y.Codigo == codigo));
+                }
+            }
 
             cmbRegimen.DataSource = this.RegimenService.GetAll();
             cmbRegimen.ValueMember = "Codigo";
@@ -76,9 +84,9 @@ namespace FrbaHotel.ABM_de_Reserva
                 MessageBox.Show("Debe especificar un hotel");
                 return false;
             }
-            if ((int)cmbTipoHabitacion.SelectedValue == 0)
+            if (lstTipoHabitacion.Items.Count == 0)
             {
-                MessageBox.Show("Debe especificar un tipo de habitación");
+                MessageBox.Show("Debe especificar al menos un tipo de habitación");
                 return false;
             }
             return true;
@@ -103,12 +111,7 @@ namespace FrbaHotel.ABM_de_Reserva
         {
             if (esValidoSinRegimen())
             {
-                int hotelId = getHotelId();
-                DateTime fechaDesde = dateFechaDesde.Value;
-                DateTime fechaHasta = dateFechaHasta.Value;
-                int tipoHabitacionCodigo = (int)cmbTipoHabitacion.SelectedValue;
-
-                if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo))
+                if (!isReservaAvailable())
                 {
                     MessageBox.Show("No hay disponibilidad para los parametros solicitados");
                 }
@@ -126,9 +129,8 @@ namespace FrbaHotel.ABM_de_Reserva
                 int hotelId = getHotelId();
                 DateTime fechaDesde = dateFechaDesde.Value;
                 DateTime fechaHasta = dateFechaHasta.Value;
-                int tipoHabitacionCodigo = (int)cmbTipoHabitacion.SelectedValue;
 
-                if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo))
+                if (!isReservaAvailable())
                 {
                     MessageBox.Show("No hay disponibilidad para los parametros solicitados");
                 }
@@ -153,7 +155,7 @@ namespace FrbaHotel.ABM_de_Reserva
                             reserva.FechaHasta = fechaHasta;
                             reserva.RegimenCodigo = (int)cmbRegimen.SelectedValue;
                             reserva.FechaCreacion = Session.Fecha;
-                            reserva.TipoHabitacionCodigo = tipoHabitacionCodigo;
+                            reserva.TipoHabitacionCodigos = lstTipoHabitacion.Items.Cast<TipoHabitacion>().Select(x => x.Codigo).ToList();
                             // TODO: Ver como obtener
                             reserva.EstadoId = 1;
 
@@ -171,7 +173,7 @@ namespace FrbaHotel.ABM_de_Reserva
                         reserva.FechaHasta = fechaHasta;
                         reserva.RegimenCodigo = (int)cmbRegimen.SelectedValue;
                         reserva.FechaCreacion = Reserva.FechaCreacion;
-                        reserva.TipoHabitacionCodigo = tipoHabitacionCodigo;
+                        reserva.TipoHabitacionCodigos = lstTipoHabitacion.Items.Cast<TipoHabitacion>().Select(x => x.Codigo).ToList();
                         // TODO: Ver como obtener
                         reserva.EstadoId = 2;
 
@@ -191,9 +193,61 @@ namespace FrbaHotel.ABM_de_Reserva
             decimal precio = ((decimal)HotelCargoPorEstrellaService.GetCargo()) * ((Hotel)cmbHotel.SelectedItem).Estrellas * diasEstadia;
             if (cmbRegimen.SelectedItem != null)
             {
-                precio += ((TipoHabitacion)cmbTipoHabitacion.SelectedItem).Porcentual * ((Regimen)cmbRegimen.SelectedItem).Precio * diasEstadia;
+                foreach (TipoHabitacion hab in lstTipoHabitacion.Items)
+                {
+                    precio += hab.Porcentual * ((Regimen)cmbRegimen.SelectedItem).Precio * diasEstadia;
+                }
             }
             return precio;
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            if ((int)cmbTipoHabitacion.SelectedValue == 0)
+            {
+                MessageBox.Show("Debe especificar un tipo de habitación");
+            }
+            else
+            {
+                lstTipoHabitacion.Items.Add(cmbTipoHabitacion.SelectedItem);
+            }
+        }
+
+        private IDictionary<int, int> getTipoHabitaciones()
+        {
+            IDictionary<int, int> res = new Dictionary<int, int>();
+            foreach (TipoHabitacion hab in lstTipoHabitacion.Items)
+            {
+                res[hab.Codigo] = (!res.ContainsKey(hab.Codigo) ? 0 : res[hab.Codigo]) + 1;
+            }
+
+            return res;
+        }
+
+        private bool isReservaAvailable()
+        {
+            int hotelId = getHotelId();
+            DateTime fechaDesde = dateFechaDesde.Value;
+            DateTime fechaHasta = dateFechaHasta.Value;
+            IDictionary<int, int> habs = getTipoHabitaciones();
+            foreach (KeyValuePair<int, int> hab in habs)
+            {
+                if (hab.Value > ReservaService.GetCountHabsAvailable(hotelId, fechaDesde, fechaHasta, hab.Key))
+                    return false;
+            }
+            return true;
+        }
+
+        private void btnBorrar_Click(object sender, EventArgs e)
+        {
+            if (lstTipoHabitacion.SelectedIndex < 0)
+            {
+                MessageBox.Show("Tiene que seleccionar un tipo habitacion de la lista para borrarlo");
+            }
+            else
+            {
+                lstTipoHabitacion.Items.RemoveAt(lstTipoHabitacion.SelectedIndex);
+            }
         }
     }
 }

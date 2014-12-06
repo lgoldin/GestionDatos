@@ -27,7 +27,7 @@ namespace FrbaHotel.Repositories
             if (collection.Count > 0)
             {
                 DataRow reader = collection[0];
-                reserva = new Reserva() { Codigo = Convert.ToInt32(reader["codigo"]), FechaDesde = Convert.ToDateTime(reader["fechaDesde"]), FechaHasta = Convert.ToDateTime(reader["fechaHasta"]), RegimenCodigo = Convert.ToInt32(reader["regimenCodigo"]), HotelId = Convert.ToInt32(reader["hotelId"]), ClienteId = Convert.ToInt32(reader["clienteId"]) };
+                reserva = new Reserva() { Codigo = Convert.ToInt32(reader["codigo"]), FechaDesde = Convert.ToDateTime(reader["fechaDesde"]), FechaHasta = Convert.ToDateTime(reader["fechaHasta"]), RegimenCodigo = Convert.ToInt32(reader["regimenCodigo"]), HotelId = Convert.ToInt32(reader["hotelId"]), ClienteId = Convert.ToInt32(reader["clienteId"]), TipoHabitacionCodigos = new List<int>() };
             }
 
             if (reserva != null)
@@ -36,10 +36,9 @@ namespace FrbaHotel.Repositories
                 tipoHabitacionCommand.Parameters.AddWithValue("@reservaCodigo", codigo);
                 DataRowCollection tipoHabitacionCollection = DBConnection.EjecutarStoredProcedureSelect(tipoHabitacionCommand).Rows;
 
-                if (tipoHabitacionCollection.Count > 0)
+                foreach (DataRow tipoHabitacion in tipoHabitacionCollection)
                 {
-                    DataRow reader = tipoHabitacionCollection[0];
-                    reserva.TipoHabitacionCodigo = Convert.ToInt32(reader["tipoHabitacionCodigo"]);
+                    reserva.TipoHabitacionCodigos.Add(Convert.ToInt32(tipoHabitacion["tipoHabitacionCodigo"]));
                 }
             }
 
@@ -61,10 +60,13 @@ namespace FrbaHotel.Repositories
                 command.Parameters.AddWithValue("@fechaCreacion", reserva.FechaCreacion);
                 codigo = DBConnection.ExecuteScalar(command);
 
-                SqlCommand reservaHabitacionCommand = DBConnection.CreateStoredProcedure("InsertReservaTipoHabitacion");
-                reservaHabitacionCommand.Parameters.AddWithValue("@reservaCodigo", codigo);
-                reservaHabitacionCommand.Parameters.AddWithValue("@tipoHabitacionCodigo", reserva.TipoHabitacionCodigo);
-                DBConnection.ExecuteNonQuery(reservaHabitacionCommand);
+                foreach (int cod in reserva.TipoHabitacionCodigos)
+                {
+                    SqlCommand reservaHabitacionCommand = DBConnection.CreateStoredProcedure("InsertReservaTipoHabitacion");
+                    reservaHabitacionCommand.Parameters.AddWithValue("@reservaCodigo", codigo);
+                    reservaHabitacionCommand.Parameters.AddWithValue("@tipoHabitacionCodigo", cod);
+                    DBConnection.ExecuteNonQuery(reservaHabitacionCommand);
+                }
 
                 transaction.Complete();
             }
@@ -88,10 +90,13 @@ namespace FrbaHotel.Repositories
                 reservaHabitacionDeleteCommand.Parameters.AddWithValue("@reservaCodigo", reserva.Codigo);
                 DBConnection.ExecuteNonQuery(reservaHabitacionDeleteCommand);
 
-                SqlCommand reservaHabitacionCommand = DBConnection.CreateStoredProcedure("InsertReservaTipoHabitacion");
-                reservaHabitacionCommand.Parameters.AddWithValue("@reservaCodigo", reserva.Codigo);
-                reservaHabitacionCommand.Parameters.AddWithValue("@tipoHabitacionCodigo", reserva.TipoHabitacionCodigo);
-                DBConnection.ExecuteNonQuery(reservaHabitacionCommand);
+                foreach (int cod in reserva.TipoHabitacionCodigos)
+                {
+                    SqlCommand reservaHabitacionCommand = DBConnection.CreateStoredProcedure("InsertReservaTipoHabitacion");
+                    reservaHabitacionCommand.Parameters.AddWithValue("@reservaCodigo", reserva.Codigo);
+                    reservaHabitacionCommand.Parameters.AddWithValue("@tipoHabitacionCodigo", cod);
+                    DBConnection.ExecuteNonQuery(reservaHabitacionCommand);
+                }
 
                 transaction.Complete();
             }
@@ -137,7 +142,7 @@ namespace FrbaHotel.Repositories
             return reservas;
         }
 
-        public bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo)
+        public int GetCountHabsAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo)
         {
             SqlCommand command = DBConnection.CreateStoredProcedure("CountPosibleReserva");
             command.Parameters.AddWithValue("@hotelId", hotelId);
@@ -148,7 +153,7 @@ namespace FrbaHotel.Repositories
 
             DataRow reader = collection[0];
 
-            return Convert.ToInt32(reader[0]) > 0;
+            return Convert.ToInt32(reader[0]);
         }
 
         public void Cancelar(IEnumerable<int> codigos, string motivo, Usuario usuario, bool noShow)

@@ -40,6 +40,9 @@
             this.cmbRegimen = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnReservar = new System.Windows.Forms.Button();
+            this.btnAgregar = new System.Windows.Forms.Button();
+            this.lstTipoHabitacion = new System.Windows.Forms.ListBox();
+            this.btnBorrar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblHotel
@@ -116,7 +119,7 @@
             // 
             // btnDisponibilidad
             // 
-            this.btnDisponibilidad.Location = new System.Drawing.Point(183, 249);
+            this.btnDisponibilidad.Location = new System.Drawing.Point(183, 327);
             this.btnDisponibilidad.Name = "btnDisponibilidad";
             this.btnDisponibilidad.Size = new System.Drawing.Size(112, 23);
             this.btnDisponibilidad.TabIndex = 71;
@@ -128,7 +131,7 @@
             // 
             this.cmbRegimen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRegimen.FormattingEnabled = true;
-            this.cmbRegimen.Location = new System.Drawing.Point(144, 203);
+            this.cmbRegimen.Location = new System.Drawing.Point(144, 281);
             this.cmbRegimen.Name = "cmbRegimen";
             this.cmbRegimen.Size = new System.Drawing.Size(151, 21);
             this.cmbRegimen.TabIndex = 73;
@@ -136,7 +139,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(45, 206);
+            this.label5.Location = new System.Drawing.Point(45, 284);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(49, 13);
             this.label5.TabIndex = 72;
@@ -144,7 +147,7 @@
             // 
             // btnReservar
             // 
-            this.btnReservar.Location = new System.Drawing.Point(219, 296);
+            this.btnReservar.Location = new System.Drawing.Point(219, 374);
             this.btnReservar.Name = "btnReservar";
             this.btnReservar.Size = new System.Drawing.Size(75, 23);
             this.btnReservar.TabIndex = 74;
@@ -152,11 +155,44 @@
             this.btnReservar.UseVisualStyleBackColor = true;
             this.btnReservar.Click += new System.EventHandler(this.btnReservar_Click);
             // 
+            // btnAgregar
+            // 
+            this.btnAgregar.Location = new System.Drawing.Point(333, 155);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(75, 23);
+            this.btnAgregar.TabIndex = 75;
+            this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            // 
+            // lstTipoHabitacion
+            // 
+            this.lstTipoHabitacion.DisplayMember = "Descripcion";
+            this.lstTipoHabitacion.FormattingEnabled = true;
+            this.lstTipoHabitacion.Location = new System.Drawing.Point(48, 188);
+            this.lstTipoHabitacion.Name = "lstTipoHabitacion";
+            this.lstTipoHabitacion.Size = new System.Drawing.Size(247, 69);
+            this.lstTipoHabitacion.TabIndex = 76;
+            this.lstTipoHabitacion.ValueMember = "Descripcion";
+            // 
+            // btnBorrar
+            // 
+            this.btnBorrar.Location = new System.Drawing.Point(333, 233);
+            this.btnBorrar.Name = "btnBorrar";
+            this.btnBorrar.Size = new System.Drawing.Size(75, 23);
+            this.btnBorrar.TabIndex = 77;
+            this.btnBorrar.Text = "Borrar";
+            this.btnBorrar.UseVisualStyleBackColor = true;
+            this.btnBorrar.Click += new System.EventHandler(this.btnBorrar_Click);
+            // 
             // AltaReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(391, 440);
+            this.ClientSize = new System.Drawing.Size(462, 440);
+            this.Controls.Add(this.btnBorrar);
+            this.Controls.Add(this.lstTipoHabitacion);
+            this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnReservar);
             this.Controls.Add(this.cmbRegimen);
             this.Controls.Add(this.label5);
@@ -191,5 +227,8 @@
         private System.Windows.Forms.ComboBox cmbRegimen;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnReservar;
+        private System.Windows.Forms.Button btnAgregar;
+        private System.Windows.Forms.ListBox lstTipoHabitacion;
+        private System.Windows.Forms.Button btnBorrar;
     }
 }

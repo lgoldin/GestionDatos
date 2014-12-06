@@ -39,10 +39,10 @@ namespace FrbaHotel.Services
             return reserva;
         }
 
-        public bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo)
+        public int GetCountHabsAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo)
         {
             ReservaRepository repository = new ReservaRepository();
-            return repository.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo);
+            return repository.GetCountHabsAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo);
         }
 
         public void Update(Reserva reserva)

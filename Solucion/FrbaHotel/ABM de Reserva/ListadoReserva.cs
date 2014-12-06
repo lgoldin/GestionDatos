@@ -41,7 +41,7 @@ namespace FrbaHotel.ABM_de_Reserva
             lblFechaDesde.Text = "";
             lblFechaHasta.Text = "";
             lblRegimen.Text = "";
-            lblTipoHabitacion.Text = "";
+            lstTipoHabitacion.Items.Clear();
             currentReserva = null;
         }
 
@@ -91,8 +91,13 @@ namespace FrbaHotel.ABM_de_Reserva
             lblHotel.Text = HotelService.GetById(reserva.HotelId).Nombre;
             lblFechaDesde.Text = reserva.FechaDesde.ToShortDateString();
             lblFechaHasta.Text = reserva.FechaHasta.ToShortDateString();
+            lstTipoHabitacion.Items.Clear();
             lblRegimen.Text = RegimenService.GetByCodigo(reserva.RegimenCodigo).Descripcion;
-            lblTipoHabitacion.Text = TipoHabitacionService.GetByCodigo(reserva.TipoHabitacionCodigo).Descripcion;
+            IEnumerable<TipoHabitacion> habitaciones = TipoHabitacionService.GetAll();
+            foreach (int cod in reserva.TipoHabitacionCodigos)
+            {
+                lstTipoHabitacion.Items.Add(habitaciones.First(x => x.Codigo == cod));
+            }
             currentReserva = reserva;
         }
 

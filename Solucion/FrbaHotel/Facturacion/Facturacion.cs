@@ -159,12 +159,15 @@ namespace FrbaHotel.Facturacion
         private static void CreateNightsItems(Factura factura, Estadia estadia, Reserva reserva, decimal regimenPrecio)
         {
             TipoHabitacionService tipoHabitacionService = new TipoHabitacionService();
-            TipoHabitacion tipoHab = tipoHabitacionService.GetByCodigo(reserva.TipoHabitacionCodigo);
+            IEnumerable<TipoHabitacion> tipoHabs = tipoHabitacionService.GetAll();
             HotelService hotelService = new HotelService();
             Hotel hotel = hotelService.GetById(reserva.HotelId);
             HotelCargoPorEstrellaService hotelCargoPorEstrellaService = new HotelCargoPorEstrellaService();
             decimal precioNoche = ((decimal)hotelCargoPorEstrellaService.GetCargo()) * hotel.Estrellas;
-            precioNoche += tipoHab.Porcentual * regimenPrecio;
+            foreach (int cod in reserva.TipoHabitacionCodigos)
+            {
+                precioNoche += tipoHabs.First(x => x.Codigo == cod).Porcentual * regimenPrecio;
+            }
             
             List<DateTime> reservaUseDates = new List<DateTime>();
             List<DateTime> reservaNotUseDates = new List<DateTime>();

@@ -41,10 +41,10 @@
             this.lblHotel = new System.Windows.Forms.Label();
             this.lblFechaDesde = new System.Windows.Forms.Label();
             this.lblFechaHasta = new System.Windows.Forms.Label();
-            this.lblTipoHabitacion = new System.Windows.Forms.Label();
             this.lblRegimen = new System.Windows.Forms.Label();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnNueva = new System.Windows.Forms.Button();
+            this.lstTipoHabitacion = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,7 +99,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(29, 302);
+            this.label5.Location = new System.Drawing.Point(29, 341);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 13);
             this.label5.TabIndex = 77;
@@ -169,25 +169,17 @@
             this.lblFechaHasta.Size = new System.Drawing.Size(0, 13);
             this.lblFechaHasta.TabIndex = 80;
             // 
-            // lblTipoHabitacion
-            // 
-            this.lblTipoHabitacion.AutoSize = true;
-            this.lblTipoHabitacion.Location = new System.Drawing.Point(133, 256);
-            this.lblTipoHabitacion.Name = "lblTipoHabitacion";
-            this.lblTipoHabitacion.Size = new System.Drawing.Size(0, 13);
-            this.lblTipoHabitacion.TabIndex = 81;
-            // 
             // lblRegimen
             // 
             this.lblRegimen.AutoSize = true;
-            this.lblRegimen.Location = new System.Drawing.Point(133, 302);
+            this.lblRegimen.Location = new System.Drawing.Point(133, 341);
             this.lblRegimen.Name = "lblRegimen";
             this.lblRegimen.Size = new System.Drawing.Size(0, 13);
             this.lblRegimen.TabIndex = 82;
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(13, 359);
+            this.btnModificar.Location = new System.Drawing.Point(13, 398);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(75, 23);
             this.btnModificar.TabIndex = 84;
@@ -205,15 +197,25 @@
             this.btnNueva.UseVisualStyleBackColor = true;
             this.btnNueva.Click += new System.EventHandler(this.btnNueva_Click);
             // 
+            // lstTipoHabitacion
+            // 
+            this.lstTipoHabitacion.DisplayMember = "Descripcion";
+            this.lstTipoHabitacion.FormattingEnabled = true;
+            this.lstTipoHabitacion.Location = new System.Drawing.Point(29, 276);
+            this.lstTipoHabitacion.Name = "lstTipoHabitacion";
+            this.lstTipoHabitacion.Size = new System.Drawing.Size(167, 56);
+            this.lstTipoHabitacion.TabIndex = 86;
+            this.lstTipoHabitacion.ValueMember = "Descripcion";
+            // 
             // ListadoReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 450);
+            this.ClientSize = new System.Drawing.Size(499, 503);
+            this.Controls.Add(this.lstTipoHabitacion);
             this.Controls.Add(this.btnNueva);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.lblRegimen);
-            this.Controls.Add(this.lblTipoHabitacion);
             this.Controls.Add(this.lblFechaHasta);
             this.Controls.Add(this.lblFechaDesde);
             this.Controls.Add(this.lblHotel);
@@ -249,9 +251,9 @@
         private System.Windows.Forms.Label lblHotel;
         private System.Windows.Forms.Label lblFechaDesde;
         private System.Windows.Forms.Label lblFechaHasta;
-        private System.Windows.Forms.Label lblTipoHabitacion;
         private System.Windows.Forms.Label lblRegimen;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnNueva;
+        private System.Windows.Forms.ListBox lstTipoHabitacion;
     }
 }
