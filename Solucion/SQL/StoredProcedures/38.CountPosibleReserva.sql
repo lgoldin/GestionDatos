@@ -12,7 +12,8 @@ CREATE PROCEDURE [Frutillitas].[CountPosibleReserva]
 @hotelId int,
 @fechaDesde datetime,
 @fechaHasta datetime,
-@tipoHabitacionCodigo numeric(18, 0)
+@tipoHabitacionCodigo numeric(18, 0),
+@reservaCodigo int = NULL
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -28,6 +29,7 @@ BEGIN
 			JOIN [Frutillitas].[ReservaTipoHabitacion] resTipo ON resTipo.tipoHabitacionCodigo = hab2.tipoCodigo AND resTipo.reservaCodigo = res.codigo
 			WHERE hab2.hotelId = @hotelId
 				AND hab2.tipoCodigo = @tipoHabitacionCodigo 
+				AND (@reservaCodigo IS NULL OR res.[codigo] <> @reservaCodigo)
 				AND ((res.fechaDesde BETWEEN @fechaDesde AND @fechaHasta) OR 
 					(res.fechaDesde BETWEEN @fechaDesde AND @fechaHasta))
 				AND res.estadoId = 1 OR res.estadoId = 2)

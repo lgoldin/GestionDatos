@@ -19,7 +19,7 @@ namespace FrbaHotel.Services.Interfaces
 
         int GetCountActiveReservaBetweenDatesByHotelId(int hotelId, DateTime fechaDesde, DateTime fechaHasta);
 
-        bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo);
+        bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo, int? reservaCodigo);
 
         void Cancelar(IEnumerable<int> codigos, string motivo, Usuario usuario, bool noShow);
 

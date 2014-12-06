@@ -137,13 +137,14 @@ namespace FrbaHotel.Repositories
             return reservas;
         }
 
-        public bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo)
+        public bool IsReservaAvailable(int hotelId, DateTime fechaDesde, DateTime fechaHasta, int tipoHabitacionCodigo, int? reservaCodigo)
         {
             SqlCommand command = DBConnection.CreateStoredProcedure("CountPosibleReserva");
             command.Parameters.AddWithValue("@hotelId", hotelId);
             command.Parameters.AddWithValue("@fechaDesde", fechaDesde);
             command.Parameters.AddWithValue("@fechaHasta", fechaHasta);
             command.Parameters.AddWithValue("@tipoHabitacionCodigo", tipoHabitacionCodigo);
+            command.Parameters.AddWithValue("@reservaCodigo", reservaCodigo);
             DataRowCollection collection = DBConnection.EjecutarStoredProcedureSelect(command).Rows;
 
             DataRow reader = collection[0];

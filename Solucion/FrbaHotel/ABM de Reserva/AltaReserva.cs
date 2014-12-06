@@ -108,7 +108,7 @@ namespace FrbaHotel.ABM_de_Reserva
                 DateTime fechaHasta = dateFechaHasta.Value;
                 int tipoHabitacionCodigo = (int)cmbTipoHabitacion.SelectedValue;
 
-                if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo))
+                if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo, Reserva == null ? null : (int?)Reserva.Codigo))
                 {
                     MessageBox.Show("No hay disponibilidad para los parametros solicitados");
                 }
@@ -128,7 +128,7 @@ namespace FrbaHotel.ABM_de_Reserva
                 DateTime fechaHasta = dateFechaHasta.Value;
                 int tipoHabitacionCodigo = (int)cmbTipoHabitacion.SelectedValue;
 
-                if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo))
+                if (!ReservaService.IsReservaAvailable(hotelId, fechaDesde, fechaHasta, tipoHabitacionCodigo, Reserva == null ? null : (int?)Reserva.Codigo))
                 {
                     MessageBox.Show("No hay disponibilidad para los parametros solicitados");
                 }
