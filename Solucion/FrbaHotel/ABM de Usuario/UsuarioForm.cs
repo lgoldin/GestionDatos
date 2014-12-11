@@ -117,9 +117,16 @@ namespace FrbaHotel.ABM_de_Usuario
             try
             {
                 this.ValidateForm();
-                int idUsuario = this.UsuarioService.Save(this.GetUsuario());
-                
-                MessageBox.Show("El usuario fue guardado correctamente", "Success", MessageBoxButtons.OK);
+                if (this.UsuarioService.IsValidUserName(this.txtUsername.Text))
+                {
+                    int idUsuario = this.UsuarioService.Save(this.GetUsuario());
+
+                    MessageBox.Show("El usuario fue guardado correctamente", "Success", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    MessageBox.Show("Ya esxiste un usuario con ese UserName, por favor elija otro.");
+                }
             }
             catch (FormException formException)
             {

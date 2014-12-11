@@ -222,5 +222,14 @@ namespace FrbaHotel.Repositories
                 Mail = row["Mail"].ToString()
             };
         }
+
+        public bool IsValidUserName(string userName)
+        {
+            SqlCommand command = DBConnection.CreateStoredProcedure("GetCountUsuarioByUserName");
+            command.Parameters.AddWithValue("@userName", userName);
+            int count = DBConnection.ExecuteScalar(command);
+
+            return count == 0;
+        }
     }
 }

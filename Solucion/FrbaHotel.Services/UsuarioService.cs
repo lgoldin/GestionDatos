@@ -73,6 +73,12 @@ namespace FrbaHotel.Services
             return usuariosDTO;
         }
 
+        public bool IsValidUserName(string userName)
+        {
+            var repository = new UsuarioRepository();
+            return repository.IsValidUserName(userName);
+        }
+
         private byte[] HashPassword(string password)
         {
             return SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(password));
