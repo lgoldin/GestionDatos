@@ -26,8 +26,7 @@ BEGIN
 		h.direccion AS Direccion,
 		h.estrellas AS Estrellas,
 		h.mail AS Mail,
-		h.fechaCreacion AS FechaCreacion,
-		h.telefono AS Telefono
+		h.fechaCreacion AS FechaCreacion
 	FROM [Frutillitas].UsuarioHotel uh
 	INNER JOIN [Frutillitas].Hotel h ON h.id = uh.hotelId
 	LEFT JOIN [Frutillitas].Ciudad c ON c.id = h.ciudadId

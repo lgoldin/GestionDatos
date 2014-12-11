@@ -7,10 +7,9 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Frutillitas].[GetHotelesByIdUsuario]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [Frutillitas].[GetHotelesByIdUsuario]
-@usuarioId int
+
+CREATE PROCEDURE [Frutillitas].[GetHotelesByIdUsuario]
+@idUsuario int
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -28,12 +27,12 @@ BEGIN
 		h.mail AS Mail,
 		h.fechaCreacion AS FechaCreacion,
 		h.telefono AS Telefono
-	FROM [Frutillitas].UsuarioHotel uh
-	INNER JOIN [Frutillitas].Hotel h ON h.id = uh.hotelId
+	FROM [Frutillitas].Hotel h
 	LEFT JOIN [Frutillitas].Ciudad c ON c.id = h.ciudadId
 	LEFT JOIN [Frutillitas].Pais p ON p.id = c.paisId
-	WHERE uh.usuarioId = @usuarioId
-END
-' 
+	INNER JOIN [Frutillitas].[UsuarioHotel] uh ON uh.hotelId = h.id
+	WHERE 
+		uh.usuarioId = @idUsuario
+
 END
 GO
